@@ -7,7 +7,7 @@ if (!defined('MOODLE_INTERNAL')) {
 /**
  * Implementation of the SAML 2.0 HTTP-POST binding.
  *
- * @author Andreas Åkre Solberg, UNINETT AS. <andreas.solberg@uninett.no>
+ * @author Andreas ï¿½kre Solberg, UNINETT AS. <andreas.solberg@uninett.no>
  * @package simpleSAMLphp
  * @version $Id: HTTPPost.php 639 2008-06-12 08:48:10Z olavmrk $
  */
@@ -67,7 +67,8 @@ class SimpleSAML_Bindings_SAML20_HTTPPost {
 		$spmd = $this->metadata->getMetaData($spentityid, 'saml20-sp-remote');
 		
 		$destination = $spmd['AssertionConsumerService'];
-	
+
+                // M2filechanges: will need to change the handling here
 		$privatekey = $this->configuration->getPathValue('certdir') . $idpmd['privatekey'];
 		$publiccert = $this->configuration->getPathValue('certdir') . $idpmd['certificate'];
 

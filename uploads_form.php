@@ -54,26 +54,18 @@ require_once("$CFG->libdir/formslib.php");
 class auth_gsaml_uploads_form extends moodleform {
     function definition() {
         $mform = $this->_form;
-
+        
         $data    = $this->_customdata['data'];
-        $options = $this->_customdata['options'];
-
-        //http://docs.moodle.org/en/Development:Using_the_File_API_in_Moodle_forms#filepicker
-        //$mform->addElement('filemanager', 'attachments', get_string('attachment', 'moodle'), null,
-        //                    array('subdirs' => 0, 'maxbytes' => $maxbytes, 'maxfiles' => 50, 'accepted_types' => array('document') ));
-        //$options = array('subdirs' => 0, 'maxfiles' => 2,);// 'accepted_types' => array('document'));
-        //$mform->addElement('filemanager', 'files_filemanager', get_string('files'), null, $options);
-
-        //$maxbytes = 10000;
-        //$mform->addElement('filepicker', 'privatekey', 'Private Key', null, array('maxbytes' => $maxbytes, 'accepted_types' => '*'));
+        $return  = $this->_customdata['return']; // return to settings page link
+        $key     = $this->_customdata['key'];    // return to settings page link
 
 
         $maxbytes = 10000;
-        $mform->addElement('filepicker', 'privatekey', 'Private Key', null, array('maxbytes' => $maxbytes, 'accepted_types' => '*'));
-
-
-        $maxbytes = 10000;
-        $mform->addElement('filepicker', 'certificate', 'certificate ', null, array('maxbytes' => $maxbytes, 'accepted_types' => '*'));
+        $mform->addElement('filemanager', $key, '['.$key.']', null,
+                    array('subdirs'  => 0,
+                          'maxbytes' => $maxbytes,
+                          'maxfiles' => 1,
+                          'accepted_types' => array('*') ));
 
         $this->add_action_buttons(true, get_string('submit'));
 

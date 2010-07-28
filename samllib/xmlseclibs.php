@@ -346,6 +346,7 @@ class XMLSecurityKey {
 
     public function loadKey($key, $isFile=FALSE, $isCert = FALSE) {
         if ($isFile) {
+            // M2filechanges: M2 filesystem rewrite sends just the filename instead of a full path
             $this->key = file_get_contents($key);
         } else {
             $this->key = $key;

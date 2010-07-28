@@ -29,10 +29,10 @@
  * 
  * This subclass is now specific to gsaml do to the get_confing('auth/gsaml') usage. :(
  * added in order to fix a bug on a short deadline. 
+ * http://docs.moodle.org/en/Development:Using_the_file_API#List_area_files
  * 
  * @author Chris Stones
  * @version $Id$
- * @package auth_gsaml
  */
  
 require_once($CFG->libdir.'/adminlib.php');
@@ -40,10 +40,20 @@ require_once($CFG->libdir.'/uploadlib.php');
 
 class admin_setting_upload extends admin_setting {
 
+
     var $paramtype;
+
     var $size;
-    var $_upload_manager;
+    
+    //var $_upload_manager;
+    
     var $file_name_ref;
+
+    /**
+     *
+     * @var link urlencoded link
+     */
+    var $returnlnk;
     
     /**
      * config text contructor
@@ -53,15 +63,27 @@ class admin_setting_upload extends admin_setting {
      * @param string $defaultsetting
      * @param mixed $paramtype int means PARAM_XXX type, string is a allowed format in regex
      * @param int $size default field size
+     * @param $fileref
+     * @param $return full path back to teh admin setting (code urlencodes the link after upload file is attached and submitted
      */
-    function admin_setting_upload($name, $visiblename, $description, $defaultsetting, $paramtype=PARAM_RAW, $size=null,$fileref=null) {  
+    function admin_setting_upload($name, $visiblename, $description, $defaultsetting, $paramtype=PARAM_RAW, $size=null,$fileref=null,$return='') {
         $this->paramtype = $paramtype; // ?? of type file? can't really type it
+
         if (!is_null($size)) {
             $this->size  = $size;
         } else {
             $this->size  = ($paramtype == PARAM_INT) ? 5 : 30;
         }
-		$this->file_name_ref = $fileref;
+
+        $this->file_name_ref = $fileref;
+
+        // return link contains a ? so it must be urlencode
+        if (empty($return)) {
+            $this->returnlnk = urlencode($CFG->wwwroot);
+        } else {
+            $this->returnlnk = urlencode($return);
+        }
+
         parent::__construct($name, $visiblename, $description, $defaultsetting);
     }
 
@@ -70,7 +92,7 @@ class admin_setting_upload extends admin_setting {
     }
 
     function write_setting($data) {
-       // Uploader doesn't have a value to return.
+       // Uploader doesn't have a value to return. 
        return '';
     }
 
@@ -84,7 +106,8 @@ class admin_setting_upload extends admin_setting {
         //
         $gsaml = get_config('auth/gsaml');
         if ( !isset($gsaml->{$this->name}) ) {
-              set_config($this->name,'','auth/gsaml'); 
+              set_config($this->name,'','auth/gsaml');
+              set_config($this->name.'_basename','','auth/gsaml');
         } 
         
         return $this->defaultsetting;
@@ -94,11 +117,16 @@ class admin_setting_upload extends admin_setting {
         $default = $this->get_defaultsetting();
         global $CFG;
         $uploadkeystr = get_string('uploadkeystr','auth_gsaml'); 
-        $uploadkey = get_string('uploadkey','auth_gsaml'); 
-        $uploadstr = get_string('uploadstr','auth_gsaml');
-        $f = link_to_popup_window($CFG->wwwroot.'/auth/gsaml/upload_key.php?key='.$this->name, 
-                                  $uploadkey.$this->name,$uploadstr,450,600, $uploadkeystr,null, true);
-                               
-        return format_admin_setting($this, $this->visiblename,$f,$this->description, true, '', $default, $query);
+        $uploadkey    = get_string('uploadkey','auth_gsaml');
+        $uploadstr    = get_string('uploadstr','auth_gsaml');
+        $currfilestr  = get_string('currfileupload','auth_gsaml');
+        $nonestr      = get_string('nonestr','auth_gsaml');
+
+        $samlvars = get_config('auth/gsaml');
+        $filename = !empty($samlvars->{$this->name.'_basename'}) ? $samlvars->{$this->name.'_basename'} : $nonestr;
+
+
+        $link = '<a href="'.$CFG->wwwroot.'/auth/gsaml/uploads.php?key='.$this->name.'&return='.$this->returnlnk.'">'.'Upload'.'</a>';                     
+        return format_admin_setting($this, $this->visiblename,$link.' '.$currfilestr.' '.$filename,$this->description, true, '', $default, $query);
     }
 }

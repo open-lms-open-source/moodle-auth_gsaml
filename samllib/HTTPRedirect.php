@@ -7,7 +7,7 @@ if (!defined('MOODLE_INTERNAL')) {
 /**
  * Implementation of the SAML 2.0 HTTP-REDIRECT binding.
  *
- * @author Andreas Åkre Solberg, UNINETT AS. <andreas.solberg@uninett.no>
+ * @author Andreas ï¿½kre Solberg, UNINETT AS. <andreas.solberg@uninett.no>
  * @package simpleSAMLphp
  * @version $Id: HTTPRedirect.php 629 2008-06-11 06:15:45Z olavmrk $
  */
@@ -41,6 +41,13 @@ class SimpleSAML_Bindings_SAML20_HTTPRedirect {
 		if (!file_exists($privatekey)) {
 			throw new Exception('Could not find private key file [' . $privatekey . '] which is needed to sign the request.');
 		}
+
+                /// M2filechanges: File handling rewritten for M2's file system
+//		$privatekey = $this->configuration->getPathValue('certdir') . $md['privatekey'];
+//		if (!gsaml_file_exists('privatekey')) {
+//			throw new Exception('Could not find private key file [' . $privatekey . '] which is needed to sign the request.');
+//		}
+
 
 		/* Sign the query string. According to the specification, the string which should be
 		 * signed is the concatenation of the following query parameters (in order):
@@ -123,6 +130,12 @@ class SimpleSAML_Bindings_SAML20_HTTPRedirect {
 			throw new Exception('Could not find certificate file [' . $publickey . '] which is needed to verify the request.');
 		}
 
+                /// M2filechanges: File handling rewritten for M2's file system
+//		$publickey = $this->configuration->getPathValue('certdir') . $md['certificate'];
+//		if (!gsaml_file_exists('certificate')) {
+//			throw new Exception('Could not find private key file [' . $publickey . '] which is needed to sign the request.');
+//		}
+//
 		// getting signature from get arguments
 		$signature = @base64_decode($_GET['Signature']);
 		if (!$signature) {

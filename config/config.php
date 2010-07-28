@@ -47,10 +47,8 @@ $config = array (
 	'metadatadir'           => 'metadata/',
 	'attributenamemapdir'   => 'attributemap/',
 
-	//'certdir'               => 'cert/', 
-	// TODO: make sure this directory exists
-	// May replace with tempdir files
-	'certdir'               => $CFG->dataroot.'/samlkeys/',
+	//'certdir'               => 'cert/',
+	'certdir'               => $CFG->dataroot.'/samlkeys/', // M2filechanges: alterntiave we could temp copy files and use them from there
 	'dictionarydir'         => 'dictionaries/',
 	'loggingdir'            => 'log/',
 	

@@ -48,6 +48,7 @@
  */
 
 require('../../config.php');
+global $CFG;
 require_once("$CFG->dirroot/blocks/private_files/edit_form.php");
 require_once("$CFG->dirroot/repository/lib.php");
 
@@ -55,49 +56,104 @@ require_login();
 if (isguestuser()) {
     die();
 }
-//TODO: add capability check here!
 
-global $CFG;
+$key       = required_param('key'   , PARAM_TEXT);
+$returnlnk = required_param('return', PARAM_URL);
+
 // The system as admin
 //http://docs.moodle.org/en/Development:Using_the_file_API
-
 //$context = get_context_instance(CONTEXT_SYSTEM);
+
 $context = get_context_instance(CONTEXT_USER, $USER->id);
 
-$PAGE->set_url('/auth/gsaml/uploads.php');
+
+// if you're using this form elsewhere you'll need to set this url of course
+$pageurl = '/auth/gsaml/uploads.php';
+$PAGE->set_url($pageurl);
 
 require_once($CFG->dirroot.'/auth/gsaml/uploads_form.php');
 
-$data = new object();
-$options = array('subdirs'=>1, 'maxbytes'=>$CFG->userquota, 'maxfiles'=>-1, 'accepted_types'=>'*', 'return_types'=>FILE_INTERNAL);
-file_prepare_standard_filemanager($data, 'files', $options, $context, 'user', 'private', 0);
 
-$mform = new auth_gsaml_uploads_form(null, array('data'=>$data, 'options'=>$options));
+$data = new object();
+$mform = new auth_gsaml_uploads_form(new moodle_url($CFG->wwwroot.$pageurl,array('key'=> $key,'return' =>$returnlnk)), // action
+                                     array('data'=>$data,'return'=>$returnlnk,'key'=>"$key"), // _customdata
+                                     'post',
+                                     '');
 
 $formdata = '';
 $privatekey = '';
 if ($mform->is_cancelled()) {
-    redirect(new moodle_url('/admin/settings.php/',array('section' => 'authsettinggsaml') ));
+    redirect(new moodle_url(urldecode($returnlnk)));
+    //redirect(new moodle_url('/admin/settings.php/',array('section' => 'authsettinggsaml') ));
 
 } else if ($formdata = $mform->get_data()) {
+    
+    $contextid = get_context_instance(CONTEXT_SYSTEM)->id;
+    $itemid = $formdata->{$key};
+    file_save_draft_area_files($itemid,
+                               $contextid,
+                               'auth_gsaml',
+                               'gsamlkeys',
+                                $itemid, // itemid that you are re saving as
+                                array('subdirs' => 0,
+                                      'maxbytes' => 1000000,
+                                      'maxfiles' => 1));
+
+   set_config($key,$itemid,'auth/gsaml');
+   
+   // obtain and store basename for gsaml libs
+   $fs = get_file_storage();
+   $files = $fs->get_area_files($contextid, 'auth_gsaml', 'gsamlkeys', $itemid);
+
+   // There appears to be a bug in M2's handling of mac's '.' files we need to pick the file that isn't the '.'
+   $file = null;
+   if (is_array($files)){
+       foreach($files as $f) {
+           if ( $f->get_filename() != '.' ) {
+                $file = $f;
+           }
+       }
+   } else {
+       $file = $files;
+   }
+
+   $fname = $file->get_filename();
+   set_config($key.'_basename',$fname,'auth/gsaml');
+   
+   redirect(new moodle_url(urldecode($returnlnk)));
+}
+
+/**
+ * finds the file if it exists in the file area and compente
+ * @global <type> $USER
+ * @param <type> $filename
+ * @return <type>
+ */
+//function this_file_exists($filename) {
+////        global $USER;
+////        $context = get_context_instance(CONTEXT_USER, $USER->id);
+//        $context = get_context_instance(CONTEXT_SYSTEM);
+//        $fs = get_file_storage();
+//        $files = $fs->get_area_files($context->id,'auth_gsaml', 'gsamlkeys');
+//        foreach ($files as $f) {
+//            $fname = $f->get_filename();
+////            $hasext = strpos('.',$fname);
+////            if ($hasext) {
+//                list($name,$ext) = explode('.',$fname);
+//                if ( 'pem' == $ext  ) {
+//                    return $f->get_itemid();
+//                }
+//          //  }
+//        }
+//        return null;
+//}
 
 
-    // Save the file contents
-    //$privatekey = $mform->get_file_content('privatekey');
-
-
-    // For later use new file system
-    //$mform->save_stored_file('privatekey', $newcontextid, $newcomponent, $newfilearea, $newitemid, $newfilepath='/',
-    //                          $newfilename=null, $overwrite=false, $newuserid=null);
-
-    // for now save file to standard path
-    $mform->save_file('privatekey', $CFG->dataroot.'/samlkeys/privatekey.pem', true);
-    $mform->save_file('certificate', $CFG->dataroot.'/samlkeys/certificate.pem', true);
-
-    // save the file contents
-    //$certificate = $mform->get_file_content('certificate');
-
-    redirect(new moodle_url('/admin/settings.php/',array('section' => 'authsettinggsaml') ));
+// if this file exists it's in our configs so check then set
+$itemid = get_config('auth/gsaml',$key); // itemid is storedhere
+if (!empty($itemid)) {
+    $toform = array( $key => $itemid);
+    $mform->set_data($toform);
 }
 
 echo $OUTPUT->header();

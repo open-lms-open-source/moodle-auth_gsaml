@@ -98,4 +98,5 @@ $string['gsamlsuccess'] = 'Success';
 $string['gmailtestresults'] = 'GMail Test Results';
 $string['gmailtestwillnotrun'] = 'GMail Test will not run unless Moodle is in DEBUG_DEVELOPER Mode';
 $string['obtainemailfeed'] = 'Obtaining email feed for username: ';
-
+$string['currfileupload'] = 'Current File:';
+$string['nonestr'] = 'None';

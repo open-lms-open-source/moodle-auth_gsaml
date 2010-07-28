@@ -41,7 +41,59 @@
  // this lib is included in an auth plugin 
  //require_once('../config.php');
  global $CFG;
- 
+
+
+/**
+ * Oriingal certdir was set to point to where the keys were stored but that code has been rewritten with
+ * my file code in HTTPRedirect.php and HTTPPost.php and AuthnResponse.php in the samllibs
+ * search for the identifier M2filechanges:  to see notes on what needs to change
+ */
+/**
+ * We need an alternative to file_exists that works with the moodlefile data
+ *
+ * @param <type> $identifier ex. privatekey or certificate
+ */
+function gsaml_file_exists($identifier) {
+    // we know we have a file if it's in our settings
+    $samlvars = get_config('auth/gsaml');
+
+    if (!empty($samlvars->{$identifier.'_basename'}) ) {
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * We need an alternative to file_get_contents that works with the moodlefile data
+ * 
+ * @param <type> $identifier itemid
+ * @return string file contents
+ */
+function gsaml_file_get_contents($identifier) {
+   $contextid = get_context_instance(CONTEXT_SYSTEM)->id;
+   $fs = get_file_storage();
+   $files = $fs->get_area_files($contextid, 'auth_gsaml', 'gsamlkeys', $itemid);
+   $file = null;
+   // M2 seems to have a bug where it uploads the '.' on mac osx so we have
+   // to check that oure filename isn't a '.'
+   if (is_array($files)){
+       foreach($files as $f) {
+           if ( $f->get_filename() != '.' ) {
+                $file = $f;
+           }
+       }
+   } else {
+       $file = $files;
+   }
+
+   return $file->get_content();
+}
+
+
+
+
+
  // Absolutly necessary samllibs
  // if you have already defined this one THEN you have prob included the rest already
 if ( !class_exists('SimpleSAML_Utilities') ) {
@@ -137,53 +189,50 @@ function gsaml_send_auth_response($samldata) {
         return false; // if this func returns we Know it's an error
     }
 	    
-	if(!empty($USER->id)) {
-        // TODO: if moodle user is not the same as google user
-        //       use the mapping
-		$username = $USER->username;
-	} else {
-		debugging('No User given to gsaml_send_auth_response', DEBUG_DEVELOPER);
-        return false;
-	}
-	
-	//TODO: better errors
-	if( !$domain = get_config('auth/gsaml','domainname') ) {
+    if(!empty($USER->id)) {
+    // TODO: if moodle user is not the same as google user
+    //       use the mapping
+            $username = $USER->username;
+    } else {
+            debugging('No User given to gsaml_send_auth_response', DEBUG_DEVELOPER);
+    return false;
+    }
+
+    if( !$domain = get_config('auth/gsaml','domainname') ) {
         debugging('No domain set in gsaml_send_auth_response', DEBUG_DEVELOPER);
-		return false; // if this func returns we Know it's an error
-	}
-	
-	$attributes['useridemail'] =  array($username.'@'.$domain);
+        return false; // if this func returns we Know it's an error
+    }
+
+    $attributes['useridemail'] =  array($username.'@'.$domain);
     $session->doLogin('login'); // was login
     $session->setAttributes($attributes);
     $session->setNameID(array(
-    	'value' => SimpleSAML_Utilities::generateID(),
-    	'Format' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient'));
+    'value' => SimpleSAML_Utilities::generateID(),
+    'Format' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient'));
 	
-	  	
-	$requestcache = array(
-			'RequestID'     => $authnrequest->getRequestID(), 
-			'Issuer'        => $authnrequest->getIssuer(),
-			'ConsentCookie' => SimpleSAML_Utilities::generateID(),
-			'RelayState'    => $authnrequest->getRelayState()
-		);
-		
-		    	    
-	try {
-		$spentityid = $requestcache['Issuer'];
-		$spmetadata = $metadata->getMetaData($spentityid, 'saml20-sp-remote');
-		
-		$sp_name = (isset($spmetadata['name']) ? $spmetadata['name'] : $spentityid);
 
-		// TODO: Are we really tracking SP's???
-		//
-		// Adding this service provider to the list of sessions.
-		// Right now the list is used for SAML 2.0 only.
-		$session->add_sp_session($spentityid);
+    $requestcache = array(
+                    'RequestID'     => $authnrequest->getRequestID(),
+                    'Issuer'        => $authnrequest->getIssuer(),
+                    'ConsentCookie' => SimpleSAML_Utilities::generateID(),
+                    'RelayState'    => $authnrequest->getRelayState()
+            );
+
+
+    try {
+            $spentityid = $requestcache['Issuer'];
+            $spmetadata = $metadata->getMetaData($spentityid, 'saml20-sp-remote');
+
+            $sp_name = (isset($spmetadata['name']) ? $spmetadata['name'] : $spentityid);
+
+            // Adding this service provider to the list of sessions.
+            // Right now the list is used for SAML 2.0 only.
+            $session->add_sp_session($spentityid);
 		
-///		SimpleSAML_Logger::info('SAML2.0 - IdP.SSOService: Sending back AuthnResponse to ' . $spentityid);
+    //SimpleSAML_Logger::info('SAML2.0 - IdP.SSOService: Sending back AuthnResponse to ' . $spentityid);
 		
-        // TODO: handle passive situtation
-        // Rigth now I replaced $isPassive with isset($isPassive) to prevent notice on debug mode
+
+    //I replaced $isPassive with isset($isPassive) to prevent notice on debug mode
 		if (isset($isPassive)) {
 			/* Generate an SAML 2.0 AuthNResponse message
 			   With statusCode: urn:oasis:names:tc:SAML:2.0:status:NoPassive
@@ -270,7 +319,7 @@ function gsaml_send_auth_response($samldata) {
 		$ar = new SimpleSAML_XML_SAML20_AuthnResponse($config, $metadata);
 		$authnResponseXML = $ar->generate($idpentityid, $spentityid, $requestcache['RequestID'], null, $filteredattributes);
 	    
-        // TODO: clean the $SESSION->samlrelaystate so we don't accidently call it again
+        // clean the $SESSION->samlrelaystate so we don't accidently call it again
         
 		// Sending the AuthNResponse using HTTP-Post SAML 2.0 binding
 		$httppost = new SimpleSAML_Bindings_SAML20_HTTPPost($config, $metadata);
@@ -278,7 +327,6 @@ function gsaml_send_auth_response($samldata) {
 		die; // VERY IMPORTANT BUG FIX to stop outputing the rest of the page. 
         
 	} catch(Exception $exception) {
-		// TODO: better error reporting
 		debugging('<pre>'.print_r($exception,true).'</pre>', DEBUG_DEVELOPER);
         return false;
 	}

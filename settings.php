@@ -40,9 +40,6 @@ require_once($CFG->libdir.'/uploadlib.php');
 
 $samlvars = get_config('auth/gsaml');
 
-// set keys to hardcoders direcotry ofr now
-set_config('privatekey',$CFG->dataroot.'/samlkeys/privatekey.pem','auth/gsaml');
-set_config('certificate',$CFG->dataroot.'/samlkeys/certificate.pem','auth/gsaml');
 
 //require_once($CFG->dirroot.'/blocks/gdata/setting.php');
 //admin_setting_configtext($name, $visiblename, $description, $defaultsetting, $paramtype=PARAM_RAW, $size=null)
@@ -56,46 +53,44 @@ $configs[] = new admin_setting_configtext('domainname', $domainnamestr, "", '', 
 
 
 // dir now hardwired to the key names...
-$uploadlink = new moodle_url('/auth/gsaml/uploads.php/');
-$desc_cert .= '<a href="'.$uploadlink.'">Upload Keys</a>';
-$configs[] = new admin_setting_heading('uploadlink',$desc_cert, $info=''.$CFG->wwwroot);
+//$uploadlink = new moodle_url('/auth/gsaml/uploads.php/');
+//$desc_cert .= '<a href="'.$uploadlink.'">Upload Keys</a>';
+//$configs[] = new admin_setting_heading('uploadlink',$desc_cert, $info=''.$CFG->wwwroot);
 
 
 
 // -------- OLD key uploading
 // Private Key Upload Option                                                    
-//$rsa_str   = get_string('rsakeystr','auth_gsaml');
-//$desc_key  = get_string('desckeystr','auth_gsaml');
+$rsa_str   = get_string('rsakeystr','auth_gsaml');
+$desc_key  = get_string('desckeystr','auth_gsaml');
 //$googauthconfstr = get_string('googauthconfstr','auth_gsaml');
 //$hbutton   = '';//helpbutton('keys', $googauthconfstr, 'auth_gsaml', true, false, '', true,'');
 //
-//$privatekey_data = !empty($samlvars->privatekey) ? basename($samlvars->privatekey) : '';
-//
-//// Before the admin settings uploader is rewritten we'll use the  regular forms file uploader on a different page.
-//// on a different page to improve accesiblity as well
-////http://docs.moodle.org/en/Development:Using_the_File_API_in_Moodle_forms#filepicker
-////$mform->addElement('filemanager', 'attachments', get_string('attachment', 'moodle'), null,
-////                    array('subdirs' => 0, 'maxbytes' => $maxbytes, 'maxfiles' => 50, 'accepted_types' => array('document') ));
-//
-//$configs[] = new admin_setting_upload('privatekey',$rsa_str.' '.$hbutton, $desc_key,null, PARAM_RAW, null, 'privatekey');
-//
-//
-//// Certificate Upload Option
-//$ssl_str   = get_string('ssl_str','auth_gsaml');
-//$desc_cert = get_string('desc_certstr','auth_gsaml');
+$privatekey_filename = !empty($samlvars->privatekey_basename) ? $samlvars->privatekey_basename : '';
+
+
+
+
+
+$hbutton = '';
+$configs[] = new admin_setting_upload('privatekey',$rsa_str.' '.$hbutton, $desc_key,null, PARAM_RAW, null, 
+                                      'privatekey',$CFG->wwwroot.'/admin/settings.php?section=authsettinggsaml');
+
+// Certificate Upload Option
+$ssl_str   = get_string('ssl_str','auth_gsaml');
+$desc_cert = get_string('desc_certstr','auth_gsaml');
 //
 ////$uploadlink = new moodle_url('/auth/gsaml/uploads.php/');
 ////$desc_cert .= '<a href="'.$uploadlink.'">Upload Keys</a>';
-//
-////$OUTPUT->old_help_icon($helpidentifier, $title, $component = 'moodle', $linktext = '');
-//$hbutton = '';
-////$hbutton = $OUTPUT->old_help_icon('keys', $googauthconfstr, 'auth_gsaml','help');
-////$hbutton   = helpbutton('keys', $googauthconfstr, 'auth_gsaml', true, false, '', true, '');
-//
-//$sslcert_data = !empty($samlvars->certificate) ? basename($samlvars->certificate) : '';
-//$configs[] = new admin_setting_upload('certificate',$ssl_str.' '.$hbutton, $desc_cert, null, PARAM_RAW, null, 'sslcertfile');
-//
 
+//$OUTPUT->old_help_icon($helpidentifier, $title, $component = 'moodle', $linktext = '');
+//$hbutton = $OUTPUT->old_help_icon('keys', $googauthconfstr, 'auth_gsaml','help');
+//$hbutton   = helpbutton('keys', $googauthconfstr, 'auth_gsaml', true, false, '', true, '');
+
+
+$hbutton = '';
+$configs[] = new admin_setting_upload('certificate',$ssl_str.' '.$hbutton, $desc_cert, null, PARAM_RAW, null,
+                                      'sslcertfile',$CFG->wwwroot.'/admin/settings.php?section=authsettinggsaml');
 // Provide a Link to Google Settings
 $googsettings = get_string('lnktogoogsettings','auth_gsaml');
 if (empty($samlvars->domainname)) {

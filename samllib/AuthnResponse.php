@@ -201,6 +201,7 @@ class SimpleSAML_XML_SAML20_AuthnResponse extends SimpleSAML_XML_AuthnResponse {
 						if (!isset($spmd['privatekey'])) {
 							throw new Exception("Private key for decrypting assertion needed, but not specified for saml20-sp-hosted id: " . $spid);
 						}
+                                                // M2filechanges:
 						$privatekey = @file_get_contents($this->configuration->getPathValue('certdir') . $spmd['privatekey']);
 						if ($privatekey === FALSE) {
 							throw new Exception("Private key for decrypting assertion specified but not found for saml20-sp-hosted id: " . $spid . " Filename: " . $spmd['privatekey']);
@@ -249,6 +250,7 @@ class SimpleSAML_XML_SAML20_AuthnResponse extends SimpleSAML_XML_AuthnResponse {
 
 		$publickey = FALSE;
 		if (isset($md['certificate'])) {
+                        // M2filechanges:
 			$publickey = @file_get_contents($this->configuration->getPathValue('certdir') . $md['certificate']);
 			if (!$publickey) {
 				throw new Exception("Saml20-idp-remote id: " . $this-issuer . " 'certificate' set to ': " . $md['certificate'] . "', but no certificate found");			
