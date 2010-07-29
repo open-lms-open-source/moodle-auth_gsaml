@@ -48,7 +48,7 @@
  */
 
 require('../../config.php');
-global $CFG;
+global $CFG,$DB;
 require_once("$CFG->dirroot/blocks/private_files/edit_form.php");
 require_once("$CFG->dirroot/repository/lib.php");
 require_once($CFG->dirroot.'/auth/gsaml/samllib.php');
@@ -57,6 +57,7 @@ if (isguestuser()) {
     die();
 }
 
+$maxbytes = 1000000;
 $key       = required_param('key'   , PARAM_TEXT);
 $returnlnk = required_param('return', PARAM_URL);
 
@@ -90,14 +91,30 @@ if ($mform->is_cancelled()) {
     
     $contextid = get_context_instance(CONTEXT_SYSTEM)->id;
     $itemid = $formdata->{$key};
-    file_save_draft_area_files($itemid,
-                               $contextid,
-                               'auth_gsaml',
-                               'gsamlkeys',
-                                $itemid, // itemid that you are re saving as
-                                array('subdirs' => 0,
-                                      'maxbytes' => 1000000,
-                                      'maxfiles' => 1));
+
+
+//    $entry = file_postupdate_standard_editor($entry, 'definition', $definitionoptions, $context, 'mod_glossary', 'entry', $entry->id);
+//    $entry = file_postupdate_standard_filemanager($entry, 'attachment', $attachmentoptions, $context, 'mod_glossary', 'attachment', $entry->id);
+//    // store the updated value values
+//    $DB->update_record('glossary_entries', $entry);
+//
+        $itemid = file_get_unused_draft_itemid();
+        file_save_draft_area_files($formdata->{$key},
+                                   $contextid,
+                                   'auth_gsaml',
+                                   'gsamlkeys',
+                                   $itemid, //$entry->id,
+                                   array('subdirs' => 0, 'maxbytes' => $maxbytes, 'maxfiles' => 50));
+
+//    //$itemid = file_get_unused_draft_itemid();
+//    file_save_draft_area_files($itemid,
+//                               $contextid,
+//                               'auth_gsaml',
+//                               'gsamlkeys',
+//                                $itemid, // itemid that you are re saving as
+//                                array('subdirs' => 0,
+//                                      'maxbytes' => 1000000,
+//                                      'maxfiles' => 1));
 
    $realpath = gsaml_file_return_real_path($itemid);
    set_config($key,$realpath,'auth/gsaml');
@@ -121,6 +138,9 @@ if ($mform->is_cancelled()) {
    // need the base name for the interface
    $fname = $file->get_filename();
    set_config($key.'_basename',$fname,'auth/gsaml');
+
+   $pathnamehash = $file->get_pathnamehash();
+   set_config($key.'_pathnamehash',$pathnamehash,'auth/gsaml');
 
    redirect(new moodle_url(urldecode($returnlnk)));
 }
@@ -152,8 +172,11 @@ if ($mform->is_cancelled()) {
 
 
 // if this file exists it's in our configs so check then set
-$itemid = get_config('auth/gsaml',$key); // itemid is storedhere
-if (!empty($itemid)) {
+$realpath = get_config('auth/gsaml',$key); // itemid is storedhere
+if (file_exists($realpath)) {
+    // pull the itemid from the realpath
+    $pathnamehash = get_config('auth/gsaml',$key.'_pathnamehash');
+    $itemid = gsaml_realpath_to_itemid($pathnamehash);
     $toform = array( $key => $itemid);
     $mform->set_data($toform);
 }
