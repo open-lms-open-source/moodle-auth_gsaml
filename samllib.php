@@ -132,6 +132,19 @@ function gsaml_file_return_real_path($itemid) {
    return $contentpath;
 }
 
+/**
+ * Given the stored pathnamehash return the itemid
+ * @param <type> $pathnamehash
+ */
+function gsaml_realpath_to_itemid($pathnamehash) {
+    $contextid = get_context_instance(CONTEXT_SYSTEM)->id;
+    $fs = get_file_storage();
+    $file = $fs->get_file_by_hash($pathnamehash);
+//    if ($file->is_directory() ) {
+//
+//    }
+    return $file->get_itemid();
+}
 
 
 
