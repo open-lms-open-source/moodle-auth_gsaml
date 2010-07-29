@@ -51,7 +51,7 @@ require('../../config.php');
 global $CFG;
 require_once("$CFG->dirroot/blocks/private_files/edit_form.php");
 require_once("$CFG->dirroot/repository/lib.php");
-
+require_once($CFG->dirroot.'/auth/gsaml/samllib.php');
 require_login();
 if (isguestuser()) {
     die();
@@ -99,13 +99,14 @@ if ($mform->is_cancelled()) {
                                       'maxbytes' => 1000000,
                                       'maxfiles' => 1));
 
-   set_config($key,$itemid,'auth/gsaml');
+   $realpath = gsaml_file_return_real_path($itemid);
+   set_config($key,$realpath,'auth/gsaml');
    
    // obtain and store basename for gsaml libs
    $fs = get_file_storage();
    $files = $fs->get_area_files($contextid, 'auth_gsaml', 'gsamlkeys', $itemid);
 
-   // There appears to be a bug in M2's handling of mac's '.' files we need to pick the file that isn't the '.'
+   // '.' denote directories $f->is_directory()
    $file = null;
    if (is_array($files)){
        foreach($files as $f) {
@@ -117,9 +118,10 @@ if ($mform->is_cancelled()) {
        $file = $files;
    }
 
+   // need the base name for the interface
    $fname = $file->get_filename();
    set_config($key.'_basename',$fname,'auth/gsaml');
-   
+
    redirect(new moodle_url(urldecode($returnlnk)));
 }
 

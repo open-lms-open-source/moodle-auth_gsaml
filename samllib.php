@@ -43,52 +43,95 @@
  global $CFG;
 
 
+///**
+// * Oriingal certdir was set to point to where the keys were stored but that code has been rewritten with
+// * my file code in HTTPRedirect.php and HTTPPost.php and AuthnResponse.php in the samllibs
+// * search for the identifier M2filechanges:  to see notes on what needs to change
+// */
+///**
+// * We need an alternative to file_exists that works with the moodlefile data
+// *
+// * @param <type> $identifier ex. privatekey or certificate
+// */
+//function gsaml_file_exists($identifier) {
+//    // we know we have a file if it's in our settings
+//    $samlvars = get_config('auth/gsaml');
+//
+//    if (!empty($samlvars->{$identifier.'_basename'}) ) {
+//        return true;
+//    }
+//
+//    return false;
+//}
+//
+///**
+// * We need an alternative to file_get_contents that works with the moodlefile data
+// *
+// * @param <type> $identifier itemid
+// * @return string file contents
+// */
+//function gsaml_file_get_contents($identifier) {
+//   $contextid = get_context_instance(CONTEXT_SYSTEM)->id;
+//   $fs = get_file_storage();
+//   $files = $fs->get_area_files($contextid, 'auth_gsaml', 'gsamlkeys', $itemid);
+//   $file = null;
+//   // M2 seems to have a bug where it uploads the '.' on mac osx so we have
+//   // to check that oure filename isn't a '.'
+//   if (is_array($files)){
+//       foreach($files as $f) {
+//           if ( $f->get_filename() != '.' ) {
+//                $file = $f;
+//           }
+//       }
+//   } else {
+//       $file = $files;
+//   }
+//
+//   $realfilepath = $file->get_parent_directory().$file->get_pathnamehash();
+//   print file_get_contents($realfilepath);
+//
+//   return $file->get_content();
+//}
+//
+
+
 /**
- * Oriingal certdir was set to point to where the keys were stored but that code has been rewritten with
- * my file code in HTTPRedirect.php and HTTPPost.php and AuthnResponse.php in the samllibs
- * search for the identifier M2filechanges:  to see notes on what needs to change
- */
-/**
- * We need an alternative to file_exists that works with the moodlefile data
+ * Returns the Real full path to the file on the filesystem
  *
- * @param <type> $identifier ex. privatekey or certificate
+ * @param $itemid
+ * @return string real path to the given file
  */
-function gsaml_file_exists($identifier) {
-    // we know we have a file if it's in our settings
-    $samlvars = get_config('auth/gsaml');
-
-    if (!empty($samlvars->{$identifier.'_basename'}) ) {
-        return true;
-    }
-
-    return false;
-}
-
-/**
- * We need an alternative to file_get_contents that works with the moodlefile data
- * 
- * @param <type> $identifier itemid
- * @return string file contents
- */
-function gsaml_file_get_contents($identifier) {
+function gsaml_file_return_real_path($itemid) {
    $contextid = get_context_instance(CONTEXT_SYSTEM)->id;
    $fs = get_file_storage();
    $files = $fs->get_area_files($contextid, 'auth_gsaml', 'gsamlkeys', $itemid);
    $file = null;
-   // M2 seems to have a bug where it uploads the '.' on mac osx so we have
-   // to check that oure filename isn't a '.'
+
+   // directories are considered . of course they happen to have the same itemid
    if (is_array($files)){
        foreach($files as $f) {
-           if ( $f->get_filename() != '.' ) {
+           if ( !$f->is_directory() ) {
                 $file = $f;
            }
        }
    } else {
        $file = $files;
+//       if ($file->is_directory()) {
+//            throw new Exception();
+//       }
    }
 
-   return $file->get_content();
+   $contenthash = $file->get_contenthash();
+   $filedir = $fs->get_filedir();
+   $contenthash = $file->get_contenthash();
+   $l1 = $contenthash[0].$contenthash[1];
+   $l2 = $contenthash[2].$contenthash[3];
+   $l3 = $contenthash[4].$contenthash[5];
+   $contentpath = "$filedir/$l1/$l2/$l3/$contenthash";
+
+   return $contentpath;
 }
+
 
 
 

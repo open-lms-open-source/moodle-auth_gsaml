@@ -48,7 +48,7 @@ $config = array (
 	'attributenamemapdir'   => 'attributemap/',
 
 	//'certdir'               => 'cert/',
-	'certdir'               => $CFG->dataroot.'/samlkeys/', // M2filechanges: alterntiave we could temp copy files and use them from there
+	'certdir'               => '', // the filenames themselves definethe full path to the file so certdir is ignored
 	'dictionarydir'         => 'dictionaries/',
 	'loggingdir'            => 'log/',
 	
