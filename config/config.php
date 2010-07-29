@@ -35,7 +35,7 @@ $config = array (
 	 * Example:
 	 *  'basedir' => '/var/simplesamlphp/',
 	 */
-	 'basedir' => $CFG->dirroot.'/auth/gsaml/', 
+	 'basedir' => $CFG->dirroot.'/auth/gsaml/',
 	 
 
 	/**
@@ -48,7 +48,7 @@ $config = array (
 	'attributenamemapdir'   => 'attributemap/',
 
 	//'certdir'               => 'cert/',
-	'certdir'               => '', // the filenames themselves definethe full path to the file so certdir is ignored
+	'certdir'               => '/', // certdir has to be set to a / to prevent samllibs from adding a base dir 
 	'dictionarydir'         => 'dictionaries/',
 	'loggingdir'            => 'log/',
 	

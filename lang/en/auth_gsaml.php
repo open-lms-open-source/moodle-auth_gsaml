@@ -100,3 +100,5 @@ $string['gmailtestwillnotrun'] = 'GMail Test will not run unless Moodle is in DE
 $string['obtainemailfeed'] = 'Obtaining email feed for username: ';
 $string['currfileupload'] = 'Current File:';
 $string['nonestr'] = 'None';
+$string['privatekeystr'] = 'Private Key';
+$string['certificatestr'] = 'Certificate';

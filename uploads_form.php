@@ -61,7 +61,7 @@ class auth_gsaml_uploads_form extends moodleform {
 
 
         $maxbytes = 10000;
-        $mform->addElement('filemanager', $key, '['.$key.']', null,
+        $mform->addElement('filemanager', $key, get_string($key.'str','auth_gsaml'), null,
                     array('subdirs'  => 0,
                           'maxbytes' => $maxbytes,
                           'maxfiles' => 1,
