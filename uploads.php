@@ -92,29 +92,14 @@ if ($mform->is_cancelled()) {
     $contextid = get_context_instance(CONTEXT_SYSTEM)->id;
     $itemid = $formdata->{$key};
 
-
-//    $entry = file_postupdate_standard_editor($entry, 'definition', $definitionoptions, $context, 'mod_glossary', 'entry', $entry->id);
-//    $entry = file_postupdate_standard_filemanager($entry, 'attachment', $attachmentoptions, $context, 'mod_glossary', 'attachment', $entry->id);
-//    // store the updated value values
-//    $DB->update_record('glossary_entries', $entry);
-//
-        $itemid = file_get_unused_draft_itemid();
-        file_save_draft_area_files($formdata->{$key},
-                                   $contextid,
-                                   'auth_gsaml',
-                                   'gsamlkeys',
-                                   $itemid, //$entry->id,
-                                   array('subdirs' => 0, 'maxbytes' => $maxbytes, 'maxfiles' => 50));
-
-//    //$itemid = file_get_unused_draft_itemid();
-//    file_save_draft_area_files($itemid,
-//                               $contextid,
-//                               'auth_gsaml',
-//                               'gsamlkeys',
-//                                $itemid, // itemid that you are re saving as
-//                                array('subdirs' => 0,
-//                                      'maxbytes' => 1000000,
-//                                      'maxfiles' => 1));
+    file_save_draft_area_files($itemid,
+                               $contextid,
+                               'auth_gsaml',
+                               'gsamlkeys',
+                               $itemid, // the key you are resaving //$itemid, //$entry->id,
+                               array('subdirs' => 0,
+                                     'maxbytes' => $maxbytes,
+                                     'maxfiles' => 1));
 
    $realpath = gsaml_file_return_real_path($itemid);
    set_config($key,$realpath,'auth/gsaml');
@@ -144,32 +129,6 @@ if ($mform->is_cancelled()) {
 
    redirect(new moodle_url(urldecode($returnlnk)));
 }
-
-/**
- * finds the file if it exists in the file area and compente
- * @global <type> $USER
- * @param <type> $filename
- * @return <type>
- */
-//function this_file_exists($filename) {
-////        global $USER;
-////        $context = get_context_instance(CONTEXT_USER, $USER->id);
-//        $context = get_context_instance(CONTEXT_SYSTEM);
-//        $fs = get_file_storage();
-//        $files = $fs->get_area_files($context->id,'auth_gsaml', 'gsamlkeys');
-//        foreach ($files as $f) {
-//            $fname = $f->get_filename();
-////            $hasext = strpos('.',$fname);
-////            if ($hasext) {
-//                list($name,$ext) = explode('.',$fname);
-//                if ( 'pem' == $ext  ) {
-//                    return $f->get_itemid();
-//                }
-//          //  }
-//        }
-//        return null;
-//}
-
 
 // if this file exists it's in our configs so check then set
 $realpath = get_config('auth/gsaml',$key); // itemid is storedhere

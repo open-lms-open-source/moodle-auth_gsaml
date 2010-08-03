@@ -60,37 +60,15 @@ class auth_gsaml_uploads_form extends moodleform {
         $return  = $this->_customdata['return']; // return to settings page link
         $key     = $this->_customdata['key'];    // return to settings page link
 
-
         $maxbytes = 1000000;
-
-        // does are file exist?
-        $pathnamehash = get_config('auth/gsaml',$key.'_pathnamehash');
-        $entry = $DB->get_record('files',array('pathnamehash' => $pathnamehash));
-
-        // if an file id doesn't exit in the db we know it's a new file
-        if (empty($entry->id)) {
-            $entry = new object();
-            $entry->id = null;
-        }
-        $contextid = get_context_instance(CONTEXT_SYSTEM)->id;
-        $draftitemid = file_get_submitted_draft_itemid($key);
-        file_prepare_draft_area($draftitemid, $contextid, 'auth_gsaml', 'gsamlkeys', $entry->id, 
-                                array('subdirs' => 0, 'maxbytes' => $maxbytes, 'maxfiles' => 1));
-
-        $formdata = null;
-        $formdata->{$key} = $draftitemid;
-
-        $this->set_data($formdata);
-
-
-        $mform->addElement('filemanager', $key, get_string($key.'str','auth_gsaml'), null,
-                    array('subdirs'  => false,
-                          'maxbytes' => $maxbytes,
-                          'maxfiles' => 1,
-                          'accepted_types' => array('*') ));
+        $mform->addElement('filemanager', 
+                           $key, get_string($key.'str','auth_gsaml'),
+                           null,
+                           array('subdirs'  => false,
+                                 'maxbytes' => $maxbytes,
+                                 'maxfiles' => 1,
+                                 'accepted_types' => array('*') ));
 
         $this->add_action_buttons(true, get_string('submit'));
-
-        //$this->set_data($data);
     }
 }
