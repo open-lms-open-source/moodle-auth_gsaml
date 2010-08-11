@@ -58,7 +58,7 @@ class auth_plugin_gsaml extends auth_plugin_base {
      */
     function user_authenticated_hook(&$user, $username, $password) {
     	
-       global $SESSION,$CFG,$_REQUEST;
+       global $SESSION,$CFG,$_REQUEST,$DB;
        // blocks/gapps  can handle this
        /*
         $eventdata = new object();
@@ -160,7 +160,7 @@ class auth_plugin_gsaml extends auth_plugin_base {
 	       	
 	       		$SESSION->samlrequest = false;
 				
-		        if (!$user = get_record('user', 'username', $username, 'mnethostid', $CFG->mnet_localhost_id)) {
+		        if (!$user = $DB->get_record('user', array('username'=> $username, 'mnethostid'=> $CFG->mnet_localhost_id))) {
                            // User could not be logged in
                            error(get_string('errusernotloggedin','auth_gsaml'));
 		        }
@@ -343,9 +343,9 @@ class auth_plugin_gsaml extends auth_plugin_base {
      * @return bool Authentication success or failure.
      */
     function user_login($username, $password) { // therefore leave this code as is
-        global $CFG;
+        global $CFG,$DB;
         // TODO: might set user->auth to gsaml here :/
-        if ($user = get_record('user', 'username', $username, 'mnethostid', $CFG->mnet_localhost_id)) {
+        if ($user = $DB->get_record('user', array('username' => $username, 'mnethostid' => $CFG->mnet_localhost_id))) {
             return validate_internal_user_password($user, $password);
         }
         return false;
