@@ -126,8 +126,7 @@ function gsaml_file_return_real_path($itemid) {
    $contenthash = $file->get_contenthash();
    $l1 = $contenthash[0].$contenthash[1];
    $l2 = $contenthash[2].$contenthash[3];
-   $l3 = $contenthash[4].$contenthash[5];
-   $contentpath = "$filedir/$l1/$l2/$l3/$contenthash";
+   $contentpath = "$filedir/$l1/$l2/$contenthash";
 
    return $contentpath;
 }
