@@ -33,6 +33,10 @@ require_once($CFG->dirroot.'/auth/gsaml/samllib.php');
 
 /**
  * SAML Authentication Plugin
+ *
+ * 
+ * NOTE MOODLE must enforce Google's minium 6 char passwords!
+ * http://www.google.com/support/a/bin/answer.py?answer=33386
  */
 class auth_plugin_gsaml extends auth_plugin_base {
     
@@ -46,8 +50,6 @@ class auth_plugin_gsaml extends auth_plugin_base {
          $this->config   = get_config('auth/gsaml');
     }
 
-    // =============================================================
-
     /**
      * Post authentication hook.
      * This method is called from authenticate_user_login() for all enabled auth plugins.
@@ -57,234 +59,185 @@ class auth_plugin_gsaml extends auth_plugin_base {
      * @param string $password plain text password (with system magic quotes)
      */
     function user_authenticated_hook(&$user, $username, $password) {
-    	
-       global $SESSION,$CFG,$_REQUEST,$DB;
-       // blocks/gapps  can handle this
-       /*
-        $eventdata = new object();
-        $eventdata->component         = 'auth/gsaml';    // path in Moodle
-        $eventdata->name              = 'user_authenticated';        // type of message from that module (as module defines it)
-        $eventdata->userfrom          = $userfrom;      // user object
-        $eventdata->userto            = $userto;        // user object
-        $eventdata->subject           = "Telling GApps to handle";     // short one-line subject
-        $eventdata->fullmessage       = "test test data about this";      // raw text
-        *
-        $eventdata->fullmessageformat = FORMAT_PLAIN;   // text format
-        $eventdata->fullmessagehtml   = "Here is the <b>full</b> message";    // html rendered version   (optional)
-        $eventdata->smallmessage      = "Here is the truncated message";      // useful for plugins like sms or twitter  (optional)
+        global $SESSION, $CFG, $_REQUEST, $DB, $PAGE, $OUTPUT;
 
-        Then we post the object as an event and forget about it:
+        // The Google SSO module will create a Google Apps account
+        // if an account exists in Moodle but not Google Apps.
+        // Hence, verify that user has a google account. If not create one for them.
+        // NOTE: that this may take some time for google to process new users
+        if (!file_exists($CFG->dirroot.'/blocks/gapps/model/gsync.php')) {
+            debugging('gdata block is not installed');
+        } else {
+            require_once($CFG->dirroot.'/blocks/gapps/model/gsync.php');
+            
+            try {
+                // obtain object and test connect to service
+                $gapps = new blocks_gapps_model_gsync();
 
-        events_trigger('user_authenticated', $eventdata);
+                $g_user = $gapps->gapps_get_user($username);
+                if (empty($g_user)) {
+
+                      // Admins are excluded from this syncing procedure
+                     $admins = get_admins();
+                     if (!array_key_exists($user->id,$admins) ) {
+                         // Create Moodle User in the Gsync system
+                         $gapps->moodle_create_user($user);
+
+                         // Create google user
+                         $m_user = $gapps->moodle_get_user($user->id);
+                         $gapps->create_user($m_user);
+
+                         add_to_log(SITEID, 'block_gapps', 'gsaml create usr','', $user->username, 0,0);
+                     }
+                }
+                
+            } catch (blocks_gdata_exception $e) {
+                debugging($e->getMessage());
+                print $e->getMessage();
+
+                if (stripos($e->getMessage(),'Error 1100: UserDeletedRecently') ) {
+                    notice('Error 1100: UserDeletedRecently.<br/> Google does not allow a user to be created after deletion until at least 5 days have passed.');
+                }
+            }
+        }
 
 
-*/
-       
-       
-       // Shouldn't need due to Gmail using OAuth 
-       //
-	   // TODO: IMPORTANT user_auth hook gets called for all plugins so
-	   //       setting user to gsaml auth may override all moodle user auth plugins.
-	   //       auth_gsaml still needs to run the update password code somehow.
-	   //       if there was another way to test for it.... as compare if password is diff
-	   //       and then set the google user to the new password. :/
-	   //
-//	   if( !set_field('user', 'auth', $this->authtype, 'id', $user->id)) {
-//			error("could not set auth to gsaml");
-//	   }
-									
-	   // Verify that user has a google account. If not create one for them
-           
-           /***************************************************/
-           /*** removing from M2 conversion for the moment ****/
-           /***************************************************/
-//       if (!file_exists($CFG->dirroot.'/blocks/gdata/gapps.php')) {
-//        	debugging('gdata block is not installed');
-//
-//        } else {
-//        	require_once($CFG->dirroot.'/blocks/gdata/gapps.php');
-//
-//        	try {
-//	        	$g = new blocks_gdata_gapps();
-//
-//	        	try {
-//	        		$g_user = $g->gapps_get_user($username);
-//
-//	        		if (empty($g_user)) {
-//	        			/*
-//	        			 * MOODLE must enforce the above minium 6 char passwords!
-//	        			 * http://www.google.com/support/a/bin/answer.py?answer=33386
-//	        			 */
-//
-//	        			 // Create Moodle User in the Gsync system
-//	        			 $g->moodle_create_user($user);
-//
-//	        			 // Create google user
-//	        			 $m_user = $g->moodle_get_user($user->id);
-//	        			 $g->create_user($m_user);
-//	        		}
-//
-//	        	} catch (blocks_gdata_exception $e) {
-//                    // TODO: catch and inform of this common error
-//                    //if (stripos($e->getMessage(),'Error 1100: UserDeletedRecently') ) {
-//                    //    notice('Error 1100: UserDeletedRecently.<br/> Google does not allow a user to be created after deletion until at least 5 days have passed.');
-//                    //}
-//	        		debugging($e, DEBUG_DEVELOPER);
-//	        	}
-//
-//  			} catch (blocks_gdata_exception $e) {
-//                //'Authentication with Google Apps failed. Please check your credentials. ->getMessage() ?
-//                // if Authentication with Google Apps failed. Please check your credentials.
-//                // print $e->getMessage();
-//
-//                // TODO: catch and inform of this Error
-//                //if (stripos($e->getMessage(),'Error 1100: UserDeletedRecently') ) {
-//                //    notice('Error 1100: UserDeletedRecently.<br/> Google does not allow a user to be created after deletion until at least 5 days have passed.');
-//                //}
-//
-//				debugging($e, DEBUG_DEVELOPER);
-//    		}
-//        }
-        
+        // We are Succesfully logged in and we have a SAML Request
+        // So we want to process the rest of the log in and redirect
+        // to the Service that the SAML Request is asking for.
+        //
+        // All this code essentialy makes up for the fact that
+        // we have to exit the login page prematurely.
+        if (!empty($SESSION->samlrequestdata) and !empty($SESSION->samlrequest) and $SESSION->samlrequest === true) {
+            $SESSION->samlrequest = false;
 
-     
-           // We are Succesfully logged in and we have a SAML Request
-           // So we want to process the rest of the log in and redirect
-           // to the Service that the SAML Request is asking for.
-           //
-           // All this code essentialy makes up for the fact that
-           //// There isn't a way to tell what code will need to be run here in the future so it's best to
-           //   to have endpoints elsewhere in the auth plugin and use events to trigger..
-		   // we have to exit the login page prematurely.
-	       if (isset($SESSION->samlrequest)) { 
-	       	
-	       		$SESSION->samlrequest = false;
-				
-		        if (!$user = $DB->get_record('user', array('username'=> $username, 'mnethostid'=> $CFG->mnet_localhost_id))) {
-                           // User could not be logged in
-                           error(get_string('errusernotloggedin','auth_gsaml'));
-		        }
+            add_to_log(SITEID, 'auth_gsaml', 'process samlrequest','','User has accessed gservice first', 0,0);
+
+            if (!$user = $DB->get_record('user', array('username'=> $username, 'mnethostid'=> $CFG->mnet_localhost_id))) {
+               // User could not be logged in
+               error(get_string('errusernotloggedin','auth_gsaml'));
+            }
+
+            if (!validate_internal_user_password($user, $password)) {
+                // Password not valid
+                error(get_string('pwdnotvalid','auth_gsaml'));
+            }
 		        
-		        if (!validate_internal_user_password($user, $password)) {
-                    // Password not valid
-                    error(get_string('pwdnotvalid','auth_gsaml')); 
-		        }
-		        
-		        // Added to fix navigation
-		        $navlinks = array(array('name' => 'test', 'link' => null, 'type' => 'misc'));
-		        $navigation = build_navigation($navlinks);
-		       		       
-		        update_login_count();
-		        
-		        if ($user) {
-		
-		            // language setup
-		            if ($user->username == 'guest') {
-		                // no predefined language for guests - use existing session or default site lang
-		                unset($user->lang);
-		
-		            } else if (!empty($user->lang)) {
-		                // unset previous session language - use user preference instead
-		                unset($SESSION->lang);
-		            }
-		
-		            if (empty($user->confirmed)) {       // This account was never confirmed
-		                print_header(get_string("mustconfirm"), get_string("mustconfirm") );
-		                print_heading(get_string("mustconfirm"));
-		                print_simple_box(get_string("emailconfirmsent", "", $user->email), "center");
-		                print_footer();
-		                die;
-		            }
-		
-		            // TODO : Fix this bug frm isn't on this page here
-		            if (isset($frm) ) { // if isset placed here for now
-			            if ($frm->password == 'changeme') {
-			                //force the change
-			                set_user_preference('auth_forcepasswordchange', true, $user->id);
-			            }
-		            } // end of if issuet
-		
-		        	/// Let's get them all set up.
-		            add_to_log(SITEID, 'user', 'login', "view.php?id=$USER->id&course=".SITEID,
-		                       $user->id, 0, $user->id);
-		                               
-		            $USER = complete_user_login($user);
-	
-		        	/// Prepare redirection
-		            if (user_not_fully_set_up($USER)) {
-		                $urltogo = $CFG->wwwroot.'/user/edit.php';
-		                // We don't delete $SESSION->wantsurl yet, so we get there later
-		
-		            } else if (isset($SESSION->wantsurl) and (strpos($SESSION->wantsurl, $CFG->wwwroot) === 0)) {
-		            	
-		                $urltogo = $SESSION->wantsurl;    /// Because it's an address in this site
-		                unset($SESSION->wantsurl);
-		
-		            } else {
-		                // no wantsurl stored or external - go to homepage
-		                $urltogo = $CFG->wwwroot.'/';
-		                unset($SESSION->wantsurl);
-		            }
-		
-		        	/// Go to my-moodle page instead of homepage if mymoodleredirect enabled
-		            if (!has_capability('moodle/site:config',get_context_instance(CONTEXT_SYSTEM)) and !empty($CFG->mymoodleredirect) and !isguest()) {
-		                if ($urltogo == $CFG->wwwroot or $urltogo == $CFG->wwwroot.'/' or $urltogo == $CFG->wwwroot.'/index.php') {
-		                    $urltogo = $CFG->wwwroot.'/my/';
-		                }
-		            }
-		
-		
-		        	/// check if user password has expired
-		        	/// Currently supported only for ldap-authentication module
-		            $userauth = get_auth_plugin($USER->auth);
-		            if (!empty($userauth->config->expiration) and $userauth->config->expiration == 1) {
-		                if ($userauth->can_change_password()) {
-		                    $passwordchangeurl = $userauth->change_password_url();
-		                } else {
-		                    $passwordchangeurl = $CFG->httpswwwroot.'/login/change_password.php';
-		                }
-		                $days2expire = $userauth->password_expire($USER->username);
-		                if (intval($days2expire) > 0 && intval($days2expire) < intval($userauth->config->expiration_warning)) {
-		                    print_header("$site->fullname: $loginsite", "$site->fullname", $navigation, '', '', true, "<div class=\"langmenu\">$langmenu</div>");
-		                    notice_yesno(get_string('auth_passwordwillexpire', 'auth', $days2expire), $passwordchangeurl, $urltogo);
-		                    print_footer();
-		                    exit;
-		                } elseif (intval($days2expire) < 0 ) {
-		                    print_header("$site->fullname: $loginsite", "$site->fullname", $navigation, '', '', true, "<div class=\"langmenu\">$langmenu</div>");
-		                    notice_yesno(get_string('auth_passwordisexpired', 'auth'), $passwordchangeurl, $urltogo);
-		                    print_footer();
-		                    exit;
-		                }
-		            }
-		
-			        reset_login_count();
+            // Since we don't have another auth plugin hook to redirect a gsaml request in the case
+            // that the user as tried to access Ex. Gmail before logging in to moodle we must complete
+            // the users login procedures and then redirect them out. So we pull in the code from
+            // login/index.php Line 116 (and on) add our redirect.
 
-					// END of the regular Moodle Login Procedures
-					
-					// Process the SAML Request and redirect to the Service
-					// it is asking for.
-                    // This function should never return unless there's an error. 
-					if (!gsaml_send_auth_response($SESSION->samlrequestdata)) {
-                        // SAML code failed turn debugging on
-                        error(get_string('samlcodefailed','auth_gsaml'));
+            // We can't Intercept 'restored' users to provide them with info & reset password
+            // because we can't pass in the $frm object. But this shouldn't be a problem because
+            // the only time we have to process this code is in the case the user accessed the google service
+            // before being logged in.
+            global $frm;
+            update_login_count(); 
+		        
+            if ($user) {
+
+                // language setup
+                if (isguestuser($user)) {
+                    // no predefined language for guests - use existing session or default site lang
+                    unset($user->lang);
+
+                } else if (!empty($user->lang)) {
+                    // unset previous session language - use user preference instead
+                    unset($SESSION->lang);
+                }
+
+                if (empty($user->confirmed)) {       // This account was never confirmed
+                    $PAGE->set_title(get_string("mustconfirm"));
+                    $PAGE->set_heading($site->fullname);
+                    echo $OUTPUT->header();
+                    echo $OUTPUT->heading(get_string("mustconfirm"));
+                    echo $OUTPUT->box(get_string("emailconfirmsent", "", $user->email), "generalbox boxaligncenter");
+                    echo $OUTPUT->footer();
+                    die;
+                }
+
+                if ($frm->password == 'changeme') {
+                    //force the change
+                    set_user_preference('auth_forcepasswordchange', true, $user->id);
+                }
+
+            /// Let's get them all set up.
+                add_to_log(SITEID, 'user', 'login', "view.php?id=$user->id&course=".SITEID,
+                           $user->id, 0, $user->id);
+                $USER = complete_user_login($user);
+
+            /// Prepare redirection
+                if (user_not_fully_set_up($USER)) {
+                    $urltogo = $CFG->wwwroot.'/user/edit.php';
+                    // We don't delete $SESSION->wantsurl yet, so we get there later
+
+                } else if (isset($SESSION->wantsurl) and (strpos($SESSION->wantsurl, $CFG->wwwroot) === 0)) {
+                    $urltogo = $SESSION->wantsurl;    /// Because it's an address in this site
+                    unset($SESSION->wantsurl);
+
+                } else {
+                    // no wantsurl stored or external - go to homepage
+                    $urltogo = $CFG->wwwroot.'/';
+                    unset($SESSION->wantsurl);
+                }
+
+            /// Go to my-moodle page instead of site homepage if defaulthomepage set to homepage_my
+                if (!empty($CFG->defaulthomepage) && $CFG->defaulthomepage == HOMEPAGE_MY && !is_siteadmin() && !isguestuser()) {
+                    if ($urltogo == $CFG->wwwroot or $urltogo == $CFG->wwwroot.'/' or $urltogo == $CFG->wwwroot.'/index.php') {
+                        $urltogo = $CFG->wwwroot.'/my/';
                     }
+                } // diff
+
+
+            /// check if user password has expired
+            /// Currently supported only for ldap-authentication module
+                $userauth = get_auth_plugin($USER->auth);
+                if (!empty($userauth->config->expiration) and $userauth->config->expiration == 1) {
+                    if ($userauth->can_change_password()) {
+                        $passwordchangeurl = $userauth->change_password_url();
+                        if (!$passwordchangeurl) {
+                            $passwordchangeurl = $CFG->httpswwwroot.'/login/change_password.php';
+                        }
+                    } else {
+                        $passwordchangeurl = $CFG->httpswwwroot.'/login/change_password.php';
+                    }
+                    $days2expire = $userauth->password_expire($USER->username);
+                    $PAGE->set_title("$site->fullname: $loginsite");
+                    $PAGE->set_heading("$site->fullname");
+                    if (intval($days2expire) > 0 && intval($days2expire) < intval($userauth->config->expiration_warning)) {
+                        echo $OUTPUT->header();
+                        echo $OUTPUT->confirm(get_string('auth_passwordwillexpire', 'auth', $days2expire), $passwordchangeurl, $urltogo);
+                        echo $OUTPUT->footer();
+                        exit;
+                    } elseif (intval($days2expire) < 0 ) {
+                        echo $OUTPUT->header();
+                        echo $OUTPUT->confirm(get_string('auth_passwordisexpired', 'auth'), $passwordchangeurl, $urltogo);
+                        echo $OUTPUT->footer();
+                        exit;
+                    }
+                }
+
+                reset_login_count();
+
+               // Added to the regular moodle login procedures
+               // Process the SAML Request and redirect to the Service
+               // it is asking for.
+               // This function should never return unless there's an error.
+               if (!gsaml_send_auth_response($SESSION->samlrequestdata)) { // Handles what the Ex. Gmail sercie is asking that the user be authentiated
+                    // SAML code failed turn debugging on
+                    error(get_string('samlcodefailed','auth_gsaml'));
+               }
 	
 		        
-		        } else {
-		            if (empty($errormsg)) {
-		                $errormsg = get_string("invalidlogin");
-		                $errorcode = 3;
-		            }
-		
-		            // TODO: if the user failed to authenticate, check if the username corresponds to a remote mnet user
-		            if ( !empty($CFG->mnet_dispatcher_mode)
-		                 && $CFG->mnet_dispatcher_mode === 'strict'
-		                 && is_enabled_auth('mnet')) {
-		                $errormsg .= get_string('loginlinkmnetuser', 'mnet', "mnet_email.php?u=$frm->username");
-		            }
-		        }
+            } else {
+                if (empty($errormsg)) {
+                    $errormsg = get_string("invalidlogin");
+                    $errorcode = 3;
+                }
+            }
 
-		} // else if NO SAML request is made we don't do anything but log in normally
+        } // else if NO SAML request is made we don't do anything but log in normally
     }
 
     
@@ -292,13 +245,10 @@ class auth_plugin_gsaml extends auth_plugin_base {
      * Perform a Google SAML Logout by visiting a page on logout
      */
     function logoutpage_hook() {
-		require_logout();
-
-        // TODO: if the Google SAML SSO Link Failed don't bother redirecting
-
-		// Google doesn't have an SSO logout procedure as far as I know right now.
-		// So we visit this and it logs us out of all of the google's services
-		redirect('https://mail.google.com/a/'.$this->config->domainname.'/?logout');
+        require_logout();
+        // Google doesn't have an SSO logout procedure
+        // So we visit this and it logs us out of all of the google's services
+        redirect('https://mail.google.com/a/'.$this->config->domainname.'/?logout');
     }
     
     
@@ -307,31 +257,40 @@ class auth_plugin_gsaml extends auth_plugin_base {
      * send a SAML Reply. Else continue with the login
      */
     function loginpage_hook() {
-	        global $frm;  // can be used to override submitted login form
-	        global $user; // can be used to replace authenticate_user_login()
-	        global $SESSION,$CFG;
-	        
-	        // Store SAMLRequest for processing upon user auth
-	        if( !empty($_REQUEST['SAMLRequest']) ) {
-	        	// Case 2: if we aren't logged in we need this SAMl request for later
-	        	// store it in session and invoke upon auth hook
-	        	$SESSION->samlrequestdata = $_REQUEST['SAMLRequest'];
-	        	$SESSION->samlrelaystate = $_REQUEST['RelayState'];
-	        	$SESSION->samlrequest = true;
-	        }
-	        
-	        // Case 1: if your logged in already and the SAML request just needs to 
-	        // be processed go ahead and redirect with authentication.
-	        if( isloggedin() and !is_null($_REQUEST['SAMLRequest']) ) { 
-	            $SESSION->samlrequestdata = $_REQUEST['SAMLRequest'];
-	        	$SESSION->samlrelaystate = $_REQUEST['RelayState'];
-                
+        global $frm,$user,$SESSION,$CFG;  
+
+        // Do we have a SAMLRequest that needs processing?
+        // Must common case is that user has already logged into Moodle
+        // and has clicked a Gmail link for example.
+        if (!array_key_exists('SAMLRequest', $_REQUEST) and empty($SESSION->samlrequestdata) ) {
+            $SESSION->samlrequest = false;
+        } else {
+            // Store SAMLRequest for processing upon user auth
+            if ( !empty($_REQUEST['SAMLRequest']) ) {
+                // Case 2: if we aren't logged in we need this SAMl request for later
+                // store it in session and invoke upon auth hook
+                $SESSION->samlrequestdata = $_REQUEST['SAMLRequest'];
+                $SESSION->samlrelaystate  = $_REQUEST['RelayState'];
+                $SESSION->samlrequest     = true;
+                add_to_log(SITEID, 'auth_gsaml', 'process samlrequest','','User has saml request but needs login/redirect', 0,0);
+            }
+
+            // Case 1: if your logged in already and the SAML request just needs to
+            // be processed go ahead and redirect with authentication.
+            if ( isloggedin() and !empty($_REQUEST['SAMLRequest']) ) {
+
+                add_to_log(SITEID, 'auth_gsaml', 'process samlrequest','','User islogged in and samlrequest', 0,0);
+
+                $SESSION->samlrequestdata = $_REQUEST['SAMLRequest'];
+                $SESSION->samlrelaystate  = $_REQUEST['RelayState'];
+
                 if (!gsaml_send_auth_response($_REQUEST['SAMLRequest'])) {
                     // Saml auth code failed
                     notice(get_string('samlauthcodefailed','auth_gsaml'),$CFG->wwwroot);
                 }
-	        }
-	}
+	    }
+        }
+    }
 
     /**
      * Returns true if the username and password work and false if they are
@@ -342,9 +301,8 @@ class auth_plugin_gsaml extends auth_plugin_base {
      *
      * @return bool Authentication success or failure.
      */
-    function user_login($username, $password) { // therefore leave this code as is
+    function user_login($username, $password) { 
         global $CFG,$DB;
-        // TODO: might set user->auth to gsaml here :/
         if ($user = $DB->get_record('user', array('username' => $username, 'mnethostid' => $CFG->mnet_localhost_id))) {
             return validate_internal_user_password($user, $password);
         }
@@ -365,61 +323,21 @@ class auth_plugin_gsaml extends auth_plugin_base {
         global $CFG,$FULLME;
         
     	// Enforce 6 char min google password rules.
-        // TODO: fix error where page jumps to some random other page
-        // Site Administration > Security > Site policies Dang
+        // error where page jumps to some random other page
+        // Site Administration > Security > Site policies 
         if( strlen($newpassword) < 6 ) {
-            //helpbutton inside of the notice ?
             $sixchar_msg = get_string('sixcharmsg','auth_gsaml');
             $link = $FULLME;
             notice($sixchar_msg,$link);
         }
         
-        // TODO: if moodle user is not the same as google user
-        //       use the mapping IF we go that route
-        
     	// Check and update on the moodle side
+        // If the user is in gsync then when the cron runs
+        // their password should be synced up
     	$user = get_complete_user_data('id', $user->id);
     	if (!update_internal_user_password($user, $newpassword) ) {
-    		return false;
+            return false;
     	}
-    	
-        // if the user isn't synced or google sync fails
-        // moodles password will be the new one but google will still
-        // think it is the old one.
-        
-        
-        
-        // Basically we need OAuth for the GMail to make this code work
-        // smoothly. Since there will no longer be  arequiremnet to keep the google and moodle
-        // passwords the same.
-        // 
-        // Assuming the user is synced so that this code has relevants
-        // Choices.. if there is an error forgive it and change the moodle code anyway.
-        // their gmail block would break but if we used OAuth for it someday it would
-        // work anyway.
-        //
-        // perhaps resync the accounts later?
-        //
-        // Need to know if user is synced or not?
-        // 
-
-        // 
-//        require_once($CFG->dirroot.'/blocks/gdata/gapps.php');
-//        
-//    	// Moodle Password change clears now adjust google account
-//        try {
-//        	$g = new blocks_gdata_gapps();
-//    		$m_user = $g->moodle_get_user($user->id);
-//        	$g_user = $g->gapps_get_user($user->username);        	
-//        	$g->sync_moodle_user_to_gapps($m_user, $g_user,false);
-//        	
-//        } catch (blocks_gdata_exception $e) {
-//            // we can now have google and moodle passwords be different and
-//            // Gmail will still work so we can forgive this error
-//        	debugging($e, DEBUG_DEVELOPER);
-//        	return false;
-//        }
-        
         return true;
     }
 
@@ -442,30 +360,13 @@ class auth_plugin_gsaml extends auth_plugin_base {
         return true;
     }
 
-    /**
-     * Prints a form for configuring this authentication plugin.
-     *
-     * This function is called from admin/auth.php, and outputs a full page with
-     * a form for configuring this plugin.
-     *
-     * @param array $page An object containing all the data for this page.
-     */
-    //function config_form($config, $err, $user_fields) {
-        //include 'config.html';
-    //    include 'settings.php';
-    //}
-
-
-// TODO: better intergrate with this.
    /**
      * Confirm the new user as registered. This should normally not be used,
      * but it may be necessary if the user auth_method is changed to manual 
      * before the user is confirmed.
      */
     function user_confirm($username, $confirmsecret = null) { 
-    	
-    	// TODO: Check for google account too??
-    	       
+    	   
         $user = get_complete_user_data('username', $username);
 
         if (!empty($user)) {
@@ -484,14 +385,4 @@ class auth_plugin_gsaml extends auth_plugin_base {
             return AUTH_CONFIRM_ERROR;
         }
     }
-    
-//     function get_description() {
-//        $authdescription = get_string("auth_{$this->authtype}description", "auth");
-//        if ($authdescription == "[[auth_{$this->authtype}description]]") {
-//            $authdescription = get_string("auth_{$this->authtype}description", "auth_{$this->authtype}");
-//        }
-//        return $authdescription;
-//    }
 }
-
-?>

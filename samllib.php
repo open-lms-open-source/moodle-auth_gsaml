@@ -120,7 +120,7 @@ function gsaml_file_return_real_path($itemid) {
 //            throw new Exception();
 //       }
    }
-
+   // compare gsaml_file_return_real_path to get_content_file_location
    $contenthash = $file->get_contenthash();
    $filedir = $fs->get_filedir();
    $contenthash = $file->get_contenthash();
@@ -375,6 +375,7 @@ function gsaml_send_auth_response($samldata) {
 		$authnResponseXML = $ar->generate($idpentityid, $spentityid, $requestcache['RequestID'], null, $filteredattributes);
 	    
         // clean the $SESSION->samlrelaystate so we don't accidently call it again
+        unset($SESSION->samlrelaystate);
         
 		// Sending the AuthNResponse using HTTP-Post SAML 2.0 binding
 		$httppost = new SimpleSAML_Bindings_SAML20_HTTPPost($config, $metadata);
