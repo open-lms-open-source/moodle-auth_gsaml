@@ -56,7 +56,7 @@ $string['gadgetinfostr'] = 'Use the following URL to add the Moodle Gadget to yo
 $string['lnktogoogsettings'] = 'Link to Google Settings';
 $string['nodomainyet'] = 'No Domain Set Yet'; 
 $string['gsamlsetuptableinfo'] = '<ol><li>Set the <b>Domain Name</b> to your google service domain name then click <b>Save Changes</b><br/><br/></li>
-<li>In a new window open Google Apps Control Panel page as admin (<a href=\"https://www.google.com/a/{$a->domainname}\">{$a->googsettings}</a>)<br/><br/></li>
+<li>In a new window open Google Apps Control Panel page as admin (<a href="https://www.google.com/a/{$a->domainname}">{$a->googsettings}</a>)<br/><br/></li>
 <li>Click the <b>Advanced tools</b> tab.<br/><br/></li>
 <li>Click the <b>Set up single sign-on (SSO)</b> link next to Authentication.<br/><br/></li>
 <li>First check the <b>Enable Single Sign-on</b> box.<br/><br/></li>
