@@ -21,6 +21,7 @@
 */
 
 $string['pluginname'] = 'Google SAML Auth';
+$string['blockname'] = 'Google SAML Authentication';
 //$string['auth_gsamldescription']  = '';
 $string['domainname']             = 'Domain';
 $string['auth_gsamldescription'] = 'This auth plugin enables Moodle to Single Sign on with SAML SPs.';
@@ -102,3 +103,194 @@ $string['currfileupload'] = 'Current File:';
 $string['nonestr'] = 'None';
 $string['privatekeystr'] = 'Private Key';
 $string['certificatestr'] = 'Certificate';
+
+// Tabs
+$string['statustab'] = 'Status';
+$string['logstab'] = 'SAML Logs';
+$string['ssoteststab'] = 'SSO Tests';
+$string['docstab'] = 'Documentation';
+$string['auth_gsaml_report_gsamllogs'] = '';
+
+
+
+// help files
+$string['config_gsaml'] = 'Configuring gsaml';
+$string['config_gsaml_help'] = '<h2>Complete Set Up</h2>
+
+<p>Setting up the full Google to Moodle intergration requires a bit of configuration. This help file should
+guide you through most of the process in getting the Google Authentication Plugin configured as well as the gdata block and
+the gmail block ready.</p>
+
+<h4>Table of contents:</h4>
+<ul>
+    <li><a href="#pre">Preconditions</a></li>
+    <li><a href="#status">Steps</a></li>
+    <li><a href="#expect">Expected Results</a></li>
+    <li><a href="#consider">Considerations</a></li>
+</ul>
+
+<h4><a name="status" href="#status">Google Apps Status</a></h4>
+<div class="indent">
+
+
+<h4><a name="pre" href="#status">Preconditions/assumptions</a></h4>
+<p>
+<ol>
+    <li>gsaml, gaccess, gmail, gdata code have been installed</li>
+    <ul>
+    <li>auth/gsaml</li>
+    <li>blocks/gmail</li>
+    <li>blocks/gdata</li>
+    <li>blocks/gaccess</li>
+    <li>blocks/mgadget (optional as of beta)</li>
+    </ul>
+</ol>
+</p>
+
+<h4><a name="pre" href="#steps">Steps</a></h4>
+<ol>
+    <li>Login to Moodle as an Administrator</li>
+    <li>Click <b>Notifications</b> to update block tables</li>
+    <li>Enable the <b>Google Authentication</b> plugin from the Manage Plugins admin page</li>
+    <li>Now Select Users Authentication goto <b>Google Authentication</b> there should be directions on the page to follow.</li>
+    <li>Enter your google partner page domain</li>
+    <li>Upload Certificate (for more information on creating this <a href="http://code.google.com/apis/apps/articles/sso-keygen.html">Google Documenation Regarding Key Generation</a> )</li>
+    <li>Upload Private Key (for more information on creating this visit <a href="http://code.google.com/apis/apps/articles/sso-keygen.html">Google Documenation Regarding Key Generation</a>)</li>
+    <li>Click Save</li>
+    <li>Follow the directions for adding the proper urls to the google SSO page</li>
+    <li>Click the checkbox on the google site to enable SSO</li>
+    <li>On the Google Site be sure to enable the provisioning API or no users will be updated.</li>
+    <li>On the Google Site make sure API Provisioning is Enabled</li>
+    <li>On the google side you may need to requset more User accounts</li>
+    <li>Return to Moodle\'s main page</li>
+    <li>Click Edit</li>
+    <li>Add GAccess, GMail and the Gdata blocks to the page.</li>
+    <li>Click <b>Settings</b> in the <b>Google Apps</b> block. Fill out the configuration information.</li>
+    <li>Click the Status link to confirm that your Google Apps block is set up properly.</li>
+    <li>Goto Site Administration &gt; Security &gt; Site policies</li>
+    <li>Check Password Policy</li>
+    <li>Set Password Length to 6 or greater (Required for Google\'s password policy)</li>
+    <li>In the Gdata block you need to add users to sync. Do this by clicking the add users to sync link in the <b>Google Apps block</b>. It helps to see the result if you set the gdata block cron to 1 min.</li>
+    <li>To Upload those Moodle Users into Google you may run the cron manually by visiting admin/cron.php Results for the sync should appear in the read out.
+    <b>Beware, as of this beta syncing Moodle Users with Google may take a <em>LONG</em> time.</b></li>
+</ol>
+
+<h4><a name="pre" href="#expect">Expected Results</a></h4>
+<ul class="alternate" type="square">
+    <li>clicking on any Google Service links or visiting services from the Google Partner page will
+    Authenticate against Moodle.</li>
+    <li>User should be logged into Moodle as well as Google Partner Services</li>
+    <li>See the <b>Diagnostics Page</b> in the gsaml settings for more information on your set up.</li>
+</ul>
+
+
+<h4><a name="pre" href="#consider">Considerations (As of BETA Version)</a></h4>
+<ul class="alternate" type="square">
+    <li>The GMail feed may not be found. This is probabily a because the user passow doesn\'t match googles user password.
+    In the future this won\'t be a problem. For now be sure to sync users with the Google Apps block. E Mail will update
+    upon login. In the future unreadmessages should update in real time.</li>
+
+    <li>The Location of the Google Authentcaion Plugin in the Authetni order is important.
+    As of this moment it needs to override a users auth type when a moodle user changes passwords.
+    This behavior may affect mnet users. A solution for
+    this problem has not yet been found.</li>
+
+</ul>
+
+</div>';
+
+$string['diagnostics'] = 'Diagnostics';
+$string['diagnostics_help'] = '<h2>Google Intergration Diagnostics</h2>
+<p>The Diagnostics page will reveal information regarding the gmail, gdata and saml connection status.
+Only administrators have permission to view diagnostic information.</p>
+
+<h3>Table of contents:</h3>
+<ul>
+    <li><a href="#setup">Set Up Table Information</a></li>
+    <li><a href="#gdata">GData Connection Status</a></li>
+    <li><a href="#gmail">GMail Block Connection Test</a></li>
+    <li><a href="#saml">SAML SSO Status Test</a></li>
+</ul>
+
+<h3><a name="setup" href="#setup">Configuration Table Info</a></h3>
+<div class="indent">
+    These tables represnt the current configuration of the Moodle to Google Intergration. Make sure the values are all set.
+</div>
+
+<h3><a name="gdata" href="#gdata">GData Connection </a></h3>
+<div class="indent">
+The GData block located in the blocks folder contains the librarys for a varity of Google Services. You must confirm
+that it is able to connect to the Google Services. You may need to adjust values on the GData Block Settings page.
+</div>
+
+<h3><a name="gmail" href="#gmail">GMail Block Connection Test</a></h3>
+<div class="indent">
+At the present moment the gmail block will only refresh a users unread messages upon login. You will only
+be able to run the test here if debugging is turned on.  Support for viewing unread messages in real time is coming.
+
+</div>
+
+<h3><a name="saml" href="#saml">SAML SSO Status Test</a></h3>
+<div class="indent">
+The SAML status test is an independent check of the SSO authorization process. It has not yet been implemented.
+<!--But with debugging turned on and set to DEBUG_DEVELOPER error information should be revealed upon login -->
+</div>';
+
+$string['keys'] = 'Keys';
+$string['keys_help'] = '<span style="font-size: 1.2em">
+<h3>Google SSO Keys</h3>
+<p>Both Moodle and Google must be able to securely authorize access to important resources.
+The admin must generate a <b>Verification Certificate</b>. And Upload a X.509 formatted certificate with an embedded public key to google.
+<a href="http://code.google.com/apis/apps/articles/sso-keygen.html">Google Documenation Regarding Key Generation</a>
+Note that the SAML Moodle SSO service only uses <b>RSA keys.</b>
+
+</p>
+</span>
+
+<!--
+<h4><a name="pem" href="#status">Google Apps Status</a></h4>
+<div class="indent">
+
+</div>
+
+<h4><a name="crt" href="#status">Certificate</a></h4>
+<div class="indent">
+-->
+</div>';
+
+$string['mgadget'] = 'Moodle Gadget';
+$string['mgadget_help'] = '<h2>Google to Moodle Gadget</h2>
+
+<p>This help file provides brief overview of the google gadget for your moodle site</p>
+
+<h3><a name="status" href="#status">The Moodle Gadget</a></h3>
+<div class="indent">
+    The <em>Moodle Gadget</em> is a gadget that you can embed on your Google Partner start page.
+
+</div>
+
+
+<p><b>Steps to install onto a Users Start Page</b></p>
+<ol>
+    <li>Login to Moodle</li>
+    <li>Click on the <b>Google Partner Page</b> in the <b>Google Services Access</b> block.</li>
+    <li>Click on the <b>Add Stuff</b> link</li>
+    <li>Click on <b>Add my url</b></li>
+    <li>Enter the moodlegadget URL</li>
+    <li>The URL is something like <br/><b>http://www.yourmoodedomain.org/auth/gsaml/moodlegadget.php </b>
+    <li> It can be found in the <b>Google Authentication</b> Settings from the Admin block</li>
+    <li>After you copy the url to the url field. Click <b>Add</b></li>
+    <li>Click <b>Back to homepage</b></li>
+    <li>You shoudl know see a block containing a link back to your moodle site.</li>
+</ol>
+
+
+
+<h3><a name="status" href="#status">Considerations (As of BETA release)</a></h3>
+<div class="indent">
+    This is the beta prototype for this Google Moodle Gadget. In the future it may be much much more useful.
+    Currently there is a known bug regarding the Gadget not updating immediately upon install.
+    Developers are looking in to it.
+</div>';
+
+
