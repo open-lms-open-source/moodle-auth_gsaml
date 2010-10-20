@@ -38,8 +38,8 @@ $metadata = array(
 		'privatekey'		=>	'googleappsidp.pem', 
 		'certificate'		=>	'googleappsidp.crt', 
 		
-                'privatekey'		=>	trim(get_config('auth/gsaml','privatekey'),'/'),  // we need certidr to be set to something so we remove the '/'
-		'certificate'		=>	trim(get_config('auth/gsaml','certificate'),'/'), //
+                'privatekey'		=>	get_config('auth/gsaml','privatekey_basename'), 
+		'certificate'		=>	get_config('auth/gsaml','certificate_basename'), 
 		'auth'				=>	'../../../../login/index.php', // To GoTo Moodle's Login page
 		//'auth'				=>	'auth/login-auto.php',        //  Goto regular login page
 		'authority'         =>  'login',
