@@ -115,7 +115,7 @@ class admin_setting_upload extends admin_setting {
     
     function output_html($data, $query='') {
         $default = $this->get_defaultsetting();
-        global $CFG;
+        global $CFG, $OUTPUT;
         $uploadkeystr = get_string('uploadkeystr','auth_gsaml'); 
         $uploadkey    = get_string('uploadkey','auth_gsaml');
         $uploadstr    = get_string('uploadstr','auth_gsaml');
@@ -125,8 +125,10 @@ class admin_setting_upload extends admin_setting {
         $samlvars = get_config('auth/gsaml');
         $filename = !empty($samlvars->{$this->name.'_basename'}) ? $samlvars->{$this->name.'_basename'} : $nonestr;
 
-
-        $link = '<a href="'.$CFG->wwwroot.'/auth/gsaml/uploads.php?key='.$this->name.'&return='.$this->returnlnk.'">'.'Upload'.'</a>';                     
+        // pop up link
+        $url = $CFG->wwwroot.'/auth/gsaml/view.php?key='.$this->name.'&return='.$this->returnlnk.'&ispopup=1&controller=default&action=upload';
+        $action = new popup_action('click', $url, 'popup', array('height' => 800, 'width' => 800,'toolbar' => false));
+        $link = $OUTPUT->action_link($url, get_string('upload'), $action);
         return format_admin_setting($this, $this->visiblename,$link.' '.$currfilestr.' '.$filename,$this->description, true, '', $default, $query);
     }
 }
