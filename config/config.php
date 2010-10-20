@@ -48,7 +48,7 @@ $config = array (
 	'attributenamemapdir'   => 'attributemap/',
 
 	//'certdir'               => 'cert/',
-	'certdir'               => '/', // certdir has to be set to a / to prevent samllibs from adding a base dir 
+	'certdir'               => $CFG->dataroot.'/authgsaml/', //'/', // certdir has to be set to a / to prevent samllibs from adding a base dir 
 	'dictionarydir'         => 'dictionaries/',
 	'loggingdir'            => 'log/',
 	
