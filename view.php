@@ -28,6 +28,12 @@
  */
 
 require_once('../../config.php');
+
+
+if ($ispopup = optional_param('ispopup',0,PARAM_INT)) {
+    $PAGE->set_pagelayout('popup');
+}
+
 require($CFG->dirroot.'/local/mr/bootstrap.php');
 
 mr_controller::render('auth/gsaml', 'blockname', 'auth_gsaml');

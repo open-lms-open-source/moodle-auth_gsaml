@@ -16,10 +16,9 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see http://opensource.org/licenses/gpl-3.0.html.
 *
-* @copyright  Copyright (c) 2009 Moodlerooms Inc. (http://www.moodlerooms.com)
+* @copyright  Copyright (c) 2010 Moodlerooms Inc. (http://www.moodlerooms.com)
 * @license    http://opensource.org/licenses/gpl-3.0.html     GNU Public License
 * @author Chris Stones
-* @version $Id$
 * @package auth_saml
 **/
 
@@ -48,11 +47,15 @@
  */
 
 require('../../config.php');
-global $CFG,$DB;
+global $CFG,$DB,$PAGE;
+
 require_once("$CFG->dirroot/blocks/private_files/edit_form.php");
 require_once("$CFG->dirroot/repository/lib.php");
 require_once($CFG->dirroot.'/auth/gsaml/samllib.php');
+require_once($CFG->dirroot.'/auth/gsaml/uploads_form.php');
+
 require_login();
+
 if (isguestuser()) {
     die();
 }
@@ -62,22 +65,15 @@ $key       = required_param('key'   , PARAM_TEXT);
 $returnlnk = required_param('return', PARAM_URL);
 
 // The system as admin
-//http://docs.moodle.org/en/Development:Using_the_file_API
-//$context = get_context_instance(CONTEXT_SYSTEM);
-
 $context = get_context_instance(CONTEXT_USER, $USER->id);
-
-
-// if you're using this form elsewhere you'll need to set this url of course
+$PAGE->set_context($context);
 $pageurl = '/auth/gsaml/uploads.php';
-$PAGE->set_url($pageurl);
-
-require_once($CFG->dirroot.'/auth/gsaml/uploads_form.php');
+$PAGE->set_url('/auth/gsaml/uploads.php');
 
 
 $data = new object();
-$mform = new auth_gsaml_uploads_form(new moodle_url($CFG->wwwroot.$pageurl,array('key'=> $key,'return' =>$returnlnk)), // action
-                                     array('data'=>$data,'return'=>$returnlnk,'key'=>"$key"), // _customdata
+$mform = new auth_gsaml_uploads_form(new moodle_url($CFG->wwwroot.$pageurl,array('key'=> $key,'return' =>$returnlnk)),
+                                     array('data'=>$data,'return'=>$returnlnk,'key'=>"$key"), 
                                      'post',
                                      '');
 
@@ -85,8 +81,6 @@ $formdata = '';
 $privatekey = '';
 if ($mform->is_cancelled()) {
     redirect(new moodle_url(urldecode($returnlnk)));
-    //redirect(new moodle_url('/admin/settings.php/',array('section' => 'authsettinggsaml') ));
-
 } else if ($formdata = $mform->get_data()) {
     
     $contextid = get_context_instance(CONTEXT_SYSTEM)->id;
@@ -96,7 +90,7 @@ if ($mform->is_cancelled()) {
                                $contextid,
                                'auth_gsaml',
                                'gsamlkeys',
-                               $itemid, // the key you are resaving //$itemid, //$entry->id,
+                               $itemid, // the key you are resaving
                                array('subdirs' => 0,
                                      'maxbytes' => $maxbytes,
                                      'maxfiles' => 1));

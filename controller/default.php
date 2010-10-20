@@ -138,4 +138,63 @@ class auth_gsaml_controller_default extends mr_controller_block {
         }
         print html_writer::table($conf_table);
     }
+
+
+    public function upload_action() {
+        global $CFG,$COURSE,$OUTPUT;
+        global $USER, $DB, $PAGE, $OUTPUT;
+
+        require_login();
+        
+        $maxbytes = 1000000;
+        $key       = required_param('key'   , PARAM_TEXT);
+
+        // Setting Page Params
+        $url = new moodle_url('/auth/gsaml/view.php');
+        $url->param('action','upload');
+        $url->param('controller','default');
+        $url->param('key',$key);
+
+        $PAGE->set_url($url);
+
+        $PAGE->set_title(strip_tags(get_string('uploadstr', 'auth_gsaml').' '.get_string($key.'str', 'auth_gsaml')));
+        $PAGE->set_heading(''); // so popup does not show the heading
+
+        // Form processing
+        require_once($CFG->dirroot.'/auth/gsaml/controller/form/uploads_form.php');
+
+        $data = new object();
+        $mform = new auth_gsaml_uploads_form($url,array('data'=>$data,'key'=>"$key"),'post','');
+
+        if ($mform->is_cancelled()) {
+            //
+        } else if ($formdata = $mform->get_data()) {
+            $content = $mform->get_file_content($key);
+            $fname = $mform->get_new_filename($key);
+
+            // If dir doesn't exist make it
+            if (!is_dir($CFG->dataroot.'/authgsaml')) {
+                mkdir($CFG->dataroot.'/authgsaml'); // perms
+            }
+            file_put_contents($CFG->dataroot.'/authgsaml/'.$fname,$content);
+
+            set_config($key,$CFG->dataroot.'/authgsaml/','auth/gsaml');
+            set_config($key.'_basename',$fname,'auth/gsaml');
+        }
+
+        // If file exists already we should show a message with current file is filename.ext
+        // though we can't set the k
+        $path = get_config('auth/gsaml',$key);
+        $fname = get_config('auth/gsaml',$key.'_basename');
+
+        print $OUTPUT->header();
+        print $OUTPUT->heading(get_string('uploadstr', 'auth_gsaml').' '.get_string($key.'str', 'auth_gsaml'));
+        if (file_exists($path.$fname)) {
+            print $OUTPUT->notification(get_string('currfileupload','auth_gsaml').' '.$fname,'notifysuccess');
+        } 
+        $mform->display();
+        print '<div class="paging">'.$OUTPUT->close_window_button().'</div>';
+        print $OUTPUT->footer();
+    }
+
 }
