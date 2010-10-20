@@ -65,41 +65,7 @@ class auth_plugin_gsaml extends auth_plugin_base {
         // if an account exists in Moodle but not Google Apps.
         // Hence, verify that user has a google account. If not create one for them.
         // NOTE: that this may take some time for google to process new users
-        if (!file_exists($CFG->dirroot.'/blocks/gapps/model/gsync.php')) {
-            debugging('gdata block is not installed');
-        } else {
-            require_once($CFG->dirroot.'/blocks/gapps/model/gsync.php');
-            
-            try {
-                // obtain object and test connect to service
-                $gapps = new blocks_gapps_model_gsync();
-
-                $g_user = $gapps->gapps_get_user($username);
-                if (empty($g_user)) {
-
-                      // Admins are excluded from this syncing procedure
-                     $admins = get_admins();
-                     if (!array_key_exists($user->id,$admins) ) {
-                         // Create Moodle User in the Gsync system
-                         $gapps->moodle_create_user($user);
-
-                         // Create google user
-                         $m_user = $gapps->moodle_get_user($user->id);
-                         $gapps->create_user($m_user);
-
-                         add_to_log(SITEID, 'block_gapps', 'gsaml create usr','', $user->username, 0,0);
-                     }
-                }
-                
-            } catch (blocks_gdata_exception $e) {
-                debugging($e->getMessage());
-                print $e->getMessage();
-
-                if (stripos($e->getMessage(),'Error 1100: UserDeletedRecently') ) {
-                    notice('Error 1100: UserDeletedRecently.<br/> Google does not allow a user to be created after deletion until at least 5 days have passed.');
-                }
-            }
-        }
+        $this->trigger_gsaml_user_auth_event($user, $username);
 
 
         // We are Succesfully logged in and we have a SAML Request
@@ -384,5 +350,20 @@ class auth_plugin_gsaml extends auth_plugin_base {
         } else  {
             return AUTH_CONFIRM_ERROR;
         }
+    }
+
+    /**
+     * Package up the data and fire an event so the model/gsync will handle
+     * the user creation logic.
+     *
+     * @param object $user
+     * @param string $username
+     */
+    function trigger_gsaml_user_auth_event(&$user, $username) {
+        $eventdata = new object();
+        $eventdata->username = $username;
+        $eventdata->user = clone($user);
+
+        events_trigger('auth_gsaml_user_authenticated', $eventdata);
     }
 }
