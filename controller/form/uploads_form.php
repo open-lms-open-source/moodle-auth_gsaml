@@ -65,14 +65,6 @@ class auth_gsaml_uploads_form extends moodleform {
                            array('maxbytes' => $maxbytes,
                                 'accepted_types' => '*'));
 
-//        $mform->addElement('filemanager',
-//                           $key, get_string($key.'str','auth_gsaml'),
-//                           null,
-//                           array('subdirs'  => false,
-//                                 'maxbytes' => $maxbytes,
-//                                 'maxfiles' => 1,
-//                                 'accepted_types' => array('*') ));
-
         $this->add_action_buttons(true, get_string('submit'));
     }
 }
