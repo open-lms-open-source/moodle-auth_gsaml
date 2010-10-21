@@ -48,15 +48,15 @@ class auth_gsaml_controller_default extends mr_controller_block {
      */
     public static function add_tabs($controller, &$tabs) {
         $tabs->toptab('status',   array('controller' => 'default','action' => 'view'))
-             ->toptab('logs',     array('controller' => 'default','action' => 'logs'));
-             //->toptab('ssotests', array('controller' => 'default','action' => 'ssotests'))
-             //->toptab('docs',     array('controller' => 'default','action' => 'docs'));
-
-
+             ->toptab('logs',     array('controller' => 'default','action' => 'logs'))
+             //->toptab('ssotests', array('controller' => 'default','action' => 'ssotests')) // Place holder for future test code
+             ->toptab('docs',     array('controller' => 'default','action' => 'docs'));
     }
 
     /**
-     * Default view is the status
+     * Default view is status which in this case is the information regarding the
+     * encryped keys.
+     * 
      */
     public function view_action() {
         global $CFG, $COURSE, $OUTPUT, $PAGE, $USER;
@@ -79,6 +79,14 @@ class auth_gsaml_controller_default extends mr_controller_block {
         $this->print_footer();       
     }
 
+    /**
+     * Simple Report Table for Viewing auth/gsaml specific logs.
+     * Useful for seeing which user has caused a problem.
+     *
+     * @global object $OUTPUT
+     * @global object $PAGE
+     * @global object $CFG
+     */
     public function logs_action() {
         global $OUTPUT,$PAGE,$CFG;
         $this->tabs->set('logs');
@@ -91,10 +99,17 @@ class auth_gsaml_controller_default extends mr_controller_block {
         $this->print_footer();
     }
 
+    /**
+     * This is a place holder for future sso tests so that the process of logging in
+     * as a user via the saml process can be automated and examined.
+     *
+     * @global object $OUTPUT
+     */
     public function ssotests_action() {
+        global $OUTPUT;
         $this->tabs->set('ssotests');
         $this->print_header();
-        print "tests to run to check authentication with google via the saml protocoal";
+        print $OUTPUT->notification("Specific SSO Test Running Code not yet Implemented");
         $this->print_footer();
     }
 
@@ -110,24 +125,24 @@ class auth_gsaml_controller_default extends mr_controller_block {
         $this->tabs->set('docs');
         $this->print_header();
 
-        // include graphics
-
-        // Also output phpdoc generated docs
-        print $this->output->heading("Gapps Documentation");
+        print $this->output->heading("Google SAML Documentation");
         print $OUTPUT->box_start('generalbox boxaligncenter');
-        //$str = '<iframe src="'.$CFG->wwwroot.'/blocks/gapps/docs/index.html'.'" width="100%" height="600" align="center"> </iframe>';
-        //print $str;
+        print '<iframe src="'.$CFG->wwwroot.'/auth/gsaml/docs/notes.txt'.'" width="100%" height="600" align="center"> </iframe>';
         print $OUTPUT->box_end();
-
-
         $this->print_footer();
     }
 
-
+    /**
+     * Helper function used to print config tables.
+     *
+     * @global object $OUTPUT
+     * @param string $heading
+     * @param object $table_obj
+     */
     public function print_config_table($heading,$table_obj) {
         global $OUTPUT;
 
-        print $OUTPUT->heading($heading);//, $size, $class, $id);
+        print $OUTPUT->heading($heading);
         $conf_table = new html_table();
         $conf_table->head  = array('Setting','Value');
         $conf_table->align = array('left','left');
@@ -139,7 +154,18 @@ class auth_gsaml_controller_default extends mr_controller_block {
         print html_writer::table($conf_table);
     }
 
-
+    /**
+     * Contains the popup code that admin_settings_upload class uses to ask the user
+     * for the SSO keys.
+     *
+     * @global object $CFG
+     * @global object $COURSE
+     * @global object $OUTPUT
+     * @global object $USER
+     * @global object $DB
+     * @global object $PAGE
+     * @global object $OUTPUT
+     */
     public function upload_action() {
         global $CFG,$COURSE,$OUTPUT;
         global $USER, $DB, $PAGE, $OUTPUT;

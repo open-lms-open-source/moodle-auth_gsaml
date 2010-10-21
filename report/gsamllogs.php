@@ -20,7 +20,7 @@
  */
  
 /**
- * A report for viewing the gapps actions for debugging and testing purposes
+ * A report for viewing the auth/gsaml actions for debugging and testing purposes
  *
  * watches for logs such as this
  * add_to_log(SITEID, 'auth_gsaml', 'process samlrequest','','255 chars of info here', 0,0);
@@ -60,14 +60,14 @@ class auth_gsaml_report_gsamllogs extends mr_report_abstract {
     public function table_init() {
         $this->url->params(array('controller' => 'default', 'action' => 'logs'));
         $this->table = new mr_html_table($this->preferences, $this->url, 'time');
-        $this->table->add_column('id',     get_string('id',    'block_gapps'))
-                    ->add_column('time',   get_string('time',  'block_gapps'))
-                    ->add_column('userid', get_string('userid','block_gapps'))
-                    ->add_column('ip',     get_string('ip',    'block_gapps'))
-                    ->add_column('course', get_string('course','block_gapps'))
-                    ->add_column('cmid',   get_string('cmid',  'block_gapps'))
-                    ->add_column('action', get_string('action','block_gapps'))
-                    ->add_column('info',   get_string('info',  'block_gapps'));
+        $this->table->add_column('id',     get_string('id',    'auth_gsaml'))
+                    ->add_column('time',   get_string('time',  'auth_gsaml'))
+                    ->add_column('userid', get_string('userid','auth_gsaml'))
+                    ->add_column('ip',     get_string('ip',    'auth_gsaml'))
+                    ->add_column('course', get_string('course','auth_gsaml'))
+                    ->add_column('cmid',   get_string('cmid',  'auth_gsaml'))
+                    ->add_column('action', get_string('action','auth_gsaml'))
+                    ->add_column('info',   get_string('info',  'auth_gsaml'));
     }
 
 
@@ -114,7 +114,7 @@ class auth_gsaml_report_gsamllogs extends mr_report_abstract {
 
 
     /**
-     * Pull logs only from block_gapps actions
+     * Pull logs only from auth/gsaml actions
      */
     public function get_sql($fields, $filtersql, $filterparams) {
         global $CFG,$SESSION;
