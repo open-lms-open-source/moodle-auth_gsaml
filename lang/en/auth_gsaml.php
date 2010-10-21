@@ -111,6 +111,17 @@ $string['ssoteststab'] = 'SSO Tests';
 $string['docstab'] = 'Documentation';
 $string['auth_gsaml_report_gsamllogs'] = '';
 
+// auth/gsaml logs_action strings
+$string['id']   = 'ID';
+$string['time']   = 'Time';
+$string['userid'] = 'UserID';
+$string['ip']     = 'IP Address';
+$string['course'] = 'Course';
+$string['module'] = 'Module';
+$string['cmid']   = 'cmid';
+$string['action'] = 'Action';
+$string['url']    = 'URL';
+$string['info']   = 'Information';
 
 
 // help files
