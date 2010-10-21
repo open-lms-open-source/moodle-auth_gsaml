@@ -58,17 +58,15 @@ class auth_gsaml_report_gsamllogs extends mr_report_abstract {
      * @return void
      */
     public function table_init() {
-        $this->url->params(array('controller' => 'gsync', 'action' => 'gappslogs'));
+        $this->url->params(array('controller' => 'default', 'action' => 'logs'));
         $this->table = new mr_html_table($this->preferences, $this->url, 'time');
         $this->table->add_column('id',     get_string('id',    'block_gapps'))
                     ->add_column('time',   get_string('time',  'block_gapps'))
                     ->add_column('userid', get_string('userid','block_gapps'))
                     ->add_column('ip',     get_string('ip',    'block_gapps'))
                     ->add_column('course', get_string('course','block_gapps'))
-                    //->add_column('module', get_string('module','block_gapps'))
                     ->add_column('cmid',   get_string('cmid',  'block_gapps'))
                     ->add_column('action', get_string('action','block_gapps'))
-                    //->add_column('url',    get_string('url',   'block_gapps'))
                     ->add_column('info',   get_string('info',  'block_gapps'));
     }
 
