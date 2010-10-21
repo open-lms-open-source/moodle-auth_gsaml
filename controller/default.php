@@ -154,6 +154,7 @@ class auth_gsaml_controller_default extends mr_controller_block {
         $url->param('action','upload');
         $url->param('controller','default');
         $url->param('key',$key);
+        $url->param('ispopup',1); 
 
         $PAGE->set_url($url);
 
