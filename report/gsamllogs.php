@@ -108,6 +108,7 @@ class auth_gsaml_report_gsamllogs extends mr_report_abstract {
     public function filter_init() {
         $this->filter = new mr_html_filter($this->preferences, $this->url);
         $this->filter->new_text('info', 'Info');
+        $this->filter->new_text('userid','userid');
         $this->filter->new_text('course', 'course');
         $this->filter->new_daterange('time', 'Times');
     }
