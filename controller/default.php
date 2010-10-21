@@ -30,17 +30,22 @@ defined('MOODLE_INTERNAL') or die('Direct access to this script is forbidden.');
 class auth_gsaml_controller_default extends mr_controller_block {
 
     /**
+     * We need to set the pagelayout early on in the initialize of this controller
+     */
+    function init() {
+        global $PAGE;
+        if ($ispopup = optional_param('ispopup',0,PARAM_INT)) {
+            $PAGE->set_pagelayout('popup');
+        }
+    }
+
+
+    /**
      * Require capability for viewing this controller
      */
     public function require_capability() {
         // Require admin for our admin action
-        switch ($this->action) {
-            case 'admin':
-                require_capability('moodle/site:config', $this->get_context());
-                break;
-            default:
-                require_capability('moodle/site:config', $this->get_context());
-        }
+        require_capability('moodle/site:config', $this->get_context());
     }
 
     /**
@@ -72,7 +77,7 @@ class auth_gsaml_controller_default extends mr_controller_block {
         if(!$gsaml_conf = get_config('auth/gsaml')) {
             print $OUTPUT->notification(get_string('gsamlconfignotset','auth_gsaml'));
         } else {
-            $this->print_config_table(get_string('googlesamlconfigdata','auth_gsaml'),$gsaml_conf);
+            $this->helper->print->config_table(get_string('googlesamlconfigdata','auth_gsaml'),$gsaml_conf);
         }
 
         print $OUTPUT->box_end();
@@ -133,28 +138,6 @@ class auth_gsaml_controller_default extends mr_controller_block {
     }
 
     /**
-     * Helper function used to print config tables.
-     *
-     * @global object $OUTPUT
-     * @param string $heading
-     * @param object $table_obj
-     */
-    public function print_config_table($heading,$table_obj) {
-        global $OUTPUT;
-
-        print $OUTPUT->heading($heading);
-        $conf_table = new html_table();
-        $conf_table->head  = array('Setting','Value');
-        $conf_table->align = array('left','left');
-        $conf_table->data  = array();
-
-        foreach( $table_obj as $setting => $value ) {
-            $conf_table->data[] = array($setting,$value);
-        }
-        print html_writer::table($conf_table);
-    }
-
-    /**
      * Contains the popup code that admin_settings_upload class uses to ask the user
      * for the SSO keys.
      *
@@ -169,8 +152,6 @@ class auth_gsaml_controller_default extends mr_controller_block {
     public function upload_action() {
         global $CFG,$COURSE,$OUTPUT;
         global $USER, $DB, $PAGE, $OUTPUT;
-
-        require_login();
         
         $maxbytes = 1000000;
         $key       = required_param('key'   , PARAM_TEXT);
@@ -188,7 +169,7 @@ class auth_gsaml_controller_default extends mr_controller_block {
         $PAGE->set_heading(''); // so popup does not show the heading
 
         // Form processing
-        require_once($CFG->dirroot.'/auth/gsaml/controller/form/uploads_form.php');
+        require_once($CFG->dirroot.'/auth/gsaml/form/uploads_form.php');
 
         $data = new object();
         $mform = new auth_gsaml_uploads_form($url,array('data'=>$data,'key'=>"$key"),'post','');

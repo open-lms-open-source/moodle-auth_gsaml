@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright (C) 2009  Moodlerooms Inc.
+ * Copyright (C) 2010  Moodlerooms Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,15 +21,35 @@
  */
 
 /**
- * View renderer
+ *  Special Printing Methods
  *
- * @author Mark Nielsen
  * @author Chris B Stones
  * @package auth_gsaml
- */
+ **/
 
-require_once('../../config.php');
+defined('MOODLE_INTERNAL') or die('Direct access to this script is forbidden.');
 
-require($CFG->dirroot.'/local/mr/bootstrap.php');
+class auth_gsaml_helper_print extends mr_helper_abstract {
 
-mr_controller::render('auth/gsaml', 'blockname', 'auth_gsaml');
+    /**
+     * Helper function used to print config tables.
+     *
+     * @global object $OUTPUT
+     * @param string $heading
+     * @param object $table_obj
+     */
+    public function config_table($heading,$table_obj) {
+        global $OUTPUT;
+
+        print $OUTPUT->heading($heading);
+        $conf_table = new html_table();
+        $conf_table->head  = array('Setting','Value');
+        $conf_table->align = array('left','left');
+        $conf_table->data  = array();
+
+        foreach( $table_obj as $setting => $value ) {
+            $conf_table->data[] = array($setting,$value);
+        }
+        print html_writer::table($conf_table);
+    }
+}
