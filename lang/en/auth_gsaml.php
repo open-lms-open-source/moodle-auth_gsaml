@@ -77,7 +77,7 @@ $string['pwdnotvalid'] = 'Password not valid';
 $string['samlcodefailed'] = 'SAML Code Failed turn debugging on to find out why';
 $string['samlauthcodefailed'] = 'SAML Auth Code Failed turn debugging on for more information';
 $string['sixcharmsg'] = 'User Password Must be longer than 6 characters for Google Intergration. Tell your Admin to adjust the site policy settings';
- 
+$string['errordecodingsamlrequest'] = 'Problem decoding Saml Request or gzinflating (May be a https settings error check your google sso configuration): {$a}';
  
 // diagnostics
 $string['googsamldiag'] = 'Google SAML Diagnostics';
