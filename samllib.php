@@ -94,15 +94,20 @@ function gsaml_send_auth_response($samldata) {
             $relaystate = NULL;
     }
 
-    $decodedRequest = @base64_decode($rawRequest);
-    if (!$decodedRequest) {
-            throw new Exception('Could not base64 decode SAMLRequest GET parameter');
-    }
+    try {
+        $decodedRequest = @base64_decode($rawRequest);
+        if (!$decodedRequest) {
+                throw new Exception('Could not base64 decode SAMLRequest GET parameter');
+        }
 
-    $samlRequestXML = @gzinflate($decodedRequest);
-    if (!$samlRequestXML) {
-            $error = error_get_last();
-            throw new Exception('Could not gzinflate base64 decoded SAMLRequest: ' . $error['message'] );
+        $samlRequestXML = @gzinflate($decodedRequest);
+        if (!$samlRequestXML) {
+                $error = error_get_last();
+                throw new Exception('Could not gzinflate base64 decoded SAMLRequest: ' . $error['message'] );
+        }
+    } catch (Exception $e) {
+        $a = $e->getMessage();
+        print_error('errordecodingsamlrequest','auth_gsaml','', $a);
     }
 
     SimpleSAML_Utilities::validateXMLDocument($samlRequestXML, 'saml20');
