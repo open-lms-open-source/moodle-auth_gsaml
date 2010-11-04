@@ -363,6 +363,7 @@ class auth_plugin_gsaml extends auth_plugin_base {
         $eventdata = new object();
         $eventdata->username = $username;
         $eventdata->user = clone($user);
+        $eventdata->id = $user->id;
 
         events_trigger('auth_gsaml_user_authenticated', $eventdata);
     }
