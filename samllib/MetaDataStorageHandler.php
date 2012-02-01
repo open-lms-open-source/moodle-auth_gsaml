@@ -11,7 +11,7 @@ if (!defined('MOODLE_INTERNAL')) {
  * @package simpleSAMLphp
  * @version $Id: MetaDataStorageHandler.php 610 2008-06-06 06:04:20Z olavmrk $
  */ 
-class SimpleSAML_Metadata_MetaDataStorageHandler {
+class gSimpleSAML_Metadata_MetaDataStorageHandler {
 
 
 	/**
@@ -38,7 +38,7 @@ class SimpleSAML_Metadata_MetaDataStorageHandler {
 	 */
 	public static function getMetadataHandler() {
 		if(self::$metadataHandler === NULL) {
-			self::$metadataHandler = new SimpleSAML_Metadata_MetaDataStorageHandler();
+			self::$metadataHandler = new gSimpleSAML_Metadata_MetaDataStorageHandler();
 		}
 
 		return self::$metadataHandler;
@@ -51,7 +51,7 @@ class SimpleSAML_Metadata_MetaDataStorageHandler {
 	 */
 	protected function __construct() {
 
-		$config = SimpleSAML_Configuration::getInstance();
+		$config = gSimpleSAML_Configuration::getInstance();
 
 		$sourcesConfig = $config->getValue('metadata.sources', NULL);
 
@@ -78,7 +78,7 @@ class SimpleSAML_Metadata_MetaDataStorageHandler {
 					);
 			}
 
-			$src = SimpleSAML_Metadata_MetaDataStorageSource::getSource($elementConfig);
+			$src = gSimpleSAML_Metadata_MetaDataStorageSource::getSource($elementConfig);
 			$this->sources[] = $src;
 		}
 	}
@@ -104,10 +104,10 @@ class SimpleSAML_Metadata_MetaDataStorageHandler {
 		}
 		
 		/* Get the configuration. */
-		$config = SimpleSAML_Configuration::getInstance();
-		assert($config instanceof SimpleSAML_Configuration);
+		$config = gSimpleSAML_Configuration::getInstance();
+		assert($config instanceof gSimpleSAML_Configuration);
 		
-		$baseurl = SimpleSAML_Utilities::selfURLhost() . '/' . 
+		$baseurl = gSimpleSAML_Utilities::selfURLhost() . '/' . 
 			$config->getBaseURL();
 		
 		if ($set == 'saml20-sp-hosted') {
@@ -198,7 +198,7 @@ class SimpleSAML_Metadata_MetaDataStorageHandler {
 		assert('is_string($set)');
 
 		/* First we look for the hostname/path combination. */
-		$currenthostwithpath = SimpleSAML_Utilities::getSelfHostWithPath(); // sp.example.org/university
+		$currenthostwithpath = gSimpleSAML_Utilities::getSelfHostWithPath(); // sp.example.org/university
 
 		foreach($this->sources as $source) {
 			$index = $source->getEntityIdFromHostPath($currenthostwithpath, $set, $type);
@@ -209,7 +209,7 @@ class SimpleSAML_Metadata_MetaDataStorageHandler {
 
 	
 		/* Then we look for the hostname. */
-		$currenthost = SimpleSAML_Utilities::getSelfHost(); // sp.example.org
+		$currenthost = gSimpleSAML_Utilities::getSelfHost(); // sp.example.org
 		if(strpos($currenthost, ":") !== FALSE) {
 			$currenthostdecomposed = explode(":", $currenthost);
 			$currenthost = $currenthostdecomposed[0];

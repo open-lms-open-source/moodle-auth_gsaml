@@ -17,7 +17,7 @@ if(array_key_exists('header', $this->data)) {
 <?php
 $onLoad = '';
 if(array_key_exists('autofocus', $this->data)) {
-	$onLoad .= 'SimpleSAML_focus(\'' . $this->data['autofocus'] . '\');';
+	$onLoad .= 'gSimpleSAML_focus(\'' . $this->data['autofocus'] . '\');';
 }
 if($onLoad !== '') {
 	$onLoad = ' onload="' . $onLoad . '"';
@@ -66,7 +66,7 @@ if (empty($_POST) ) {
 		if ($current) {
 			$textarray[] = $langnames[$lang];
 		} else {
-			$textarray[] = '<a href="' . htmlspecialchars(SimpleSAML_Utilities::addURLparameter(SimpleSAML_Utilities::selfURL(), 'language=' . $lang)) . '">' . 
+			$textarray[] = '<a href="' . htmlspecialchars(gSimpleSAML_Utilities::addURLparameter(gSimpleSAML_Utilities::selfURL(), 'language=' . $lang)) . '">' . 
 				$langnames[$lang] . '</a>';
 		}
 	}

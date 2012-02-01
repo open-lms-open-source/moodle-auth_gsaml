@@ -12,13 +12,13 @@ if (!defined('MOODLE_INTERNAL')) {
  * @version $ID$
  */
 
-class SimpleSAML_Logger_LoggingHandlerSyslog implements SimpleSAML_Logger_LoggingHandler {
+class gSimpleSAML_Logger_LoggingHandlerSyslog implements gSimpleSAML_Logger_LoggingHandler {
 
 	private $isWindows = false;
 	
     function __construct() {
-        $config = SimpleSAML_Configuration::getInstance();
-        assert($config instanceof SimpleSAML_Configuration);
+        $config = gSimpleSAML_Configuration::getInstance();
+        assert($config instanceof gSimpleSAML_Configuration);
         $facility = $config->getValue('logging.facility');
         $processname = $config->getValue('logging.processname','simpleSAMLphp');
         /*

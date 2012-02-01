@@ -16,7 +16,7 @@ if (!defined('MOODLE_INTERNAL')) {
  * @package simpleSAMLphp
  * @version $Id$
  */
-abstract class SimpleSAML_Metadata_MetaDataStorageSource {
+abstract class gSimpleSAML_Metadata_MetaDataStorageSource {
 
 
 	/**
@@ -39,11 +39,11 @@ abstract class SimpleSAML_Metadata_MetaDataStorageSource {
 
 		switch($type) {
 		case 'flatfile':
-			return new SimpleSAML_Metadata_MetaDataStorageHandlerFlatFile($sourceConfig);
+			return new gSimpleSAML_Metadata_MetaDataStorageHandlerFlatFile($sourceConfig);
 		case 'xml':
-			return new SimpleSAML_Metadata_MetaDataStorageHandlerXML($sourceConfig);
+			return new gSimpleSAML_Metadata_MetaDataStorageHandlerXML($sourceConfig);
 		case 'dynamicxml':
-			return new SimpleSAML_Metadata_MetaDataStorageHandlerDynamicXML($sourceConfig);
+			return new gSimpleSAML_Metadata_MetaDataStorageHandlerDynamicXML($sourceConfig);
 		default:
 			throw new Exception('Invalid metadata source type: "' . $type . '".');
 		}
@@ -124,7 +124,7 @@ abstract class SimpleSAML_Metadata_MetaDataStorageSource {
 			if(!is_array($entry['hint.cidr'])) continue;
 			
 			foreach ($entry['hint.cidr'] AS $hint_entry) {
-				if (SimpleSAML_Utilities::ipCIDRcheck($hint_entry, $ip)) {
+				if (gSimpleSAML_Utilities::ipCIDRcheck($hint_entry, $ip)) {
 					if ($type === 'entityid') {
 						return $entry['entityid'];
 					} else {

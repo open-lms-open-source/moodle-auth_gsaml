@@ -11,7 +11,7 @@ if (!defined('MOODLE_INTERNAL')) {
  * @package simpleSAMLphp
  * @version $Id: LogoutResponse.php 610 2008-06-06 06:04:20Z olavmrk $
  */
-class SimpleSAML_XML_SAML20_LogoutResponse {
+class gSimpleSAML_XML_SAML20_LogoutResponse {
 
 	private $configuration = null;
 	private $metadata = null;
@@ -22,7 +22,7 @@ class SimpleSAML_XML_SAML20_LogoutResponse {
 	
 	const PROTOCOL = 'urn:oasis:names:tc:SAML:2.0';
 
-	function __construct(SimpleSAML_Configuration $configuration, SimpleSAML_Metadata_MetaDataStorageHandler $metadatastore) {
+	function __construct(gSimpleSAML_Configuration $configuration, gSimpleSAML_Metadata_MetaDataStorageHandler $metadatastore) {
 		$this->configuration = $configuration;
 		$this->metadata = $metadatastore;
 	}
@@ -117,8 +117,8 @@ class SimpleSAML_XML_SAML20_LogoutResponse {
 		$issuermd 	= $this->metadata->getMetaData($issuer, $issuerset);
 		$receivermd = $this->metadata->getMetaData($receiver, $receiverset);
 		
-		$id = SimpleSAML_Utilities::generateID();
-		$issueInstant = SimpleSAML_Utilities::generateTimestamp();
+		$id = gSimpleSAML_Utilities::generateID();
+		$issueInstant = gSimpleSAML_Utilities::generateTimestamp();
 
 		$destination = $receivermd['SingleLogoutService'];
 		

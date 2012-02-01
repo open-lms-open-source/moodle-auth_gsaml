@@ -5,7 +5,7 @@ if (!defined('MOODLE_INTERNAL')) {
 }
 
 /**
- * This file is part of SimpleSAMLphp. See the file COPYING in the
+ * This file is part of gSimpleSAMLphp. See the file COPYING in the
  * root of the distribution for licence information.
  *
  * This file defines a session handler which uses the default php
@@ -15,11 +15,11 @@ if (!defined('MOODLE_INTERNAL')) {
  * @package simpleSAMLphp
  * @version $Id: SessionHandlerPHP.php 610 2008-06-06 06:04:20Z olavmrk $
  */
-class SimpleSAML_SessionHandlerPHP extends SimpleSAML_SessionHandler {
+class gSimpleSAML_SessionHandlerPHP extends gSimpleSAML_SessionHandler {
 
 	/* Initialize the PHP session handling. This constructor is protected
 	 * because it should only be called from
-	 * SimpleSAML_SessionHandler::createSessionHandler(...).
+	 * gSimpleSAML_SessionHandler::createSessionHandler(...).
 	 */
 	protected function __construct() {
 
@@ -37,10 +37,10 @@ class SimpleSAML_SessionHandlerPHP extends SimpleSAML_SessionHandler {
 		if(session_id() === '') {
 			// None of this gets run so it doesn't matter to moodle
 			
-			$config = SimpleSAML_Configuration::getInstance();
+			$config = gSimpleSAML_Configuration::getInstance();
 			
 			$cookiepath = ($config->getValue('session.phpsession.limitedpath', FALSE) ? '/' . $config->getValue('baseurlpath') : '/');
-			session_set_cookie_params(0, $cookiepath, NULL, SimpleSAML_Utilities::isHTTPS());
+			session_set_cookie_params(0, $cookiepath, NULL, gSimpleSAML_Utilities::isHTTPS());
 			
 			$cookiename = $config->getValue('session.phpsession.cookiename', NULL);
 			if (!empty($cookiename)) session_name($cookiename);
@@ -52,7 +52,7 @@ class SimpleSAML_SessionHandlerPHP extends SimpleSAML_SessionHandler {
 
 			if(!array_key_exists(session_name(), $_COOKIE)) {
 				/* Session cookie unset - session id not set. Generate new (secure) session id. */
-				session_id(SimpleSAML_Utilities::stringToHex(SimpleSAML_Utilities::generateRandomBytes(16)));
+				session_id(gSimpleSAML_Utilities::stringToHex(gSimpleSAML_Utilities::generateRandomBytes(16)));
 			}
 			
 			session_start();
@@ -72,7 +72,7 @@ class SimpleSAML_SessionHandlerPHP extends SimpleSAML_SessionHandler {
 
 	/* This function is used to store data in this session object.
 	 *
-	 * See the information in SimpleSAML_SessionHandler::set(...) for
+	 * See the information in gSimpleSAML_SessionHandler::set(...) for
 	 * more information.
 	 */
 	public function set($key, $value) {
@@ -82,7 +82,7 @@ class SimpleSAML_SessionHandlerPHP extends SimpleSAML_SessionHandler {
 
 	/* This function retrieves a value from this session object.
 	 *
-	 * See the information in SimpleSAML_SessionHandler::get(...) for
+	 * See the information in gSimpleSAML_SessionHandler::get(...) for
 	 * more information.
 	 */
 	public function get($key) {

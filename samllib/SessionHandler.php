@@ -4,7 +4,7 @@ if (!defined('MOODLE_INTERNAL')) {
 }
 
 /**
- * This file is part of SimpleSAMLphp. See the file COPYING in the
+ * This file is part of gSimpleSAMLphp. See the file COPYING in the
  * root of the distribution for licence information.
  *
  * This file defines a base class for session handling.
@@ -15,7 +15,7 @@ if (!defined('MOODLE_INTERNAL')) {
  * @package simpleSAMLphp
  * @version $Id: SessionHandler.php 610 2008-06-06 06:04:20Z olavmrk $
  */
-abstract class SimpleSAML_SessionHandler {
+abstract class gSimpleSAML_SessionHandler {
 
 
 	/* This static variable contains a reference to the current
@@ -95,8 +95,8 @@ abstract class SimpleSAML_SessionHandler {
 		global $SIMPLESAML_INCPREFIX;
 		
 		/* Get the configuration. */
-		$config = SimpleSAML_Configuration::getInstance();
-		assert($config instanceof SimpleSAML_Configuration);
+		$config = gSimpleSAML_Configuration::getInstance();
+		assert($config instanceof gSimpleSAML_Configuration);
 
 		/* Get the session handler option from the configuration. */
 		$handler = $config->getValue('session.handler', 'phpsession');
@@ -106,9 +106,9 @@ abstract class SimpleSAML_SessionHandler {
 		$handler = strtolower($handler);
 
 		if($handler === 'phpsession') {
-			$sh = new SimpleSAML_SessionHandlerPHP();
+			$sh = new gSimpleSAML_SessionHandlerPHP();
 		} else if($handler === 'memcache') {
-			$sh = new SimpleSAML_SessionHandlerMemcache();
+			$sh = new gSimpleSAML_SessionHandlerMemcache();
 		} else {
 			$e = 'Invalid value for the \'session.handler\'' .
 			     ' configuration option. Unknown session' .

@@ -5,13 +5,13 @@
 }
 
 /**
- * Configuration of SimpleSAMLphp
+ * Configuration of gSimpleSAMLphp
  *
  * @author Andreas Aakre Solberg, UNINETT AS. <andreas.solberg@uninett.no>
  * @package simpleSAMLphp
  * @version $Id: Configuration.php 630 2008-06-11 09:26:13Z olavmrk $
  */
-class SimpleSAML_Configuration {
+class gSimpleSAML_Configuration {
 
 	/**
 	 * A default value which means that the given option is required.
@@ -37,11 +37,11 @@ class SimpleSAML_Configuration {
 	}
 	
 	public static function init($path, $instancename = 'simplesaml', $configfilename = 'config.php') {
-		self::$instance[$instancename] = new SimpleSAML_Configuration($path, $configfilename);
+		self::$instance[$instancename] = new gSimpleSAML_Configuration($path, $configfilename);
 	}
 	
 	public function copyFromBase($instancename, $filename) {
-		self::$instance[$instancename] = new SimpleSAML_Configuration($this->configpath, $filename);
+		self::$instance[$instancename] = new gSimpleSAML_Configuration($this->configpath, $filename);
 		return self::$instance[$instancename];
 	}
 
@@ -62,7 +62,7 @@ class SimpleSAML_Configuration {
 	 *
 	 * @param $name  Name of the configuration option.
 	 * @param $default  Default value of the configuration option. This parameter will default to NULL if not
-	 *                  specified. This can be set to SimpleSAML_Configuration::REQUIRED_OPTION, which will
+	 *                  specified. This can be set to gSimpleSAML_Configuration::REQUIRED_OPTION, which will
 	 *                  cause an exception to be thrown if the option isn't found.
 	 * @return  The configuration option with name $name, or $default if the option was not found.
 	 */
@@ -85,7 +85,7 @@ class SimpleSAML_Configuration {
 	
 	public function getBaseURL() {
 		if (preg_match('/^\*(.*)$/', $this->getValue('baseurlpath', ''), $matches)) {
-			return SimpleSAML_Utilities::getFirstPathElement(false) . $matches[1];
+			return gSimpleSAML_Utilities::getFirstPathElement(false) . $matches[1];
 		}
 		return $this->getValue('baseurlpath', '');
 	}
@@ -178,14 +178,14 @@ class SimpleSAML_Configuration {
 		}
 
 		/* The directory wasn't set in the configuration file. Our
-		 * path is <base directory>/lib/SimpleSAML/Configuration.php
+		 * path is <base directory>/lib/gSimpleSAML/Configuration.php
 		 */
 
 		$dir = __FILE__;
 		assert('basename($dir) === "Configuration.php"');
 
 		$dir = dirname($dir);
-		assert('basename($dir) === "SimpleSAML"');
+		assert('basename($dir) === "gSimpleSAML"');
 
 		$dir = dirname($dir);
 		assert('basename($dir) === "lib"');

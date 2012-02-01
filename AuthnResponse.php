@@ -28,7 +28,7 @@
  * @version $Id: AuthnResponse.php 610 2008-06-06 06:04:20Z olavmrk $
  * @abstract
  */
- abstract class SimpleSAML_XML_AuthnResponse {
+ abstract class gSimpleSAML_XML_AuthnResponse {
 
 	private $configuration = null;
 	private $metadata = 'default.php';
@@ -41,7 +41,7 @@
 	
 	const PROTOCOL = 'urn:oasis:names:tc:SAML:2.0';
 
-	function __construct(SimpleSAML_Configuration $configuration, SimpleSAML_Metadata_MetaDataStorageHandler $metadatastore) {
+	function __construct(gSimpleSAML_Configuration $configuration, gSimpleSAML_Metadata_MetaDataStorageHandler $metadatastore) {
 		$this->configuration = $configuration;
 		$this->metadata = $metadatastore;
 	}

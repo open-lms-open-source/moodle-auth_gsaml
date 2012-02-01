@@ -13,14 +13,14 @@ if (!defined('MOODLE_INTERNAL')) {
  * @version $ID$
  */
 
-class SimpleSAML_Logger_LoggingHandlerFile implements SimpleSAML_Logger_LoggingHandler {
+class gSimpleSAML_Logger_LoggingHandlerFile implements gSimpleSAML_Logger_LoggingHandler {
 
     private $logFile = null;
     private $processname = null;
 
     function __construct() {
-        $config = SimpleSAML_Configuration::getInstance();
-        assert($config instanceof SimpleSAML_Configuration);
+        $config = gSimpleSAML_Configuration::getInstance();
+        assert($config instanceof gSimpleSAML_Configuration);
 
         /* Get the metadata handler option from the configuration. */
         $this->logFile = $config->getPathValue('loggingdir').$config->getValue('logging.logfile');

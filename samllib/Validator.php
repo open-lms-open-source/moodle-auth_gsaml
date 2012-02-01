@@ -11,7 +11,7 @@ if (!defined('MOODLE_INTERNAL')) {
  * @package simpleSAMLphp
  * @version $Id: Validator.php 610 2008-06-06 06:04:20Z olavmrk $
  */
-class SimpleSAML_XML_Validator {
+class gSimpleSAML_XML_Validator {
 
 	/**
 	 * This variable contains the fingerprint of the certificate the XML document

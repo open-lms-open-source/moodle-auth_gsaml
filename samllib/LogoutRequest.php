@@ -11,7 +11,7 @@ if (!defined('MOODLE_INTERNAL')) {
  * @package simpleSAMLphp
  * @version $Id: LogoutRequest.php 610 2008-06-06 06:04:20Z olavmrk $
  */
-class SimpleSAML_XML_SAML20_LogoutRequest {
+class gSimpleSAML_XML_SAML20_LogoutRequest {
 
 	private $configuration = null;
 	private $metadata = null;
@@ -30,12 +30,12 @@ class SimpleSAML_XML_SAML20_LogoutRequest {
 	private $id = null;
 
 
-	function __construct(SimpleSAML_Configuration $configuration, SimpleSAML_Metadata_MetaDataStorageHandler $metadatastore) {
+	function __construct(gSimpleSAML_Configuration $configuration, gSimpleSAML_Metadata_MetaDataStorageHandler $metadatastore) {
 		$this->configuration = $configuration;
 		$this->metadata = $metadatastore;
 
 		/* Generate request id. */
-		$this->id = SimpleSAML_Utilities::generateID();
+		$this->id = gSimpleSAML_Utilities::generateID();
 	}
 	
 	public function setXML($xml) {
@@ -138,7 +138,7 @@ class SimpleSAML_XML_SAML20_LogoutRequest {
 			$spnamequalifier = isset($issuermd['SPNameQualifier']) ? $issuermd['SPNameQualifier'] : $issuermd['entityid'];
 		}
 		
-		$issueInstant = SimpleSAML_Utilities::generateTimestamp();
+		$issueInstant = gSimpleSAML_Utilities::generateTimestamp();
 
 		$destination = $receivermd['SingleLogoutService'];
 		

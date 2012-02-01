@@ -11,7 +11,7 @@ if (!defined('MOODLE_INTERNAL')) {
  * @package simpleSAMLphp
  * @version $Id: Template.php 653 2008-06-13 09:58:12Z andreassolberg $
  */
-class SimpleSAML_XHTML_Template {
+class gSimpleSAML_XHTML_Template {
 
 	/**
 	 * This is the default language map. It is used to map languages codes from the user agent to
@@ -35,7 +35,7 @@ class SimpleSAML_XHTML_Template {
 	 * @param $template        Which template file to load
 	 * @param $languagefile    Optionally load a language file
 	 */
-	function __construct(SimpleSAML_Configuration $configuration, $template, $languagefile = null) {
+	function __construct(gSimpleSAML_Configuration $configuration, $template, $languagefile = null) {
 		$this->configuration = $configuration;
 		$this->template = $template;
 		
@@ -100,7 +100,7 @@ class SimpleSAML_XHTML_Template {
 	 */
 	private function getHTTPLanguage() {
 		$availableLanguages = $this->configuration->getValue('language.available');
-		$languageScore = SimpleSAML_Utilities::getAcceptLanguage();
+		$languageScore = gSimpleSAML_Utilities::getAcceptLanguage();
 
 		/* For now we only use the default language map. We may use a configurable language map
 		 * in the future.
@@ -175,12 +175,12 @@ class SimpleSAML_XHTML_Template {
 
 		if (!file_exists($filename)) {
 		
-			SimpleSAML_Logger::error($_SERVER['PHP_SELF'].' - Template: Could not find template file [' . $file . 
+			gSimpleSAML_Logger::error($_SERVER['PHP_SELF'].' - Template: Could not find template file [' . $file . 
 				'] at [' . $filename . '] - Now trying at base');
 			
 			$filename = $this->configuration->getPathValue('templatedir') . $this->configuration->getValue('theme.base') . '/' . $file;
 			if (!file_exists($filename)) {
-				SimpleSAML_Logger::error($_SERVER['PHP_SELF'].' - Template: Could not find template file [' . $file . 
+				gSimpleSAML_Logger::error($_SERVER['PHP_SELF'].' - Template: Could not find template file [' . $file . 
 					'] at [' . $filename . ']');
 				throw new Exception('Could not load template file [' . $file . ']');
 			}
@@ -214,7 +214,7 @@ class SimpleSAML_XHTML_Template {
 	private function t($tag, $fallbacktag = TRUE, $fallbackdefault = true, $replacements = array(), $striptags = false) {
 		
 		if (empty($this->langtext) || !is_array($this->langtext)) {
-			SimpleSAML_Logger::error('Template: No language text loaded. Looking up [' . $tag . ']');
+			gSimpleSAML_Logger::error('Template: No language text loaded. Looking up [' . $tag . ']');
 			return $this->t_not_translated($tag, $fallbacktag);
 		}
 
@@ -229,21 +229,21 @@ class SimpleSAML_XHTML_Template {
 			 */
 			if (array_key_exists($selected_language, $this->langtext[$tag])) {
 			
-				//SimpleSAML_Logger::debug('Template: Found up [' . $tag . ']: in selected language [' . $selected_language . ']. Text is: [' . $this->langtext[$tag][$selected_language] . '].');
+				//gSimpleSAML_Logger::debug('Template: Found up [' . $tag . ']: in selected language [' . $selected_language . ']. Text is: [' . $this->langtext[$tag][$selected_language] . '].');
 				$translated =  $this->langtext[$tag][$selected_language];
 
 			/**
 			 * Look up translation of tag in the default language, only if fallbackdefault = true (method parameter)
 			 */				
 			} elseif($fallbackdefault && array_key_exists($default_language, $this->langtext[$tag])) {
-				SimpleSAML_Logger::info('Template: Looking up [' . $tag . ']: not found in language [' . $selected_language . '] using default [' . $default_language . '].');
+				gSimpleSAML_Logger::info('Template: Looking up [' . $tag . ']: not found in language [' . $selected_language . '] using default [' . $default_language . '].');
 				$translated =  $this->langtext[$tag][$default_language];
 				
 			/**
 			 * Look up translation of tag in the base language, only if fallbackdefault = true (method parameter)
 			 */				
 			} elseif($fallbackdefault && array_key_exists($base_language, $this->langtext[$tag])) {
-				SimpleSAML_Logger::info('Template: Looking up [' . $tag . ']: not found in language default [' . $default_language . '] using base [' . $base_language . '].');
+				gSimpleSAML_Logger::info('Template: Looking up [' . $tag . ']: not found in language default [' . $default_language . '] using base [' . $base_language . '].');
 				$translated =  $this->langtext[$tag][$base_language];
 				
 			}
@@ -252,7 +252,7 @@ class SimpleSAML_XHTML_Template {
 			}
 			return $translated;
 		}
-		SimpleSAML_Logger::info('Template: Looking up [' . $tag . ']: not translated at all.');
+		gSimpleSAML_Logger::info('Template: Looking up [' . $tag . ']: not translated at all.');
 		return $this->t_not_translated($tag, $fallbacktag); 
 		
 	}
@@ -292,7 +292,7 @@ class SimpleSAML_XHTML_Template {
 		if (!is_array($this->langtext)) 
 			$this->langtext = array();	
 		
-		SimpleSAML_Logger::info('Template: Adding inline language translation for tag [' . $tag . ']');
+		gSimpleSAML_Logger::info('Template: Adding inline language translation for tag [' . $tag . ']');
 		$this->langtext[$tag] = $translation;
 	}
 	
@@ -315,19 +315,19 @@ class SimpleSAML_XHTML_Template {
 		}
 		
 		
-		SimpleSAML_Logger::info('Template: Loading [' . $filebase . $file . ']');
+		gSimpleSAML_Logger::info('Template: Loading [' . $filebase . $file . ']');
 		
 		if (!file_exists($filebase . $file)) {
-			SimpleSAML_Logger::error($_SERVER['PHP_SELF'].' - Template: Could not find template file [' . $this->template . '] at [' . $filebase . $file . ']');
+			gSimpleSAML_Logger::error($_SERVER['PHP_SELF'].' - Template: Could not find template file [' . $this->template . '] at [' . $filebase . $file . ']');
 			return;
 		}
 		include($filebase . $file);
 		if (isset($lang)) {
 			if (is_array($this->langtext)) {
-				SimpleSAML_Logger::info('Template: Merging language array. Loading [' . $file . ']');
+				gSimpleSAML_Logger::info('Template: Merging language array. Loading [' . $file . ']');
 				$this->langtext = array_merge($this->langtext, $lang);
 			} else {
-				SimpleSAML_Logger::info('Template: Setting new language array. Loading [' . $file . ']');
+				gSimpleSAML_Logger::info('Template: Setting new language array. Loading [' . $file . ']');
 				$this->langtext = $lang;
 			}
 		}
@@ -346,7 +346,7 @@ class SimpleSAML_XHTML_Template {
 		
 
 		if (!file_exists($filename)) {
-			SimpleSAML_Logger::warning($_SERVER['PHP_SELF'].' - Template: Could not find template file [' . $this->template . '] at [' . $filename . '] - now trying the base template');
+			gSimpleSAML_Logger::warning($_SERVER['PHP_SELF'].' - Template: Could not find template file [' . $this->template . '] at [' . $filename . '] - now trying the base template');
 			
 			
 			$filename = $this->configuration->getPathValue('templatedir') . 
@@ -354,7 +354,7 @@ class SimpleSAML_XHTML_Template {
 			
 
 			if (!file_exists($filename)) {
-				SimpleSAML_Logger::critical($_SERVER['PHP_SELF'].' - Template: Could not find template file [' . $this->template . '] at [' . $filename . ']');
+				gSimpleSAML_Logger::critical($_SERVER['PHP_SELF'].' - Template: Could not find template file [' . $this->template . '] at [' . $filename . ']');
 			
 				echo 'Fatal error: Could not find template file [' . $this->template . '] at [' . $filename . ']';
 				exit(0);

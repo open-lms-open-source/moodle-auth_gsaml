@@ -11,11 +11,11 @@ if (!defined('MOODLE_INTERNAL')) {
  * @package simpleSAMLphp
  * @version $Id: AttributeFilter.php 636 2008-06-12 07:07:20Z lassebirnbaum $
  */
-class SimpleSAML_XML_AttributeFilter {
+class gSimpleSAML_XML_AttributeFilter {
 
 	private $attributes = null;
 
-	function __construct(SimpleSAML_Configuration $configuration, $attributes) {
+	function __construct(gSimpleSAML_Configuration $configuration, $attributes) {
 		$this->configuration = $configuration;
 		$this->attributes = $attributes;
 	}
@@ -27,31 +27,31 @@ class SimpleSAML_XML_AttributeFilter {
 	public function process($idpmetadata, $spmetadata) {
 	
 		if (isset($idpmetadata['attributemap'])) {
-			SimpleSAML_Logger::debug('Applying IdP specific attributemap: ' . $idpmetadata['attributemap']);
+			gSimpleSAML_Logger::debug('Applying IdP specific attributemap: ' . $idpmetadata['attributemap']);
 			$this->namemap($idpmetadata['attributemap']);
 		}
 		if (isset($spmetadata['attributemap'])) {
-			SimpleSAML_Logger::debug('Applying SP specific attributemap: ' . $spmetadata['attributemap']);
+			gSimpleSAML_Logger::debug('Applying SP specific attributemap: ' . $spmetadata['attributemap']);
 			$this->namemap($spmetadata['attributemap']);
 		}
 		if (isset($idpmetadata['attributealter'])) {
 			if (!is_array($idpmetadata['attributealter'])) {
-				SimpleSAML_Logger::debug('Applying IdP specific attribute alter: ' . $idpmetadata['attributealter']);
+				gSimpleSAML_Logger::debug('Applying IdP specific attribute alter: ' . $idpmetadata['attributealter']);
 				$this->alter($idpmetadata['attributealter'],$spmetadata['entityid'],$idpmetadata['entityid']);
 			} else {
 				foreach($idpmetadata['attributealter'] AS $alterfunc) {
-					SimpleSAML_Logger::debug('Applying IdP specific attribute alter: ' . $alterfunc);
+					gSimpleSAML_Logger::debug('Applying IdP specific attribute alter: ' . $alterfunc);
 					$this->alter($alterfunc,$spmetadata['entityid'],$idpmetadata['entityid']);
 				}
 			}
 		}
 		if (isset($spmetadata['attributealter'])) {
 			if (!is_array($spmetadata['attributealter'])) {
-				SimpleSAML_Logger::debug('Applying SP specific attribute alter: ' . $spmetadata['attributealter']);
+				gSimpleSAML_Logger::debug('Applying SP specific attribute alter: ' . $spmetadata['attributealter']);
 				$this->alter($spmetadata['attributealter'],$spmetadata['entityid'],$idpmetadata['entityid']);
 			} else {
 				foreach($spmetadata['attributealter'] AS $alterfunc) {
-					SimpleSAML_Logger::debug('Applying SP specific attribute alter: ' . $alterfunc);
+					gSimpleSAML_Logger::debug('Applying SP specific attribute alter: ' . $alterfunc);
 					$this->alter($alterfunc,$spmetadata['entityid'],$idpmetadata['entityid']);
 				}
 			}
@@ -65,7 +65,7 @@ class SimpleSAML_XML_AttributeFilter {
 		 * Filter away attributes that are not allowed for this SP.
 		 */
 		if (isset($spmetadata['attributes'])) {
-			SimpleSAML_Logger::debug('Applying SP specific attribute filter: ' . join(',', $spmetadata['attributes']));
+			gSimpleSAML_Logger::debug('Applying SP specific attribute filter: ' . join(',', $spmetadata['attributes']));
 			$this->filter($spmetadata['attributes']);
 		}
 		

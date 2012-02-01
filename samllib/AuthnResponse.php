@@ -12,7 +12,7 @@ if (!defined('MOODLE_INTERNAL')) {
  * @package simpleSAMLphp
  * @version $Id: AuthnResponse.php 610 2008-06-06 06:04:20Z olavmrk $
  */
-class SimpleSAML_XML_SAML20_AuthnResponse extends SimpleSAML_XML_AuthnResponse {
+class gSimpleSAML_XML_SAML20_AuthnResponse extends gSimpleSAML_XML_AuthnResponse {
 
 	
 	const PROTOCOL = 'urn:oasis:names:tc:SAML:2.0';
@@ -63,7 +63,7 @@ class SimpleSAML_XML_SAML20_AuthnResponse extends SimpleSAML_XML_AuthnResponse {
 	private $attributes = array();
 
 
-	function __construct(SimpleSAML_Configuration $configuration, SimpleSAML_Metadata_MetaDataStorageHandler $metadatastore) {
+	function __construct(gSimpleSAML_Configuration $configuration, gSimpleSAML_Metadata_MetaDataStorageHandler $metadatastore) {
 		$this->configuration = $configuration;
 		$this->metadata = $metadatastore;
 	}
@@ -257,7 +257,7 @@ class SimpleSAML_XML_SAML20_AuthnResponse extends SimpleSAML_XML_AuthnResponse {
 			}
 		}
 		/* Validate the signature. */
-		$this->validator = new SimpleSAML_XML_Validator($dom, 'ID', $publickey);
+		$this->validator = new gSimpleSAML_XML_Validator($dom, 'ID', $publickey);
 		
 		if (!$publickey) {
 			/* Get fingerprint for the certificate of the issuer. */
@@ -329,7 +329,7 @@ class SimpleSAML_XML_SAML20_AuthnResponse extends SimpleSAML_XML_AuthnResponse {
 		/* First verify the NotBefore and NotOnOrAfter attributes if they are present. */
 		$notBefore = $conditions->getAttribute("NotBefore");
 		$notOnOrAfter = $conditions->getAttribute("NotOnOrAfter");
-		if (! SimpleSAML_Utilities::checkDateConditions($notBefore, $notOnOrAfter)) {
+		if (! gSimpleSAML_Utilities::checkDateConditions($notBefore, $notOnOrAfter)) {
 			throw new Exception('Date check failed (between ' . $notBefore . ' and ' . $notOnOrAfter . ').' .
 				' Check if the clocks on the SP and IdP are synchronized. Alternatively' .
 				' you can get this message, when you move back in history or refresh an old page.');
@@ -506,7 +506,7 @@ class SimpleSAML_XML_SAML20_AuthnResponse extends SimpleSAML_XML_AuthnResponse {
 			}
 	
 			/* Update the session information */
-			$session = SimpleSAML_Session::getInstance();
+			$session = gSimpleSAML_Session::getInstance();
 			$session->doLogin('saml2');
 	
 			$session->setAttributes($this->attributes);
@@ -516,11 +516,11 @@ class SimpleSAML_XML_SAML20_AuthnResponse extends SimpleSAML_XML_AuthnResponse {
 		} elseif ($status == 'urn:oasis:names:tc:SAML:2.0:status:NoPassive') {
 			/* 	Do not process the authResponse when NoPassive is sent - we continue with an empty set of attributes.
 		   		Some day we will be able to tell the application what happened */
-			$session = SimpleSAML_Session::getInstance();
+			$session = gSimpleSAML_Session::getInstance();
 			$session->doLogin('saml2');
 			$session->setAttributes(array());
 		} else {
-			SimpleSAML_Utilities::fatalError($session->getTrackID(), 'RESPONSESTATUSNOSUCCESS', new Exception("Status = " . $status));
+			gSimpleSAML_Utilities::fatalError($session->getTrackID(), 'RESPONSESTATUSNOSUCCESS', new Exception("Status = " . $status));
 		}
 	}
 
@@ -580,13 +580,13 @@ class SimpleSAML_XML_SAML20_AuthnResponse extends SimpleSAML_XML_AuthnResponse {
 		/**
 		 * Generating IDs and timestamps.
 		 */
-		$id = SimpleSAML_Utilities::generateID();
-		$issueInstant = SimpleSAML_Utilities::generateTimestamp();
-		$assertionExpire = SimpleSAML_Utilities::generateTimestamp(time() + 60 * 5);# 5 minutes
-		$notBefore = SimpleSAML_Utilities::generateTimestamp(time() - 30);
+		$id = gSimpleSAML_Utilities::generateID();
+		$issueInstant = gSimpleSAML_Utilities::generateTimestamp();
+		$assertionExpire = gSimpleSAML_Utilities::generateTimestamp(time() + 60 * 5);# 5 minutes
+		$notBefore = gSimpleSAML_Utilities::generateTimestamp(time() - 30);
 		
-		$assertionid = SimpleSAML_Utilities::generateID();
-		$sessionindex = SimpleSAML_Utilities::generateID();
+		$assertionid = gSimpleSAML_Utilities::generateID();
+		$sessionindex = gSimpleSAML_Utilities::generateID();
 
 		
 		/**
@@ -632,7 +632,7 @@ class SimpleSAML_XML_SAML20_AuthnResponse extends SimpleSAML_XML_AuthnResponse {
 			//print "<hr>";
 			$nameid = $this->generateNameID($nameidformat, $attributes[$spmd['simplesaml.nameidattribute']][0], $spnamequalifier);
 		} else {
-			$nameid = $this->generateNameID($nameidformat, SimpleSAML_Utilities::generateID(), $spnamequalifier);
+			$nameid = $this->generateNameID($nameidformat, gSimpleSAML_Utilities::generateID(), $spnamequalifier);
 		}
 
 		$assertion = "";
