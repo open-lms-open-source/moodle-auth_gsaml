@@ -11,12 +11,12 @@ if (!defined('MOODLE_INTERNAL')) {
  * @package simpleSAMLphp
  * @version $Id: HTTPRedirect.php 629 2008-06-11 06:15:45Z olavmrk $
  */
-class SimpleSAML_Bindings_SAML20_HTTPRedirect {
+class gSimpleSAML_Bindings_SAML20_HTTPRedirect {
 
 	private $configuration = null;
 	private $metadata = null;
 
-	function __construct(SimpleSAML_Configuration $configuration, SimpleSAML_Metadata_MetaDataStorageHandler $metadatastore) {
+	function __construct(gSimpleSAML_Configuration $configuration, gSimpleSAML_Metadata_MetaDataStorageHandler $metadatastore) {
 		$this->configuration = $configuration;
 		$this->metadata = $metadatastore;
 	}
@@ -85,7 +85,7 @@ class SimpleSAML_Bindings_SAML20_HTTPRedirect {
 		if ($mode == 'IdP') {
 			$metadataset = 'saml20-sp-remote';
 		}
-		SimpleSAML_Logger::debug('Library - HTTPRedirect validateQuery(): Looking up metadata issuer:' . $issuer . ' in set '. $metadataset);
+		gSimpleSAML_Logger::debug('Library - HTTPRedirect validateQuery(): Looking up metadata issuer:' . $issuer . ' in set '. $metadataset);
 		$md = $this->metadata->getMetaData($issuer, $metadataset);
 		
 		// check whether to validate or not
@@ -97,7 +97,7 @@ class SimpleSAML_Bindings_SAML20_HTTPRedirect {
 			throw new Exception('No Signature on the request, required by configuration');
 		}
 		
-		SimpleSAML_Logger::debug('Library - HTTPRedirect validateQuery(): All required paramaters received.');
+		gSimpleSAML_Logger::debug('Library - HTTPRedirect validateQuery(): All required paramaters received.');
 
 		// building query string
 		$query = $request.'='.urlencode($_GET[$request]);
@@ -115,8 +115,8 @@ class SimpleSAML_Bindings_SAML20_HTTPRedirect {
 
 		$query = $query . "&" . "SigAlg=" . urlencode($algURI);
 		
-		SimpleSAML_Logger::debug('Library - HTTPRedirect validateQuery(): Built query: ' . $query);
-		SimpleSAML_Logger::debug('Library - HTTPRedirect validateQuery(): Sig Alg: ' . $algURI);
+		gSimpleSAML_Logger::debug('Library - HTTPRedirect validateQuery(): Built query: ' . $query);
+		gSimpleSAML_Logger::debug('Library - HTTPRedirect validateQuery(): Sig Alg: ' . $algURI);
 				
 				
 
@@ -197,13 +197,13 @@ class SimpleSAML_Bindings_SAML20_HTTPRedirect {
 	
 	public function sendMessage($request, $localentityid, $remoteentityid, $relayState = null, $endpoint = 'SingleSignOnService', $direction = 'SAMLRequest', $mode = 'SP') {
 		
-		SimpleSAML_Utilities::validateXMLDocument($request, 'saml20');
+		gSimpleSAML_Utilities::validateXMLDocument($request, 'saml20');
 
 		$redirectURL = $this->getRedirectURL($request, $localentityid, $remoteentityid, $relayState, $endpoint, $direction, $mode);
 		
 		if ($this->configuration->getValue('debug')) {
 	
-			$p = new SimpleSAML_XHTML_Template($this->configuration, 'httpredirect-debug.php');
+			$p = new gSimpleSAML_XHTML_Template($this->configuration, 'httpredirect-debug.php');
 			
 			$p->data['header'] = 'HTTP-REDIRECT Debug';
 			$p->data['url'] = $redirectURL;
@@ -214,7 +214,7 @@ class SimpleSAML_Bindings_SAML20_HTTPRedirect {
 		
 		} else {
 
-			SimpleSAML_Utilities::redirect($redirectURL);
+			gSimpleSAML_Utilities::redirect($redirectURL);
 		
 		}
 
@@ -251,9 +251,9 @@ class SimpleSAML_Bindings_SAML20_HTTPRedirect {
 			throw new Exception('Could not gzinflate base64 decoded SAMLRequest: ' . $error['message'] );
 		}		
 
-		SimpleSAML_Utilities::validateXMLDocument($samlRequestXML, 'saml20');
+		gSimpleSAML_Utilities::validateXMLDocument($samlRequestXML, 'saml20');
 		
-		$samlRequest = new SimpleSAML_XML_SAML20_AuthnRequest($this->configuration, $this->metadata);
+		$samlRequest = new gSimpleSAML_XML_SAML20_AuthnRequest($this->configuration, $this->metadata);
 	
 		$samlRequest->setXML($samlRequestXML);
 		
@@ -289,9 +289,9 @@ class SimpleSAML_Bindings_SAML20_HTTPRedirect {
 			throw new Exception('Could not gzinflate base64 decoded SAMLRequest: ' . $error['message'] );
 		}		
 
-		SimpleSAML_Utilities::validateXMLDocument($samlRequestXML, 'saml20');
+		gSimpleSAML_Utilities::validateXMLDocument($samlRequestXML, 'saml20');
 
-		$samlRequest = new SimpleSAML_XML_SAML20_LogoutRequest($this->configuration, $this->metadata);
+		$samlRequest = new gSimpleSAML_XML_SAML20_LogoutRequest($this->configuration, $this->metadata);
 	
 		$samlRequest->setXML($samlRequestXML);
 		
@@ -328,10 +328,10 @@ class SimpleSAML_Bindings_SAML20_HTTPRedirect {
 			throw new Exception('Could not gzinflate base64 decoded SAMLRequest: ' . $error['message'] );
 		}		
 
-		SimpleSAML_Utilities::validateXMLDocument($samlRequestXML, 'saml20');
+		gSimpleSAML_Utilities::validateXMLDocument($samlRequestXML, 'saml20');
 		
          
-		$samlRequest = new SimpleSAML_XML_SAML20_LogoutResponse($this->configuration, $this->metadata);
+		$samlRequest = new gSimpleSAML_XML_SAML20_LogoutResponse($this->configuration, $this->metadata);
 	
 		$samlRequest->setXML($samlRequestXML);
 		

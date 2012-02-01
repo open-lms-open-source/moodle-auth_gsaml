@@ -12,7 +12,7 @@
  * @package simpleSAMLphp
  * @version $Id: AuthnRequest.php 610 2008-06-06 06:04:20Z olavmrk $
  */
-class SimpleSAML_XML_SAML20_AuthnRequest {
+class gSimpleSAML_XML_SAML20_AuthnRequest {
 
 	private $configuration = null;
 	private $metadata = 'default.php';
@@ -26,7 +26,7 @@ class SimpleSAML_XML_SAML20_AuthnRequest {
 	const PROTOCOL = 'saml2';
 
 
-	function __construct(SimpleSAML_Configuration $configuration, SimpleSAML_Metadata_MetaDataStorageHandler $metadatastore) {
+	function __construct(gSimpleSAML_Configuration $configuration, gSimpleSAML_Metadata_MetaDataStorageHandler $metadatastore) {
 		$this->configuration = $configuration;
 		$this->metadata = $metadatastore;
 	}
@@ -184,8 +184,8 @@ class SimpleSAML_XML_SAML20_AuthnRequest {
 	public function generate($spentityid, $destination) {
 		$md = $this->metadata->getMetaData($spentityid);
 		
-		$id = SimpleSAML_Utilities::generateID();
-		$issueInstant = SimpleSAML_Utilities::generateTimestamp();
+		$id = gSimpleSAML_Utilities::generateID();
+		$issueInstant = gSimpleSAML_Utilities::generateTimestamp();
 
 		$assertionConsumerServiceURL = $this->metadata->getGenerated('AssertionConsumerService', 'saml20-sp-hosted');
 		

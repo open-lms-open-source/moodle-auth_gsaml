@@ -341,7 +341,7 @@ $config = array (
 
 	/*
 	 * This configuration option allows you to select which session handler
-	 * SimpleSAMLPHP should use to store the session information. Currently
+	 * gSimpleSAMLPHP should use to store the session information. Currently
 	 * we have two session handlers:
 	 * - 'phpsession': The default PHP session handler.
 	 * - 'memcache': Stores the session information in one or more

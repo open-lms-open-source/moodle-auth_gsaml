@@ -13,7 +13,7 @@ if (!defined('MOODLE_INTERNAL')) {
  * @package simpleSAMLphp
  * @version $Id: MetaDataStorageHandlerFlatFile.php 610 2008-06-06 06:04:20Z olavmrk $
  */
-class SimpleSAML_Metadata_MetaDataStorageHandlerFlatFile extends SimpleSAML_Metadata_MetaDataStorageSource {
+class gSimpleSAML_Metadata_MetaDataStorageHandlerFlatFile extends gSimpleSAML_Metadata_MetaDataStorageSource {
 
 	/**
 	 * This is the valid metadata sets we know about.
@@ -52,7 +52,7 @@ class SimpleSAML_Metadata_MetaDataStorageHandlerFlatFile extends SimpleSAML_Meta
 		assert('is_array($config)');
 
 		/* Get the configuration. */
-		$globalConfig = SimpleSAML_Configuration::getInstance();
+		$globalConfig = gSimpleSAML_Configuration::getInstance();
 
 
 		/* Find the path to the directory we should search for metadata in. */
@@ -133,8 +133,8 @@ class SimpleSAML_Metadata_MetaDataStorageHandlerFlatFile extends SimpleSAML_Meta
 	private function generateDynamicHostedEntityID($set) {
 
 		/* Get the configuration. */
-		$config = SimpleSAML_Configuration::getInstance();
-		$baseurl = SimpleSAML_Utilities::selfURLhost() . '/' . $config->getBaseURL();
+		$config = gSimpleSAML_Configuration::getInstance();
+		$baseurl = gSimpleSAML_Utilities::selfURLhost() . '/' . $config->getBaseURL();
 
 		if ($set === 'saml20-idp-hosted') {
 			return $baseurl . 'saml2/idp/metadata.php';

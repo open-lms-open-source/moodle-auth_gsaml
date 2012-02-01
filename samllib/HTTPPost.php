@@ -11,12 +11,12 @@ if (!defined('MOODLE_INTERNAL')) {
  * @package simpleSAMLphp
  * @version $Id: HTTPPost.php 639 2008-06-12 08:48:10Z olavmrk $
  */
-class SimpleSAML_Bindings_SAML20_HTTPPost {
+class gSimpleSAML_Bindings_SAML20_HTTPPost {
 
 	private $configuration = null;
 	private $metadata = null;
 
-	function __construct(SimpleSAML_Configuration $configuration, SimpleSAML_Metadata_MetaDataStorageHandler $metadatastore) {
+	function __construct(gSimpleSAML_Configuration $configuration, gSimpleSAML_Metadata_MetaDataStorageHandler $metadatastore) {
 		$this->configuration = $configuration;
 		$this->metadata = $metadatastore;
 	}
@@ -24,7 +24,7 @@ class SimpleSAML_Bindings_SAML20_HTTPPost {
 	
 	public function sendResponseUnsigned($response, $idpentityid, $spentityid, $relayState = null, $endpoint = 'AssertionConsumerService') {
 
-		SimpleSAML_Utilities::validateXMLDocument($response, 'saml20');
+		gSimpleSAML_Utilities::validateXMLDocument($response, 'saml20');
 
 		$idpmd = $this->metadata->getMetaData($idpentityid, 'saml20-idp-hosted');
 		$spmd = $this->metadata->getMetaData($spentityid, 'saml20-sp-remote');
@@ -190,7 +190,7 @@ class SimpleSAML_Bindings_SAML20_HTTPPost {
 		}
 		$response = $responsedom->saveXML();
 		
-		SimpleSAML_Utilities::validateXMLDocument($response, 'saml20');
+		gSimpleSAML_Utilities::validateXMLDocument($response, 'saml20');
 		
 		# openssl genrsa -des3 -out server.key 1024 
 		# openssl rsa -in server.key -out server.pem
@@ -200,7 +200,7 @@ class SimpleSAML_Bindings_SAML20_HTTPPost {
 		
 		if ($this->configuration->getValue('debug')) {
 	
-			$p = new SimpleSAML_XHTML_Template($this->configuration, 'post-debug.php');
+			$p = new gSimpleSAML_XHTML_Template($this->configuration, 'post-debug.php');
 			
 			$p->data['header'] = 'SAML Response Debug-mode';
 			$p->data['RelayStateName'] = 'RelayState';
@@ -214,7 +214,7 @@ class SimpleSAML_Bindings_SAML20_HTTPPost {
 		
 		} else {
 
-			$p = new SimpleSAML_XHTML_Template($this->configuration, 'post.php');
+			$p = new gSimpleSAML_XHTML_Template($this->configuration, 'post.php');
 	
 			$p->data['RelayStateName'] = 'RelayState';
 			$p->data['RelayState'] = $relayState;
@@ -238,11 +238,11 @@ class SimpleSAML_Bindings_SAML20_HTTPPost {
 		
 		$samlResponseXML = base64_decode( $rawResponse );
 
-		SimpleSAML_Utilities::validateXMLDocument($samlResponseXML, 'saml20');
+		gSimpleSAML_Utilities::validateXMLDocument($samlResponseXML, 'saml20');
 		
 		//error_log("Response is: " . $samlResponseXML);
         
-		$samlResponse = new SimpleSAML_XML_SAML20_AuthnResponse($this->configuration, $this->metadata);
+		$samlResponse = new gSimpleSAML_XML_SAML20_AuthnResponse($this->configuration, $this->metadata);
 	
 		$samlResponse->setXML($samlResponseXML);
 		

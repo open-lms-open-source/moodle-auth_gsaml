@@ -13,11 +13,11 @@ if (!defined('MOODLE_INTERNAL')) {
  * @version $ID$
  */
 
-interface SimpleSAML_Logger_LoggingHandler {
+interface gSimpleSAML_Logger_LoggingHandler {
     function log_internal($level,$string);
 }
 
-class SimpleSAML_Logger {
+class gSimpleSAML_Logger {
 	private static $loggingHandler = null;
 	private static $logLevel = null;
 
@@ -101,8 +101,8 @@ class SimpleSAML_Logger {
 		global $SIMPLESAML_INCPREFIX;
 	
 		/* Get the configuration. */
-		$config = SimpleSAML_Configuration::getInstance();
-		assert($config instanceof SimpleSAML_Configuration);
+		$config = gSimpleSAML_Configuration::getInstance();
+		assert($config instanceof gSimpleSAML_Configuration);
 
 		/* Get the metadata handler option from the configuration. */
 		$handler = $config->getValue('logging.handler','syslog');
@@ -128,12 +128,12 @@ class SimpleSAML_Logger {
 		$handler = strtolower($handler);
 
 		if($handler === 'syslog') {
-			$sh = new SimpleSAML_Logger_LoggingHandlerSyslog();
+			$sh = new gSimpleSAML_Logger_LoggingHandlerSyslog();
 
 		} elseif ($handler === 'file')  {
-			$sh = new SimpleSAML_Logger_LoggingHandlerFile();
+			$sh = new gSimpleSAML_Logger_LoggingHandlerFile();
 		} elseif ($handler === 'errorlog')  {
-			$sh = new SimpleSAML_Logger_LoggingHandlerErrorLog();
+			$sh = new gSimpleSAML_Logger_LoggingHandlerErrorLog();
 		} else {
 			throw new Exception('Invalid value for the [logging.handler] configuration option. Unknown handler: ' . $handler);
 		}
@@ -175,7 +175,7 @@ class SimpleSAML_Logger {
 			self::$trackid = self::$TRACKID_FETCHING;
 
 			/* Get the current session. This could cause recursion back to the logger class. */
-			$session = SimpleSAML_Session::getInstance();
+			$session = gSimpleSAML_Session::getInstance();
 
 			/* Update the trackid. */
 			self::$trackid = $session->getTrackId();
@@ -188,7 +188,7 @@ class SimpleSAML_Logger {
 
 
  /*
-class SimpleSAML_Logger {
+class gSimpleSAML_Logger {
 
 
 	private $configuration = null;
@@ -196,7 +196,7 @@ class SimpleSAML_Logger {
 
 	public function __construct() {
 
-		$this->configuration = SimpleSAML_Configuration::getInstance();
+		$this->configuration = gSimpleSAML_Configuration::getInstance();
 		$this->loglevel = $this->configuration->getValue('logging.level');
 		
 		define_syslog_variables();

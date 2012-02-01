@@ -24,7 +24,7 @@
 
  // Absolutly necessary samllibs
  // if you have already defined this one THEN you have prob included the rest already
-if ( !class_exists('SimpleSAML_Utilities') ) {
+if ( !class_exists('gSimpleSAML_Utilities') ) {
     require_once($CFG->dirroot.'/auth/gsaml/samllib/Utilities.php');
     require_once($CFG->dirroot.'/auth/gsaml/samllib/Configuration.php');
     require_once($CFG->dirroot.'/auth/gsaml/samllib/SessionHandler.php');
@@ -64,10 +64,10 @@ if ( !class_exists('SimpleSAML_Utilities') ) {
 function gsaml_send_auth_response($samldata) {
     global $CFG,$SESSION,$USER;
 	
-    SimpleSAML_Configuration::init($CFG->dirroot.'/auth/gsaml/config');
-    $config   = SimpleSAML_Configuration::getInstance();
-    $metadata = SimpleSAML_Metadata_MetaDataStorageHandler::getMetadataHandler();
-    $session  = SimpleSAML_Session::getInstance();
+    gSimpleSAML_Configuration::init($CFG->dirroot.'/auth/gsaml/config');
+    $config   = gSimpleSAML_Configuration::getInstance();
+    $metadata = gSimpleSAML_Metadata_MetaDataStorageHandler::getMetadataHandler();
+    $session  = gSimpleSAML_Session::getInstance();
 	
     try {
         $idpentityid = $metadata->getMetaDataCurrentEntityID('saml20-idp-hosted');
@@ -79,11 +79,11 @@ function gsaml_send_auth_response($samldata) {
         }
 
     } catch (Exception $exception) {
-        SimpleSAML_Utilities::fatalError($session->getTrackID(), 'METADATA', $exception);
+        gSimpleSAML_Utilities::fatalError($session->getTrackID(), 'METADATA', $exception);
     }
 
     if (!$config->getValue('enable.saml20-idp', false)) {
-        SimpleSAML_Utilities::fatalError($session->getTrackID(), 'NOACCESS');
+        gSimpleSAML_Utilities::fatalError($session->getTrackID(), 'NOACCESS');
     }
 
     $rawRequest = $samldata;
@@ -110,8 +110,8 @@ function gsaml_send_auth_response($samldata) {
         print_error('errordecodingsamlrequest','auth_gsaml','', $a);
     }
 
-    SimpleSAML_Utilities::validateXMLDocument($samlRequestXML, 'saml20');
-    $samlRequest = new SimpleSAML_XML_SAML20_AuthnRequest($config, $metadata);
+    gSimpleSAML_Utilities::validateXMLDocument($samlRequestXML, 'saml20');
+    $samlRequest = new gSimpleSAML_XML_SAML20_AuthnRequest($config, $metadata);
     $samlRequest->setXML($samlRequestXML);
 
     if (!is_null($relaystate)) {
@@ -142,14 +142,14 @@ function gsaml_send_auth_response($samldata) {
     $session->doLogin('login'); // was login
     $session->setAttributes($attributes);
     $session->setNameID(array(
-    'value' => SimpleSAML_Utilities::generateID(),
+    'value' => gSimpleSAML_Utilities::generateID(),
     'Format' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient'));
 	
 
     $requestcache = array(
                     'RequestID'     => $authnrequest->getRequestID(),
                     'Issuer'        => $authnrequest->getIssuer(),
-                    'ConsentCookie' => SimpleSAML_Utilities::generateID(),
+                    'ConsentCookie' => gSimpleSAML_Utilities::generateID(),
                     'RelayState'    => $authnrequest->getRelayState());
 
     try {
@@ -166,11 +166,11 @@ function gsaml_send_auth_response($samldata) {
             if (isset($isPassive)) {
                 // Generate an SAML 2.0 AuthNResponse message
                 //   With statusCode: urn:oasis:names:tc:SAML:2.0:status:NoPassive
-                $ar = new SimpleSAML_XML_SAML20_AuthnResponse($config, $metadata);
+                $ar = new gSimpleSAML_XML_SAML20_AuthnResponse($config, $metadata);
                 $authnResponseXML = $ar->generate($idpentityid, $spentityid, $requestcache['RequestID'], null, array(), 'NoPassive');
 
                 // Sending the AuthNResponse using HTTP-Post SAML 2.0 binding
-                $httppost = new SimpleSAML_Bindings_SAML20_HTTPPost($config, $metadata);
+                $httppost = new gSimpleSAML_Bindings_SAML20_HTTPPost($config, $metadata);
                 $httppost->sendResponse($authnResponseXML, $idpentityid, $spentityid, $requestcache['RelayState']);
                 exit;
             }
@@ -179,21 +179,21 @@ function gsaml_send_auth_response($samldata) {
              * Attribute handling
              */
             $attributes = $session->getAttributes();
-            $afilter = new SimpleSAML_XML_AttributeFilter($config, $attributes);
+            $afilter = new gSimpleSAML_XML_AttributeFilter($config, $attributes);
             $afilter->process($idpmetadata, $spmetadata);
             $afilter->processFilter($idpmetadata, $spmetadata);
 
             $filteredattributes = $afilter->getAttributes();
 
             // Generate the SAML 2.0 AuthNResponse message
-            $ar = new SimpleSAML_XML_SAML20_AuthnResponse($config, $metadata);
+            $ar = new gSimpleSAML_XML_SAML20_AuthnResponse($config, $metadata);
             $authnResponseXML = $ar->generate($idpentityid, $spentityid, $requestcache['RequestID'], null, $filteredattributes);
 
             // clean the $SESSION->samlrelaystate so we don't accidently call it again
             unset($SESSION->samlrelaystate);
 
             // Sending the AuthNResponse using HTTP-Post SAML 2.0 binding
-            $httppost = new SimpleSAML_Bindings_SAML20_HTTPPost($config, $metadata);
+            $httppost = new gSimpleSAML_Bindings_SAML20_HTTPPost($config, $metadata);
             $httppost->sendResponse($authnResponseXML, $idmetaindex, $spentityid, $requestcache['RelayState']);
             die; // VERY IMPORTANT stops outputing the rest of the page.
         

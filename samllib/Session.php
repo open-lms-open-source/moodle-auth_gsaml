@@ -16,7 +16,7 @@ if (!defined('MOODLE_INTERNAL')) {
  * @package simpleSAMLphp
  * @version $Id: Session.php 610 2008-06-06 06:04:20Z olavmrk $
  */
-class SimpleSAML_Session {
+class gSimpleSAML_Session {
 
 	const STATE_ONLINE = 1;
 	const STATE_LOGOUTINPROGRESS = 2;
@@ -88,10 +88,10 @@ class SimpleSAML_Session {
 	 */
 	private function __construct() {
 		
-		$configuration = SimpleSAML_Configuration::getInstance();
+		$configuration = gSimpleSAML_Configuration::getInstance();
 		$this->sessionduration = $configuration->getValue('session.duration');
 		
-		$this->trackid = SimpleSAML_Utilities::generateTrackID();
+		$this->trackid = gSimpleSAML_Utilities::generateTrackID();
 
 		$this->dirty = TRUE;
 		$this->addShutdownFunction();
@@ -134,11 +134,11 @@ class SimpleSAML_Session {
 
 
 		/* Create a new session. */
-		self::$instance = new SimpleSAML_Session();
+		self::$instance = new gSimpleSAML_Session();
 
 		/* Save the new session with the session handler. */
-		$sh = SimpleSAML_SessionHandler::getSessionHandler();
-		$sh->set('SimpleSAMLphp_SESSION', self::$instance);
+		$sh = gSimpleSAML_SessionHandler::getSessionHandler();
+		$sh->set('gSimpleSAMLphp_SESSION', self::$instance);
 
 		return self::$instance;
 	}
@@ -182,7 +182,7 @@ class SimpleSAML_Session {
 	// *** *** *** *** *** *** *** *** *** *** ***
 	
 	public function add_sp_session($entityid) {
-		SimpleSAML_Logger::debug('Library - Session: Adding SP session: ' . $entityid);
+		gSimpleSAML_Logger::debug('Library - Session: Adding SP session: ' . $entityid);
 		$this->dirty = TRUE;
 		$this->sp_at_idpsessions[$entityid] = self::STATE_ONLINE;
 	}
@@ -216,7 +216,7 @@ class SimpleSAML_Session {
 	}
 	
 	public function set_sp_logout_completed($entityid) {
-		SimpleSAML_Logger::debug('Library - Session: Setting SP state completed for : ' . $entityid);
+		gSimpleSAML_Logger::debug('Library - Session: Setting SP state completed for : ' . $entityid);
 		$this->dirty = true;
 		$this->sp_at_idpsessions[$entityid] = self::STATE_LOGGEDOUT;
 	}
@@ -224,7 +224,7 @@ class SimpleSAML_Session {
 	
 	public function dump_sp_sessions() {
 		foreach ($this->sp_at_idpsessions AS $entityid => $sp) {
-			SimpleSAML_Logger::debug('Dump sp sessions: ' . $entityid . ' status: ' . $sp);
+			gSimpleSAML_Logger::debug('Dump sp sessions: ' . $entityid . ' status: ' . $sp);
 		}
 	}
 	// *** --- ***
@@ -246,7 +246,7 @@ class SimpleSAML_Session {
 	public function getAuthnRequest($protocol, $requestid) {
 
 
-		SimpleSAML_Logger::debug('Library - Session: Get authnrequest from cache ' . $protocol . ' time:' . time() . '  id: '. $requestid );
+		gSimpleSAML_Logger::debug('Library - Session: Get authnrequest from cache ' . $protocol . ' time:' . time() . '  id: '. $requestid );
 
 		$type = 'AuthnRequest-' . $protocol;
 		$authnRequest = $this->getData($type, $requestid);
@@ -270,7 +270,7 @@ class SimpleSAML_Session {
 	 */
 	public function setAuthnRequest($protocol, $requestid, array $cache) {
 	
-		SimpleSAML_Logger::debug('Library - Session: Set authnrequest ' . $protocol . ' time:' . time() . ' size:' . count($cache) . '  id: '. $requestid );
+		gSimpleSAML_Logger::debug('Library - Session: Set authnrequest ' . $protocol . ' time:' . time() . ' size:' . count($cache) . '  id: '. $requestid );
 
 		$type = 'AuthnRequest-' . $protocol;
 		$this->setData($type, $requestid, $cache);
@@ -281,7 +281,7 @@ class SimpleSAML_Session {
 
 	public function setIdP($idp) {
 	
-		SimpleSAML_Logger::debug('Library - Session: Set IdP to : ' . $idp);
+		gSimpleSAML_Logger::debug('Library - Session: Set IdP to : ' . $idp);
 		$this->dirty = true;
 		$this->idp = $idp;
 	}
@@ -291,7 +291,7 @@ class SimpleSAML_Session {
 	
 
 	public function setSessionIndex($sessionindex) {
-		SimpleSAML_Logger::debug('Library - Session: Set sessionindex: ' . $sessionindex);
+		gSimpleSAML_Logger::debug('Library - Session: Set sessionindex: ' . $sessionindex);
 		$this->dirty = true;
 		$this->sessionindex = $sessionindex;
 	}
@@ -299,7 +299,7 @@ class SimpleSAML_Session {
 		return $this->sessionindex;
 	}
 	public function setNameID($nameid) {
-		SimpleSAML_Logger::debug('Library - Session: Set nameID: ');
+		gSimpleSAML_Logger::debug('Library - Session: Set nameID: ');
 		$this->dirty = true;
 		$this->nameid = $nameid;
 	}
@@ -318,7 +318,7 @@ class SimpleSAML_Session {
 	public function doLogin($authority) {
 		assert('is_string($authority)');
 
-		SimpleSAML_Logger::debug('Session: doLogin("' . $authority . '")');
+		gSimpleSAML_Logger::debug('Session: doLogin("' . $authority . '")');
 
 		$this->dirty = TRUE;
 
@@ -344,7 +344,7 @@ class SimpleSAML_Session {
 	 */
 	public function doLogout() {
 
-		SimpleSAML_Logger::debug('Session: doLogout()');
+		gSimpleSAML_Logger::debug('Session: doLogout()');
 
 		$this->dirty = TRUE;
 
@@ -364,7 +364,7 @@ class SimpleSAML_Session {
 	 */
 	public function setAuthenticated($auth, $authority = null) {
 		
-		SimpleSAML_Logger::debug('Library - Session: Set authenticated ' . ($auth ? 'yes': 'no'). ' authority:' . 
+		gSimpleSAML_Logger::debug('Library - Session: Set authenticated ' . ($auth ? 'yes': 'no'). ' authority:' . 
 			(isset($authority) ? $authority : 'null'));
 
 		if ($auth) {	
@@ -378,7 +378,7 @@ class SimpleSAML_Session {
 	}
 	
 	public function setSessionDuration($duration) {
-		SimpleSAML_Logger::debug('Library - Session: Set session duration ' . $duration);
+		gSimpleSAML_Logger::debug('Library - Session: Set session duration ' . $duration);
 		$this->dirty = true;
 		$this->sessionduration = $duration;
 	}
@@ -408,7 +408,7 @@ class SimpleSAML_Session {
 			// referer:         http://googlealpha.mroomsdev.com/login/index.php
 			
 			
-		SimpleSAML_Logger::debug('Library - Session: Check if session is valid.' .
+		gSimpleSAML_Logger::debug('Library - Session: Check if session is valid.' .
 			' checkauthority:' . (isset($authority) ? $authority : 'null') . 
 			' thisauthority:' . (isset($this->authority) ? $this->authority : 'null') .
 			' isauthenticated:' . ($this->isAuthenticated() ? 'yes' : 'no') . 
@@ -500,7 +500,7 @@ class SimpleSAML_Session {
 	 */
 	public function clean($cleancache = false) {
 	
-		SimpleSAML_Logger::debug('Library - Session: Cleaning Session. Clean cache: ' . ($cleancache ? 'yes' : 'no') );
+		gSimpleSAML_Logger::debug('Library - Session: Cleaning Session. Clean cache: ' . ($cleancache ? 'yes' : 'no') );
 	
 		if ($cleancache) {
 			$this->dataStore = null;
@@ -647,7 +647,7 @@ class SimpleSAML_Session {
 		if($timeout === NULL) {
 			/* Use the default timeout. */
 
-			$configuration = SimpleSAML_Configuration::getInstance();
+			$configuration = gSimpleSAML_Configuration::getInstance();
 
 			$timeout = $configuration->getValue('session.datastore.timeout', NULL);
 			if($timeout !== NULL) {
@@ -752,8 +752,8 @@ class SimpleSAML_Session {
 	 */
 	private static function loadSession() {
 
-		$sh = SimpleSAML_SessionHandler::getSessionHandler();
-		$sessionData = $sh->get('SimpleSAMLphp_SESSION');
+		$sh = gSimpleSAML_SessionHandler::getSessionHandler();
+		$sessionData = $sh->get('gSimpleSAMLphp_SESSION');
 		if($sessionData == NULL) {
 			//print "NO SESSION DATA RETURNED BY loadSession<br>"; // TODO remove this stuff
 			return NULL;
@@ -766,7 +766,7 @@ class SimpleSAML_Session {
 		$sessionData = unserialize($sessionData);
 
 		if(!($sessionData instanceof self)) {
-			SimpleSAML_Logger::warning('Retrieved and deserialized session data was not a session.');
+			gSimpleSAML_Logger::warning('Retrieved and deserialized session data was not a session.');
 			//print "NOT AN INSTANCE OF SELF";
 			return NULL;
 		}
@@ -790,8 +790,8 @@ class SimpleSAML_Session {
 		$this->dirty = FALSE;
 		$sessionData = serialize($this);
 
-		$sh = SimpleSAML_SessionHandler::getSessionHandler();
-		$sh->set('SimpleSAMLphp_SESSION', $sessionData);
+		$sh = gSimpleSAML_SessionHandler::getSessionHandler();
+		$sh->set('gSimpleSAMLphp_SESSION', $sessionData);
 	}
 
 

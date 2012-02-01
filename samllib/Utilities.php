@@ -11,7 +11,7 @@ if (!defined('MOODLE_INTERNAL')) {
  * @package simpleSAMLphp
  * @version $Id: Utilities.php 629 2008-06-11 06:15:45Z olavmrk $
  */
-class SimpleSAML_Utilities {
+class gSimpleSAML_Utilities {
 
 
 	/**
@@ -360,20 +360,20 @@ class SimpleSAML_Utilities {
 	 */
 	public static function fatalError($trackid = 'na', $errorcode = null, Exception $e = null, $level = LOG_ERR) {
 	
-		$config = SimpleSAML_Configuration::getInstance();
+		$config = gSimpleSAML_Configuration::getInstance();
 		
 		// Get the exception message if there is any exception provided.
 		$emsg   = (empty($e) ? 'No exception available' : $e->getMessage());
 		$etrace = (empty($e) ? 'No exception available' : $e->getTraceAsString()); 
 		
 		// Log a error message
-		SimpleSAML_Logger::error($_SERVER['PHP_SELF'].' - UserError: ErrCode:'.(!empty($errorcode) ? $errorcode : 'na').': '.urlencode($emsg) );
+		gSimpleSAML_Logger::error($_SERVER['PHP_SELF'].' - UserError: ErrCode:'.(!empty($errorcode) ? $errorcode : 'na').': '.urlencode($emsg) );
 		
 		$languagefile = null;
 		if (isset($errorcode)) $languagefile = 'errors.php';
 		
 		// Initialize a template
-		$t = new SimpleSAML_XHTML_Template($config, 'error.php', $languagefile);
+		$t = new gSimpleSAML_XHTML_Template($config, 'error.php', $languagefile);
 		
 		
 		$t->data['errorcode'] = $errorcode;
@@ -383,7 +383,7 @@ class SimpleSAML_Utilities {
 		/* Check if there is a valid technical contact email address. */
 		if($config->getValue('technicalcontact_email', 'na@example.org') !== 'na@example.org') {
 			/* Enable error reporting. */
-			$baseurl = SimpleSAML_Utilities::selfURLhost() . '/' . $config->getBaseURL();
+			$baseurl = gSimpleSAML_Utilities::selfURLhost() . '/' . $config->getBaseURL();
 			$t->data['errorreportaddress'] = $baseurl . 'errorreport.php';
 
 		} else {
@@ -774,7 +774,7 @@ class SimpleSAML_Utilities {
 		$res = $dom->loadXML($message);
 		if($res) {
 
-			$config = SimpleSAML_Configuration::getInstance();
+			$config = gSimpleSAML_Configuration::getInstance();
 			$schemaPath = $config->resolvePath('schemas') . '/';
 			$schemaFile = $schemaPath . $schema;
 
@@ -815,13 +815,13 @@ class SimpleSAML_Utilities {
 			throw new Exception('XML contained a doctype declaration.');
 		}
 
-		$enabled = SimpleSAML_Configuration::getInstance()->getValue('debug.validatexml', NULL);
+		$enabled = gSimpleSAML_Configuration::getInstance()->getValue('debug.validatexml', NULL);
 		if($enabled === NULL) {
 			/* Fall back to old configuration option. */
-			$enabled = SimpleSAML_Configuration::getInstance()->getValue('debug.validatesamlmessages', NULL);
+			$enabled = gSimpleSAML_Configuration::getInstance()->getValue('debug.validatesamlmessages', NULL);
 			if($enabled === NULL) {
 				/* Fall back to even older configuration option. */
-				$enabled = SimpleSAML_Configuration::getInstance()->getValue('debug.validatesaml2messages', FALSE);
+				$enabled = gSimpleSAML_Configuration::getInstance()->getValue('debug.validatesaml2messages', FALSE);
 				if(!is_bool($enabled)) {
 					throw new Exception('Expected "debug.validatesaml2messages" to be set to a boolean value.');
 				}
@@ -849,7 +849,7 @@ class SimpleSAML_Utilities {
 		}
 
 		if($result !== '') {
-			SimpleSAML_Logger::warning($result);
+			gSimpleSAML_Logger::warning($result);
 		}
 	}
 
@@ -866,7 +866,7 @@ class SimpleSAML_Utilities {
 	 * @return A non-reversible unique identifier for the user.
 	 */
 	public static function generateUserIdentifier($idpEntityId, $spEntityId, $attributes) {
-		$metadataHandler = SimpleSAML_Metadata_MetaDataStorageHandler::getMetadataHandler();
+		$metadataHandler = gSimpleSAML_Metadata_MetaDataStorageHandler::getMetadataHandler();
 		$idpMetadata = $metadataHandler->getMetaData($idpEntityId, 'saml20-idp-hosted');
 		$spMetadata = $metadataHandler->getMetaData($spEntityId, 'saml20-sp-remote');
 
@@ -896,7 +896,7 @@ class SimpleSAML_Utilities {
 		}
 
 
-		$secretSalt = SimpleSAML_Configuration::getInstance()->getValue('secretsalt');
+		$secretSalt = gSimpleSAML_Configuration::getInstance()->getValue('secretsalt');
 		if(empty($secretSalt)) {
 			throw new Exception('The "secretsalt" configuration option must be set before user' .
 			                    ' ids can be generated.');
@@ -983,7 +983,7 @@ class SimpleSAML_Utilities {
 	 */
 	public static function resolvePath($path, $base = NULL) {
 		if($base === NULL) {
-			$config = SimpleSAML_Configuration::getInstance();
+			$config = gSimpleSAML_Configuration::getInstance();
 			$base =  $config->getBaseDir();
 		}
 
@@ -1029,7 +1029,7 @@ class SimpleSAML_Utilities {
 	 */
 	public static function resolveURL($url, $base = NULL) {
 		if($base === NULL) {
-			$config = SimpleSAML_Configuration::getInstance();
+			$config = gSimpleSAML_Configuration::getInstance();
 			$base = self::selfURLhost() . '/' . $config->getBaseURL();
 		}
 

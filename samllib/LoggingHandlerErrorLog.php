@@ -13,7 +13,7 @@ if (!defined('MOODLE_INTERNAL')) {
  * @package simpleSAMLphp
  * @version $ID$
  */
-class SimpleSAML_Logger_LoggingHandlerErrorLog implements SimpleSAML_Logger_LoggingHandler {
+class gSimpleSAML_Logger_LoggingHandlerErrorLog implements gSimpleSAML_Logger_LoggingHandler {
 
 	/**
 	 * This array contains the mappings from syslog loglevel to names.
@@ -31,8 +31,8 @@ class SimpleSAML_Logger_LoggingHandlerErrorLog implements SimpleSAML_Logger_Logg
 
 
 	function log_internal($level, $string) {
-		$config = SimpleSAML_Configuration::getInstance();
-        assert($config instanceof SimpleSAML_Configuration);
+		$config = gSimpleSAML_Configuration::getInstance();
+        assert($config instanceof gSimpleSAML_Configuration);
         $processname = $config->getValue('logging.processname','simpleSAMLphp');
 		
 		if(array_key_exists($level, self::$levelNames)) {
