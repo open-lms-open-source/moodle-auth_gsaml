@@ -17,7 +17,7 @@ if(array_key_exists('header', $this->data)) {
 <?php
 $onLoad = '';
 if(array_key_exists('autofocus', $this->data)) {
-	$onLoad .= 'gSimpleSAML_focus(\'' . $this->data['autofocus'] . '\');';
+	$onLoad .= 'SimpleSAML_focus(\'' . $this->data['autofocus'] . '\');';
 }
 if($onLoad !== '') {
 	$onLoad = ' onload="' . $onLoad . '"';
