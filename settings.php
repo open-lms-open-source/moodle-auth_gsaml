@@ -14,7 +14,7 @@
 *
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see http://opensource.org/licenses/gpl-3.0.html.
-* 
+*
 * @copyright  Copyright (c) 2009 Moodlerooms Inc. (http://www.moodlerooms.com)
 * @license    http://opensource.org/licenses/gpl-3.0.html     GNU Public License
 */
@@ -29,6 +29,9 @@ defined('MOODLE_INTERNAL') or die('Direct access to this script is forbidden.');
 
 global $OUTPUT,$CFG;
 
+if (!$ADMIN->fulltree) {
+    return;
+}
 
 require_once($CFG->dirroot.'/lib/adminlib.php');
 require_once($CFG->dirroot.'/auth/gsaml/admin_upload.php');
@@ -41,7 +44,7 @@ $domainnamestr = get_string('domainnamestr','auth_gsaml');
 $configs[] = new admin_setting_configtext('domainname', $domainnamestr, "", '', PARAM_RAW, 30);
 
 
-// Private Key Upload Option                                                    
+// Private Key Upload Option
 $rsa_str   = get_string('rsakeystr','auth_gsaml');
 $desc_key  = get_string('desckeystr','auth_gsaml');
 $privatekey_filename = !empty($samlvars->privatekey_basename) ? $samlvars->privatekey_basename : '';
@@ -49,7 +52,7 @@ $privatekey_filename = !empty($samlvars->privatekey_basename) ? $samlvars->priva
 
 // Private Key Upload Option
 $hbutton = $OUTPUT->help_icon('keys','auth_gsaml');
-$configs[] = new admin_setting_upload('privatekey',$rsa_str.' '.$hbutton, $desc_key,null, PARAM_RAW, null, 
+$configs[] = new admin_setting_upload('privatekey',$rsa_str.' '.$hbutton, $desc_key,null, PARAM_RAW, null,
                                       'privatekey',$CFG->wwwroot.'/admin/settings.php?section=authsettinggsaml');
 
 // Certificate Upload Option
@@ -62,8 +65,8 @@ $configs[] = new admin_setting_upload('certificate',$ssl_str.' '.$hbutton, $desc
 $googsettings = get_string('lnktogoogsettings','auth_gsaml');
 if (empty($samlvars->domainname)) {
     $samlvars->domainname = '';
-    $googsettings = get_string('nodomainyet','auth_gsaml'); 
-} 
+    $googsettings = get_string('nodomainyet','auth_gsaml');
+}
 
 // Table of Steps String
 $a = new object();
@@ -80,7 +83,7 @@ $configs[] = new admin_setting_heading('info', $setupinstrctstr.$hbutton, $info)
 
 
 // Moodle Gadget Info and Set Up
-$mgadgethelp = get_string('mgadgethelp','auth_gsaml');                 
+$mgadgethelp = get_string('mgadgethelp','auth_gsaml');
 $hbutton = $OUTPUT->help_icon('mgadget','auth_gsaml');
 $a = new object();
 $a->wwwroot = $CFG->wwwroot;
@@ -92,7 +95,7 @@ $configs[] = new admin_setting_heading('moodlegadget', $mgadgetstr.$hbutton, $ga
 // Diagnostics Info and Options
 $googdiag   = get_string('googdiag','auth_gsaml');
 $hbutton = '';
-$debugopts  = get_string('googdebugopts','auth_gsaml'); 
+$debugopts  = get_string('googdebugopts','auth_gsaml');
 $debugopts .= '<a href="'.$CFG->wwwroot.'/auth/gsaml/view.php?controller=default'.'">'.get_string('thediagnosticspage','auth_gsaml').'</a> for confirmation.';
 $configs[]  = new admin_setting_heading('diagnostics', "Diagnostics ".$hbutton, $debugopts);
 
