@@ -65,7 +65,7 @@ class auth_plugin_gsaml extends auth_plugin_base {
         // if an account exists in Moodle but not Google Apps.
         // Hence, verify that user has a google account. If not create one for them.
         // NOTE: that this may take some time for google to process new users
-        $this->trigger_gsaml_user_auth_event($user, $username);
+        $this->trigger_gsaml_user_auth_event($user, $username, $password);
 
 
         // We are Succesfully logged in and we have a SAML Request
@@ -211,6 +211,9 @@ class auth_plugin_gsaml extends auth_plugin_base {
      * Perform a Google SAML Logout by visiting a page on logout
      */
     function logoutpage_hook() {
+        if (empty($this->config->domainname)) {
+            return;
+        }
         require_logout();
         // Google doesn't have an SSO logout procedure
         // So we visit this and it logs us out of all of the google's services
@@ -358,12 +361,14 @@ class auth_plugin_gsaml extends auth_plugin_base {
      *
      * @param object $user
      * @param string $username
+     * @param string $password
      */
-    function trigger_gsaml_user_auth_event(&$user, $username) {
+    function trigger_gsaml_user_auth_event(&$user, $username, $password) {
         $eventdata = new object();
         $eventdata->username = $username;
         $eventdata->user = clone($user);
         $eventdata->id = $user->id;
+        $eventdata->plainpassword = $password;
 
         events_trigger('auth_gsaml_user_authenticated', $eventdata);
     }
