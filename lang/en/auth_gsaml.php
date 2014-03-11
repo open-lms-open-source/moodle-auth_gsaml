@@ -303,5 +303,6 @@ $string['mgadget_help'] = '<h2>Google to Moodle Gadget</h2>
     Currently there is a known bug regarding the Gadget not updating immediately upon install.
     Developers are looking in to it.
 </div>';
+$string['event_user_authenticated'] = 'User authenticated';
 
 
