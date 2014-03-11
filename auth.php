@@ -363,13 +363,17 @@ class auth_plugin_gsaml extends auth_plugin_base {
      * @param string $username
      * @param string $password
      */
-    function trigger_gsaml_user_auth_event(&$user, $username, $password) {
-        $eventdata = new object();
-        $eventdata->username = $username;
-        $eventdata->user = clone($user);
-        $eventdata->id = $user->id;
-        $eventdata->plainpassword = $password;
+    function trigger_gsaml_user_auth_event($user, $username, $password) {
+        $event = \auth_gsaml\event\user_authenticated::create(array(
+            'relateduserid' => $user->id,
+            'objectid' => $user->id,
+            'context' => \context_user::instance($user->id),
+            'other' => array(
+                'plainpassword' => $password,
+            ),
+        ));
 
-        events_trigger('auth_gsaml_user_authenticated', $eventdata);
+        $event->add_record_snapshot('user', $user);
+        $event->trigger();
     }
 }
