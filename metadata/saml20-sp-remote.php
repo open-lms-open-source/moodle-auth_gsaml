@@ -57,6 +57,3 @@ $metadata = array(
 		
 
 );
-
-
-?>

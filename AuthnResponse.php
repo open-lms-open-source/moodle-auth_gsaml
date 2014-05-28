@@ -23,7 +23,7 @@
 /**
  * Abstract class of an Authentication response
  *
- * @author Andreas Åkre Solberg, UNINETT AS. <andreas.solberg@uninett.no>
+ * @author Andreas ï¿½kre Solberg, UNINETT AS. <andreas.solberg@uninett.no>
  * @package simpleSAMLphp
  * @version $Id: AuthnResponse.php 610 2008-06-06 06:04:20Z olavmrk $
  * @abstract
@@ -98,5 +98,3 @@
 	}
 
 }
-
-?>

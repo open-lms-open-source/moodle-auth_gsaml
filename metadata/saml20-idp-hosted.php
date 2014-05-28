@@ -48,5 +48,3 @@ $metadata = array(
 // I could write override code here... but it might break things.. many things.
 
 );
-
-?>
