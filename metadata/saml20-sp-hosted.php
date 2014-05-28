@@ -34,6 +34,3 @@ $metadata = array(
 	// needs an internal authority to handle the login process, maybe
 
 );
-
-
-?>

@@ -203,4 +203,3 @@ function gsaml_send_auth_response($samldata) {
 	}
 				
 }
-?>

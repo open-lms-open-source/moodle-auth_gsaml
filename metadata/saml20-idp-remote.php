@@ -46,5 +46,3 @@ $metadata = array(
     'simplesaml.attributes'      => false
   )
 );
-  
-?>

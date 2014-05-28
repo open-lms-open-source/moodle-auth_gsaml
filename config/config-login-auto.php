@@ -64,5 +64,3 @@ $config = array (
 	'auth.auto.delay_login' => 0,
 );
 
-
-?>
