@@ -1,9 +1,8 @@
 <?php
 /**
- * eFolio Authentication Plugin
+ * Google SAML Authentication Plugin
  *
- * @author Mark Nielsen
- * @version $Id$
+ * @author Chris Stones
  * @package auth_gsaml
  **/
 
