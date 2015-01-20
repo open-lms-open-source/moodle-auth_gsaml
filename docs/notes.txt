@@ -1,0 +1,15 @@
+Documentation for Developers
+October 2010
+
+
+The auth/gsaml plugin makes extensive use of an early version
+of the  phpSimpleSAML library. Changes have been made to the library
+code. And some folders from inside the SAML library such as the
+(http://simplesamlphp.org/)
+These simple SAML integrated directories live in the auth/gsaml directory now.
+  templates
+  config
+  cert
+  metadata
+  samllib
+

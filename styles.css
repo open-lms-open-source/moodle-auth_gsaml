@@ -1,0 +1,8 @@
+.auth-gsaml .mform {
+    width: 100%;
+}
+
+/* Widen tables so data does not overlap */
+body#page-auth-gsaml-view div.boxwidthnormal  {
+    width: 90%;
+}
