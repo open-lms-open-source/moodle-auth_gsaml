@@ -364,16 +364,8 @@ class auth_plugin_gsaml extends auth_plugin_base {
      * @param string $password
      */
     function trigger_gsaml_user_auth_event($user, $username, $password) {
-        $event = \auth_gsaml\event\user_authenticated::create(array(
-            'relateduserid' => $user->id,
-            'objectid' => $user->id,
-            'context' => \context_user::instance($user->id),
-            'other' => array(
-                'plainpassword' => $password,
-            ),
-        ));
-
-        $event->add_record_snapshot('user', $user);
-        $event->trigger();
+        if (core_component::get_component_directory('tool_googleadmin') !== null) {
+            \tool_googleadmin\user_authenticated::handle($user, $password);
+        }
     }
 }
