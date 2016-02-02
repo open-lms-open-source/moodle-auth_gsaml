@@ -31,6 +31,14 @@
 namespace auth_gsaml\event;
 use core\event\base;
 
+/**
+ * Auth Gsaml user authenticated event definition.
+ *
+ * @package
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @deprecated Do not use.
+ */
 class user_authenticated extends base {
     protected function init() {
         $this->data['objecttable'] = 'user';
