@@ -81,12 +81,12 @@ class auth_plugin_gsaml extends auth_plugin_base {
 
             if (!$user = $DB->get_record('user', array('username'=> $username, 'mnethostid'=> $CFG->mnet_localhost_id))) {
                // User could not be logged in
-               error(get_string('errusernotloggedin','auth_gsaml'));
+               print_error('errusernotloggedin', 'auth_gsaml');
             }
 
             if (!validate_internal_user_password($user, $password)) {
                 // Password not valid
-                error(get_string('pwdnotvalid','auth_gsaml'));
+                print_error('pwdnotvalid', 'auth_gsaml');
             }
 		        
             // Since we don't have another auth plugin hook to redirect a gsaml request in the case
@@ -99,7 +99,6 @@ class auth_plugin_gsaml extends auth_plugin_base {
             // the only time we have to process this code is in the case the user accessed the google service
             // before being logged in.
             global $frm;
-            update_login_count(); 
 		        
             if ($user) {
 
@@ -184,15 +183,13 @@ class auth_plugin_gsaml extends auth_plugin_base {
                     }
                 }
 
-                reset_login_count();
-
                // Added to the regular moodle login procedures
                // Process the SAML Request and redirect to the Service
                // it is asking for.
                // This function should never return unless there's an error.
                if (!gsaml_send_auth_response($SESSION->samlrequestdata)) { // Handles what the Ex. Gmail sercie is asking that the user be authentiated
                     // SAML code failed turn debugging on
-                    error(get_string('samlcodefailed','auth_gsaml'));
+                    print_error('samlcodefailed','auth_gsaml');
                }
 	
 		        
