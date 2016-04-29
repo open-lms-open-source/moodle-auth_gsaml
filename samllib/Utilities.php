@@ -7,7 +7,7 @@ if (!defined('MOODLE_INTERNAL')) {
 /**
  * Misc static functions that is used several places.in example parsing and id generation.
  *
- * @author Andreas Åkre Solberg, UNINETT AS. <andreas.solberg@uninett.no>
+ * @author Andreas ï¿½kre Solberg, UNINETT AS. <andreas.solberg@uninett.no>
  * @package simpleSAMLphp
  * @version $Id: Utilities.php 629 2008-06-11 06:15:45Z olavmrk $
  */
@@ -409,7 +409,7 @@ class gSimpleSAML_Utilities {
 	 */
 	static function ipCIDRcheck($cidr, $ip = null) {
 		if ($ip == null) $ip = $_SERVER['REMOTE_ADDR'];
-		list ($net, $mask) = split ("/", $cidr);
+		list ($net, $mask) = explode ("/", $cidr);
 		
 		$ip_net = ip2long ($net);
 		$ip_mask = ~((1 << (32 - $mask)) - 1);
