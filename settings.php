@@ -69,7 +69,7 @@ if (empty($samlvars->domainname)) {
 }
 
 // Table of Steps String
-$a = new object();
+$a = new stdClass();
 $a->domainname = $samlvars->domainname;
 $a->googsettings = $googsettings;
 $a->wwwroot = $CFG->wwwroot;
@@ -85,7 +85,7 @@ $configs[] = new admin_setting_heading('info', $setupinstrctstr.$hbutton, $info)
 // Moodle Gadget Info and Set Up
 $mgadgethelp = get_string('mgadgethelp','auth_gsaml');
 $hbutton = $OUTPUT->help_icon('mgadget','auth_gsaml');
-$a = new object();
+$a = new stdClass();
 $a->wwwroot = $CFG->wwwroot;
 $gadgetinfo = get_string('gadgetinfostr','auth_gsaml',$a);
 $mgadgetstr = get_string('mgadgetstr','auth_gsaml');

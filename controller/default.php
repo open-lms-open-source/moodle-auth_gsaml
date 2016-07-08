@@ -171,7 +171,7 @@ class auth_gsaml_controller_default extends mr_controller_block {
         // Form processing
         require_once($CFG->dirroot.'/auth/gsaml/form/uploads_form.php');
 
-        $data = new object();
+        $data = new stdClass();
         $mform = new auth_gsaml_uploads_form($url,array('data'=>$data,'key'=>"$key"),'post','');
 
         if ($mform->is_cancelled()) {
