@@ -66,7 +66,7 @@ class admin_setting_upload extends admin_setting {
      * @param $fileref
      * @param $return full path back to teh admin setting (code urlencodes the link after upload file is attached and submitted
      */
-    function admin_setting_upload($name, $visiblename, $description, $defaultsetting, $paramtype=PARAM_RAW, $size=null,$fileref=null,$return='') {
+    function __construct($name, $visiblename, $description, $defaultsetting, $paramtype=PARAM_RAW, $size=null,$fileref=null,$return='') {
         $this->paramtype = $paramtype; // ?? of type file? can't really type it
 
         if (!is_null($size)) {
