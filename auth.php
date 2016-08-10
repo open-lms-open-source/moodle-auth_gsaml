@@ -44,7 +44,7 @@ class auth_plugin_gsaml extends auth_plugin_base {
     /**
      * Constructor.
      */
-    function auth_plugin_gsaml() {
+    function __construct() {
          $this->authtype = 'gsaml';
          $this->loggedin = false;
          $this->config   = get_config('auth/gsaml');
