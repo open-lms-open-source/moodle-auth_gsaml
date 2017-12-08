@@ -28,8 +28,8 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version      = 2017063000;
+$plugin->version      = 2017120800;
 $plugin->requires     = 2017051500;
 $plugin->component    = 'auth_gsaml';
-$plugin->release      = '3.3.1';
-$plugin->dependencies = array('local_mr' => 2017063000);
+$plugin->release      = '3.3.3';
+$plugin->dependencies = array('local_mr' => 2017120800);
