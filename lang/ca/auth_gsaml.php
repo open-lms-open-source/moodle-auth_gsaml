@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -52,7 +52,7 @@ $string['gadgetinfostr'] = 'Utilitzeu l\'URL següent per afegir el giny de Mood
 $string['lnktogoogsettings'] = 'Enllaç als paràmetres de Google';
 $string['nodomainyet'] = 'Encara no s’ha establert cap domini';
 $string['gsamlsetuptableinfo'] = '<ol><li>Establiu com a <b>Nom de domini</b> el vostre nom de domini dels serveis de Google i, seguidament, feu clic a <b>Desa els canvis</b><br/><br/></li>
-<li>Obriu en una finestra nova la pàgina Tauler de control de Google Apps com administrador (<a href="https://www.google.com/a/{$a->domainname}">{$a->googsettings}</a>)<br/><br/></li>
+<li>Obriu en una finestra nova la pàgina Tauler de control de Google Apps com a administrador (<a href="https://www.google.com/a/{$a->domainname}">{$a->googsettings}</a>)<br/><br/></li>
 <li>Feu clic a la pestanya <b>Eines avançades</b>.<br/><br/></li>
 <li>Feu clic a l’enllaç <b>Configura l’inici de sessió únic (SSO)</b> que trobareu al costat d’Autenticació.<br/><br/></li>
 <li>Primer marqueu la casella <b>Habilita l\'inici de sessió únic</b>.<br/><br/></li>
@@ -60,7 +60,7 @@ $string['gsamlsetuptableinfo'] = '<ol><li>Establiu com a <b>Nom de domini</b> el
 <li>Inseriu aquest URL en el camp de text <b>URL de la pàgina de tancament de sessió</b>.<br/><b>{$a->wwwroot}/login/logout.php</b><br/><br/></li>
 <li>Inseriu aquest URL en el camp de text <b>URL de la pàgina de canvi de contrasenya</b>.<br/><b>{$a->wwwroot}/login/change_password.php</b><br/><br/></li>
 <li>Genereu i carregueu un <b>certificat de comprovació a Google (certificat X.509 que conté la clau pública)</b><br/><br/></li>
-<li>Carregueu també la clau privada i el certificat a Moodle i seguidament feu clic a <b>Desa els canvis</b></b><br/></li></ol>';
+<li>Carregueu també la clau privada i el certificat a Moodle i, seguidament, feu clic a <b>Desa els canvis</b></b><br/></li></ol>';
 $string['tomoodle'] = 'A Moodle';
 $string['errusernotloggedin'] = 'No s’ha pogut iniciar la sessió d\'aquest usuari';
 $string['pwdnotvalid'] = 'La contrasenya no és vàlida';
