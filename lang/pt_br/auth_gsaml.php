@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -95,7 +95,7 @@ $string['statustab'] = 'Status';
 $string['logstab'] = 'Registros SAML';
 $string['ssoteststab'] = 'Testes SSO';
 $string['docstab'] = 'Documentação';
-$string['id'] = 'ID';
+$string['id'] = 'Código';
 $string['time'] = 'Hora';
 $string['userid'] = 'UserID';
 $string['ip'] = 'Endereço IP';
