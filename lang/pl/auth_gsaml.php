@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -54,7 +54,7 @@ $string['nodomainyet'] = 'Nie ustawiono żadnej domeny';
 $string['gsamlsetuptableinfo'] = '<ol><li>Jako<b>nazwę domeny</b> należy ustawić nazwę domeny Google użytkownika, a następnie kliknąć przycisk <b>Zapisz zmiany</b><br/><br/></li>
 <li>W nowym oknie należy otworzyć stronę panelu sterowania Google Apps jako administrator (<a href="https://www.google.com/a/{$a->domainname}">{$a->googsettings}</a>)<br/><br/></li>
 <li>Kliknąć kartę <b>Narzędzia zaawansowane</b>.<br/><br/></li>
-<li>Kliknąć łącze <b>Skonfiguruj jednokrotne logowanie SSO</b> obok opcji Uwierzytelnienie.<br/><br/></li>
+<li>Kliknąć łącze <b>Skonfiguruj pojedyncze logowanie</b> obok opcji Uwierzytelnienie.<br/><br/></li>
 <li>Najpierw zaznaczyć pole <b>Włącz jednokrotne logowanie SSO</b>.<br/><br/></li>
 <li>Następnie wstawić następujący adres URL do pola tekstowego <b>Adres URL strony logowania</b>.<br/><b>{$a->wwwroot}/login/index.php</b><br/><br/></li>
 <li>Wstawić następujący adres URL do pola tekstowego <b>Adres URL strony wylogowania</b>.<br/><b>{$a->wwwroot}/login/logout.php</b><br/><br/></li>
@@ -67,7 +67,7 @@ $string['pwdnotvalid'] = 'Niepoprawne hasło';
 $string['samlcodefailed'] = 'Błąd kodu SAML. Aby odkryć przyczynę, włącz debugowanie.';
 $string['samlauthcodefailed'] = 'Błąd kodu uwierzytelnienia SAML. Aby odkryć przyczynę, włącz debugowanie.';
 $string['sixcharmsg'] = 'Hasło użytkownika do integracji przeglądarki Google musi być dłuższe niż 6 znaków. Należy powiadomić administratora o potrzebie zmiany ustawień zasad użytkowania witryny.';
-$string['errordecodingsamlrequest'] = 'Problem z odkodowaniem żądania SAML lub gzinflating (możliwe, że jest to błąd ustawień protokołu HTTPS; należy sprawdzić konfigurację jednokrotnego logowania SSO przeglądarki Google): {$a}';
+$string['errordecodingsamlrequest'] = 'Problem z odkodowaniem żądania SAML lub gzinflating (możliwe, że jest to błąd ustawień protokołu HTTPS; należy sprawdzić konfigurację pojedycznego logowania przeglądarki Google): {$a}';
 $string['googsamldiag'] = 'Diagnostyka Google SAML';
 $string['notadminnoperm'] = 'Użytkownik nie jest administratorem strony. Brak uprawnień do wyświetlenia tych informacji.';
 $string['gdatanotconfig'] = 'Tabela konfiguracji GData nie została ustawiona.';
@@ -93,7 +93,7 @@ $string['privatekeystr'] = 'Klucz prywatny';
 $string['certificatestr'] = 'Certyfikat';
 $string['statustab'] = 'Status';
 $string['logstab'] = 'Dzienniki SAML';
-$string['ssoteststab'] = 'Testy SSO';
+$string['ssoteststab'] = 'Testy pojedynczego logowania';
 $string['docstab'] = 'Dokumentacja';
 $string['id'] = 'ID';
 $string['time'] = 'Czas';
