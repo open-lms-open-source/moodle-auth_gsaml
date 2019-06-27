@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -93,7 +93,7 @@ $string['privatekeystr'] = '秘密鍵';
 $string['certificatestr'] = '証明書';
 $string['statustab'] = 'ステータス';
 $string['logstab'] = 'SAMLログ';
-$string['ssoteststab'] = 'SSOのテスト';
+$string['ssoteststab'] = 'シングルサインオンのテスト';
 $string['docstab'] = 'ドキュメンテーション';
 $string['id'] = 'ID';
 $string['time'] = '時間';
@@ -146,16 +146,12 @@ $string['config_gsaml_help'] = '<h2>完全セットアップ</h2>
     <li>ユーザの認証を選択し、<b>Google認証</b>に移動します。表示されるページに、説明が記載されています。</li>
     <li>Google Partnerページのドメインを入力します。</li>    
     <li>証明書をアップロードします (証明書の作成方法の詳細については、<a
-
-
     href="http://code.google.com/apis/apps/articles/sso-keygen.html">キーの生成に関するGoogleのドキュメント</a>を参照してください)。</li>
     <li>秘密鍵をアップロードします (秘密鍵の作成方法の詳細については、<a
-
-
     href="http://code.google.com/apis/apps/articles/sso-keygen.html">キーの生成に関するGoogleのドキュメント</a>を参照してください)。</li>
     <li>[保存]をクリックします。</li>
-    <li>説明に従って、適切なURLをGoogleのSSOページに追加します。</li>
-    <li>Googleサイトのチェックボックスをオンにして、SSOを有効にします。</li>
+    <li>説明に従って、適切なURLをGoogleのシングルサインオンページに追加します。</li>
+    <li>Googleサイトのチェックボックスをオンにして、シングルサインオンを有効にします。</li>
     <li>Googleサイトで、プロビジョニングAPIを必ず有効にしてください。有効にしないと、ユーザが更新されなくなります。</li>
     <li>Googleサイトで、プロビジョニングAPIが有効になっていることを確認します。</li>
     <li>Google側でユーザアカウントの追加のリクエストが必要がなることがあります。</li>
@@ -205,7 +201,7 @@ $string['diagnostics_help'] = '<h2>Google統合診断</h2>
     <li><a href="#setup">設定テーブルの情報</a></li>
     <li><a href="#gdata">GDataの接続ステータス</a></li>
     <li><a href="#gmail">Gmailブロックの接続テスト</a></li>
-    <li><a href="#saml">SAML SSOのステータステスト</a></li>
+    <li><a href="#saml">SAMLシングルサインオンのステータステスト</a></li>
 </ul>
 
 <h3><a name="setup" href="#setup">設定テーブルの情報</a></h3>
@@ -238,7 +234,7 @@ $string['keys_help'] = '<span style="font-size: 1.2em">
 管理者は、<b>検証証明書</b>を生成して、公開鍵が埋め込まれたX.509フォーマットの証明書をGoogleにアップロードする
 必要があります。
 <a href="http://code.google.com/apis/apps/articles/sso-keygen.html">キーの生成に関するGoogleのドキュメント</a>
-SAML Moodle SSOサービスでは、<b>RSAキー</b>のみが使用される点に注意してください。
+SAML Moodleシングルサインオンサービスでは、<b>RSAキー</b>のみが使用される点に注意してください。
 
 </p>
 </span>
