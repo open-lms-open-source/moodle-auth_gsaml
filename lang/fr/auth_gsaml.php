@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2019 Blackboard Inc. (http://www.blackboard.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -24,7 +24,7 @@ defined('MOODLE_INTERNAL') || die();
 $string['pluginname'] = 'Google SAML Auth';
 $string['blockname'] = 'Authentification Google SAML';
 $string['domainname'] = 'Domaine';
-$string['auth_gsamldescription'] = 'Grâce à ce plug-in d\'authentification, Moodle bénéficie de la technologie d\'authentification unique (SSO) des fournisseurs de services SAML.*';
+$string['auth_gsamldescription'] = 'Grâce à ce plug-in d\'authentification, Moodle bénéficie de la technologie d\'authentification unique des fournisseurs de services SAML.*';
 $string['auth_gsamltitle'] = 'Authentification Google';
 $string['cert'] = 'Certificat';
 $string['key'] = 'Clé de chiffrement RSA';
@@ -54,8 +54,8 @@ $string['nodomainyet'] = 'Aucun domaine configuré';
 $string['gsamlsetuptableinfo'] = '<ol><li>Configurez le <b>nom de domaine</b> pour le nom de domaine de vos services Google, puis cliquez sur <b>Enregistrer les modifications</b><br/><br/></li>
 <li>Dans une nouvelle fenêtre, ouvrez la Console d\'administration de Google Apps en tant qu\'administrateur (<a href="https://www.google.com/a/{$a->domainname}">{$a->googsettings}</a>)<br/><br/></li>
 <li>Cliquez sur l\'onglet <b>Outils avancés</b>.<br/><br/></li>
-<li>À côté d\'Authentification, cliquez sur le lien <b>Activer l\'authentification unique (SSO)</b>.<br/><br/></li>
-<li>Cochez d\'abord la case <b>Activer l\'authentification unique (SSO)</b>.<br/><br/></li>
+<li>À côté d\'Authentification, cliquez sur le lien <b>Activer l\'authentification unique</b>.<br/><br/></li>
+<li>Cochez d\'abord la case <b>Activer l\'authentification unique</b>.<br/><br/></li>
 <li>Ensuite, insérez cette URL dans le champ <b>URL de la page de connexion</b>.<br/><b>{$a->wwwroot}/login/index.php</b><br/><br/></li>
 <li>Insérez cette URL dans le champ <b>URL de la page de déconnexion</b>.<br/><b>{$a->wwwroot}/login/logout.php</b><br/><br/></li>
 <li>Insérez cette URL dans le champ <b>URL de changement de mot de passe</b>.<br/><b>{$a->wwwroot}/login/change_password.php</b><br/><br/></li>
@@ -67,7 +67,7 @@ $string['pwdnotvalid'] = 'Mot de passe incorrect';
 $string['samlcodefailed'] = 'Échec du code SAML, activez le débogage pour en savoir plus';
 $string['samlauthcodefailed'] = 'Échec du code d\'authentification SAML, activez le débogage pour en savoir plus';
 $string['sixcharmsg'] = 'Le mot de passe de l\'intégration Google doit contenir plus de 6 caractères. Demandez à votre administrateur d\'ajuster les règles du site.';
-$string['errordecodingsamlrequest'] = 'Problème de décodage de la requête SAML ou gzinflating (il peut s\'agir d\'une erreur de paramètres https, vérifiez la configuration de votre authentification unique SSO Google) : {$a}';
+$string['errordecodingsamlrequest'] = 'Problème de décodage de la requête SAML ou gzinflating (il peut s\'agir d\'une erreur de paramètres https, vérifiez la configuration de votre authentification unique Google) : {$a}';
 $string['googsamldiag'] = 'Diagnostics SAML Google';
 $string['notadminnoperm'] = 'Vous n\'êtes pas administrateur du site. Vous n\'êtes pas autorisé à consulter cette information.';
 $string['gdatanotconfig'] = 'La table de configuration GData n\'est pas définie.';
@@ -93,7 +93,7 @@ $string['privatekeystr'] = 'Clé privée';
 $string['certificatestr'] = 'Certificat';
 $string['statustab'] = 'État';
 $string['logstab'] = 'Journaux SAML';
-$string['ssoteststab'] = 'Tests SSO';
+$string['ssoteststab'] = 'Tests d\'authentification unique';
 $string['docstab'] = 'Documentation';
 $string['id'] = 'Identifiant';
 $string['time'] = 'Heure';
@@ -146,18 +146,12 @@ d\'authentification Google et de préparation des blocs GData et GMail.</p>
     <li>Sélectionnez l\'authentification des utilisateurs, puis accédez à l\'<b>authentification Google</b> et suivez les instructions indiquées sur la page.</li>
     <li>Saisissez le domaine de votre page partenaire Google.</li>
     <li>Téléchargez le certificat (pour plus d\'informations sur sa création, consultez la <a
-
-
-
     href="http://code.google.com/apis/apps/articles/sso-keygen.html">Documentation Google sur la génération de clé</a>).</li>
     <li>Téléchargez la clé privée (pour plus d\'informations sur sa création, consultez la <a
-
-
-
     href="http://code.google.com/apis/apps/articles/sso-keygen.html">Documentation Google sur la génération de clé</a>).</li>
     <li>Cliquez sur Enregistrer.</li>
-    <li>Suivez les instructions pour ajouter les URL appropriées sur la page SSO Google.</li>
-    <li>Cochez la case sur le site Google pour activer l\'authentification unique SSO.</li>
+    <li>Suivez les instructions pour ajouter les URL appropriées sur la page d\'authentification unique Google.</li>
+    <li>Cochez la case sur le site Google pour activer l\'authentification unique.</li>
     <li>Sur le site Google, assurez-vous que l\'API Provisioning est activée, sinon aucun utilisateur ne sera mis à jour.</li>
     <li>Sur le site Google, assurez-vous que l\'API Provisioning est activée.</li>
     <li>Côté Google, il se peut que vous ayez besoin de demander plus de comptes utilisateurs.</li>
@@ -208,7 +202,7 @@ Seuls les administrateurs disposent d\'une autorisation permettant de visualiser
     <li><a href="#setup">Définition des informations de table</a></li>
     <li><a href="#gdata">État de la connexion GData</a></li>
     <li><a href="#gmail">Test de connexion au bloc GMail</a></li>
-    <li><a href="#saml">Test de l\'état du SSO SAML</a></li>
+    <li><a href="#saml">Test de l\'état de l\'authentification unique SAML</a></li>
 </ul>
 
 <h3><a name="setup" href="#setup">Définition des informations de table</a></h3>
@@ -229,18 +223,18 @@ pouvez réaliser le test que si le débogage est activé. Nous prendrons bientô
 
 </div>
 
-<h3><a name="saml" href="#saml">Test de l\'état du SSO SAML</a></h3>
+<h3><a name="saml" href="#saml">Test de l\'état de l\'authentification unique SAML</a></h3>
 <div class="indent">
-Le test d\'état SAML est une vérification indépendante du processus d\'autorisation SSO. Il n\'a pas encore été mis en place.
+Le test d\'état SAML est une vérification indépendante du processus d\'autorisation avec authentification unique. Il n\'a pas encore été mis en place.
 <!--But with debugging turned on and set to DEBUG_DEVELOPER error information should be revealed upon login -->
 </div>';
 $string['keys'] = 'Clés';
 $string['keys_help'] = '<span style="font-size: 1.2em">
-<h3>Clés SSO Google</h3>
+<h3>Clés d\'authentification unique Google</h3>
 <p>Aussi bien Moodle que Google doivent être en mesure d\'autoriser un accès sécurisé aux ressources importantes.
 L\'administrateur doit générer un <b>Certificat de vérification</b> et télécharger sur Google un certificat au format X.509 avec une clé publique intégrée.
 <a href="http://code.google.com/apis/apps/articles/sso-keygen.html">Documentation Google sur la génération de clé</a>
-Remarque : le service d\'authentification unique (SSO) Moodle SAML n\'utilise que des <b>clés de chiffrement RSA.</b>
+Remarque : le service d\'authentification unique Moodle SAML n\'utilise que des <b>clés de chiffrement RSA.</b>
 
 </p>
 </span>
