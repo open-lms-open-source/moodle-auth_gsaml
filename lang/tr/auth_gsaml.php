@@ -52,7 +52,7 @@ $string['gadgetinfostr'] = 'Moodle Aracını Google Başlangıç Sayfanıza ekle
 $string['lnktogoogsettings'] = 'Google Ayarları Bağlantısı';
 $string['nodomainyet'] = 'Henüz Bir Etki Alanı Belirlenmemiş';
 $string['gsamlsetuptableinfo'] = '<ol><li>Google hizmet etki alanı adınız için <b>Etki Alanı</b>’nı belirleyin, ardından <b>Değişiklikleri Kaydet</b>’i tıklatın<br/><br/></li>
-<li>Yeni bir pencerede Google Apps Denetim Masası sayfasını yönetici olarak açın (<a href="https://www.google.com/a/{$a->domainname}">{$a->googsettings}</a>)<br/><br/></li>
+<li>Yeni bir pencerede Google Apps Kontrol Paneli sayfasını yönetici olarak açın (<a href="https://www.google.com/a/{$a->domainname}">{$a->googsettings}</a>)<br/><br/></li>
 <li><b>Gelişmiş araçlar</b> sekmesini tıklatın.<br/><br/></li>
 <li>Kimlik doğrulamanın yanındaki <b>Tek parolayla oturum açma (SSO) ayarı</b> bağlantısını tıklatın.<br/><br/></li>
 <li>İlk olarak <b>Tek parolayla oturum açmayı etkinleştir</b> kutusunu işaretleyin.<br/><br/></li>
