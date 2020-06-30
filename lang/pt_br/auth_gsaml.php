@@ -48,7 +48,7 @@ $string['uploadkeystr'] = 'Carregar a chave';
 $string['uploadkey'] = 'Carregar chave';
 $string['uploadstr'] = 'Carregar';
 $string['uploadthekey'] = 'Carregar chave';
-$string['gadgetinfostr'] = 'Use a URL a seguir para adicionar o Moodle Gadget à sua página inicial do Google <br/><b>{$a->wwwroot}/auth/gsaml/moodlegadget.php</b>';
+$string['gadgetinfostr'] = 'Use o URL a seguir para adicionar o Moodle Gadget à sua página inicial do Google <br/><b>{$a->wwwroot}/auth/gsaml/moodlegadget.php</b>';
 $string['lnktogoogsettings'] = 'Link para configurações do Google';
 $string['nodomainyet'] = 'Nenhum domínio definido ainda';
 $string['gsamlsetuptableinfo'] = '<ol><li>Defina o <b>Nome de domínio</b> como seu nome de domínio de serviços do Google e depois clique em <b>Salvar alterações</b><br/><br/></li>
@@ -142,28 +142,28 @@ do Gmail.</p>
 <ol>
     <li>Faça login no Moodle como administrador</li>
     <li>Clique em <b>Notificações</b> para atualizar as tabelas de blocos</li>
-    <li>Habilite o plug-in de <b>Autenticação do Google</b> a partir da página de administração "Gerenciar plug-ins"</li>
-    <li>Agora, selecione "Autenticação de usuários" e acesse <b>Autenticação do Google</b>; a página a seguir deverá ter orientações.</li>
+    <li>Habilite o plug-in de <b>Autenticação do Google</b> na página de administração “Gerenciar plug-ins”</li>
+    <li>Agora, selecione “Autenticação de usuários” e acesse <b>Autenticação do Google</b>; a página a seguir deverá ter orientações.</li>
     <li>Acesse seu domínio de página de parceiro do Google</li>
     <li>Carregue o certificado (para obter mais informações sobre a criação do certificado, acesse a <a
-    href="http://code.google.com/apis/apps/articles/sso-keygen.html">Documentação do Google sobre a geração de chaves</a> )</li>
+    href="http://code.google.com/apis/apps/articles/sso-keygen.html">Documentação do Google sobre a geração de chaves</a>)</li>
     <li>Carregue a chave privada (para obter mais informações sobre como criá-la, acesse a <a
     href="http://code.google.com/apis/apps/articles/sso-keygen.html">Documentação do Google sobre a geração de chaves</a>)</li>
-    <li>Clique em "Salvar"</li>
-    <li>Siga as orientações para adicionar os URLs adequados na página de SSO do Google</li>
-    <li>Clique na caixa de seleção no site do Google para habilitar o SSO</li>
+    <li>Clique em “Salvar”</li>
+    <li>Siga as orientações para adicionar os URLs adequados na página de logon único do Google</li>
+    <li>Clique na caixa de seleção no site do Google para habilitar o logon único</li>
     <li>No site do Google, lembre-se de habilitar a API de provisionamento; caso contrário, os usuários não serão atualizados.</li>
     <li>No site do Google, certifique-se de que o provisionamento de API esteja habilitado</li>
     <li>No site do Google, talvez seja necessário solicitar mais contas de usuário</li>
     <li>Volte à página principal do Moodle</li>
-    <li>Clique em "Editar"</li>
+    <li>Clique em “Editar”</li>
     <li>Adicione blocos do GAccess, Gmail e GData à página.</li>
     <li>Clique em <b>Configurações</b> no bloco <b>Google Apps</b>. Preencha as informações de configuração.</li>
-    <li>Clique no link "Status" para confirmar que o seu bloco do Google Apps está configurado corretamente.</li>
-    <li>Acesse Administração do site > Segurança > Políticas do site</li>
-    <li>Marque "Política de senhas"</li>
-    <li>Ajuste o comprimento da senha para 6 ou mais caracteres (obrigatório para a política de senhas do Google)</li>
-    <li>No bloco GData, é necessário adicionar usuários para sincronizar. Faça isso clicando no link "Adicionar usuários para sincronizar" no <b>bloco do Google Apps</b>. Isso ajudará a visualizar o resultado caso você ajuste o cron do bloco do GData para 1 minuto.</li>
+    <li>Clique no link “Status” para confirmar que o seu bloco do Google Apps está configurado corretamente.</li>
+    <li>Acesse Administração do site &gt; Segurança &gt; Políticas do site</li>
+    <li>Marque “Política de senhas”</li>
+    <li>Defina o comprimento da senha para 6 ou mais caracteres (obrigatório para a política de senhas do Google)</li>
+    <li>No bloco GData, é necessário adicionar usuários para sincronizar. Faça isso clicando no link “Adicionar usuários para sincronizar” no <b>bloco do Google Apps</b>. Isso ajudará a visualizar o resultado caso você ajuste o cron do bloco do GData para 1 minuto.</li>
     <li>Para carregar esses usuários do Moodle no Google, você pode executar o cron manualmente acessando admin/cron.php. Os resultados da sincronização devem ser exibidos na leitura.
     <b>Esteja ciente de que a sincronização beta de usuários do Moodle com o Google pode levar <em>MUITO</em> tempo.</b></li>
 </ol>
@@ -179,7 +179,7 @@ do Gmail.</p>
 
 <h4><a name="pre" href="#consider">Considerações (válidas até a versão BETA)</a></h4>
 <ul class="alternate" type="square">
-    <li>O feed do Gmail pode não ser encontrado. Isso provavelmente se deve ao fato da senha do usuário não corresponder à senha do usuário no Google.
+    <li>O feed do Gmail pode não ser encontrado. Isso provavelmente se deve ao fato de a senha do usuário não corresponder à senha do usuário no Google.
     No futuro, isso não será um problema. Por enquanto, lembre-se de sincronizar os usuários com o bloco do Google Apps. O e-mail será atualizado após
     a conexão. No futuro, as mensagens não lidas deverão ser atualizadas em tempo real.</li>
 
@@ -193,7 +193,7 @@ do Gmail.</p>
 </div>';
 $string['diagnostics'] = 'Diagnóstico';
 $string['diagnostics_help'] = '<h2>Diagnóstico de integração do Google</h2>
-<p>A página "Diagnóstico" exibe informações relacionadas ao status de conexão com Gmail, GData e SAML.
+<p>A página “Diagnóstico” exibe informações relacionadas ao status de conexão com Gmail, GData e SAML.
 Apenas administradores têm permissão para visualizar as informações de diagnóstico.</p>
 
 <h3>Índice:</h3>
@@ -201,7 +201,7 @@ Apenas administradores têm permissão para visualizar as informações de diagn
     <li><a href="#setup">Configurar informações de tabela</a></li>
     <li><a href="#gdata">Status de conexão do GData </a></li>
     <li><a href="#gmail">Teste de conexão de bloco do Gmail</a></li>
-    <li><a href="#saml">Teste de status de SSO do SAML</a></li>
+    <li><a href="#saml">Teste de status de logon único do SAML</a></li>
 </ul>
 
 <h3><a name="setup" href="#setup">Informações da tabela de configuração</a></h3>
@@ -269,7 +269,7 @@ $string['mgadget_help'] = '<h2>Gadget do Google para o Moodle</h2>
     <li>Insira o URL do Gadget do Moodle </li>
     <li>O URL tem o formato parecido com <br/><b>http://www.seudominiodomoodle.org/auth/gsaml/moodlegadget.php </b>
     <li> Ela pode ser encontrada nas configurações de <b>Autenticação do Google</b> no bloco de administração</li>
-    <li>Depois de copiar o URL para o campo "URL", clique em <b>Adicionar</b></li>
+    <li>Depois de copiar o URL para o campo “URL”, clique em <b>Adicionar</b></li>
     <li>Clique em <b>Voltar à página inicial</b></li>
     <li>Agora deve ser possível visualizar um bloco que contém um link para o seu site do Moodle</li>
 </ol>
