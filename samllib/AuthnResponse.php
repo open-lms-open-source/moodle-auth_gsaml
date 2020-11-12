@@ -253,7 +253,7 @@ class gSimpleSAML_XML_SAML20_AuthnResponse extends gSimpleSAML_XML_AuthnResponse
                         // M2filechanges:
 			$publickey = @file_get_contents($this->configuration->getPathValue('certdir') . $md['certificate']);
 			if (!$publickey) {
-				throw new Exception("Saml20-idp-remote id: " . $this-issuer . " 'certificate' set to ': " . $md['certificate'] . "', but no certificate found");			
+				throw new Exception("Saml20-idp-remote id: " . ($this->issuer) . " 'certificate' set to ': " . $md['certificate'] . "', but no certificate found");
 			}
 		}
 		/* Validate the signature. */

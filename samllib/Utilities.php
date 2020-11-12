@@ -31,9 +31,7 @@ class gSimpleSAML_Utilities {
 	 * Will return https
 	 */
 	public static function getSelfProtocol() {
-		$s = empty($_SERVER["HTTPS"]) ? ''
-			: ($_SERVER["HTTPS"] == "on") ? "s"
-			: "";
+		$s = (empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on")) ? "s" : "";
 		$protocol = self::strleft(strtolower($_SERVER["SERVER_PROTOCOL"]), "/").$s;
 		return $protocol;
 	}

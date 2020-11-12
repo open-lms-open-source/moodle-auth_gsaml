@@ -44,5 +44,3 @@ class gSimpleSAML_Logger_LoggingHandlerErrorLog implements gSimpleSAML_Logger_Lo
 		error_log($processname.' - '.$levelName . ': ' . $string);
 	}
 }
-
-?>
