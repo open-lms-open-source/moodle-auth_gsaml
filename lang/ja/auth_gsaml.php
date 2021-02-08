@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2020 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -86,12 +86,12 @@ $string['trytoinitgdataconnection'] = 'GdataからGoogleへの接続開始を試
 $string['gsamlsuccess'] = '成功';
 $string['gmailtestresults'] = 'Gmailのテスト結果';
 $string['gmailtestwillnotrun'] = 'MoodleがDEBUG_DEVELOPERモードでない場合、Gmailのテストは実行されません';
-$string['obtainemailfeed'] = 'ユーザ名についてメールのフィードを取得しています : ';
+$string['obtainemailfeed'] = 'ユーザ名についてメールのフィードを取得しています :';
 $string['currfileupload'] = '現在のファイル :';
 $string['nonestr'] = 'なし';
 $string['privatekeystr'] = '秘密鍵';
 $string['certificatestr'] = '証明書';
-$string['statustab'] = 'ステータス';
+$string['statustab'] = '状態';
 $string['logstab'] = 'SAMLログ';
 $string['ssoteststab'] = 'シングルサインオンのテスト';
 $string['docstab'] = 'ドキュメンテーション';
@@ -102,9 +102,9 @@ $string['ip'] = 'IPアドレス';
 $string['course'] = 'コース';
 $string['module'] = 'モジュール';
 $string['cmid'] = 'CMID';
-$string['action'] = '活動';
+$string['action'] = '動作';
 $string['url'] = 'URL';
-$string['info'] = 'インフォメーション';
+$string['info'] = '情報';
 $string['config_gsaml'] = 'Google SAMLを設定中';
 $string['config_gsaml_help'] = '<h2>完全セットアップ</h2>
 
@@ -114,10 +114,10 @@ $string['config_gsaml_help'] = '<h2>完全セットアップ</h2>
 
 <h4>目次 :</h4>
 <ul>
-    <li><a href="#pre">前提条件</a></li>
-    <li><a href="#status">手順</a></li>
-    <li><a href="#expect">想定される結果</a></li>
-    <li><a href="#consider">考慮事項</a></li>
+<li><a href="#pre">前提条件</a></li>
+<li><a href="#status">手順</a></li>
+<li><a href="#expect">想定される結果</a></li>
+<li><a href="#consider">考慮事項</a></li>
 </ul>
 
 <h4><a name="status" href="#status">Google Appsのステータス</a></h4>
@@ -127,66 +127,66 @@ $string['config_gsaml_help'] = '<h2>完全セットアップ</h2>
 <h4><a name="pre" href="#status">前提条件</a></h4>
 <p>
 <ol>
-    <li>GSAML、GAccess、Gmail、GDataコードがインストール済みであること</li>
-    <ul>
-    <li>auth/gsaml</li>
-    <li>blocks/gmail</li>
-    <li>blocks/gdata</li>
-    <li>blocks/gaccess</li>
-    <li>blocks/mgadget (ベータの時点では任意)</li>
-    </ul>
+<li>GSAML、GAccess、Gmail、GDataコードがインストール済みであること</li>
+<ul>
+<li>auth/gsaml</li>
+<li>blocks/gmail</li>
+<li>blocks/gdata</li>
+<li>blocks/gaccess</li>
+<li>blocks/mgadget (ベータの時点では任意)</li>
+</ul>
 </ol>
 </p>
 
 <h4><a name="pre" href="#steps">手順</a></h4>
 <ol>
-    <li>管理者としてMoodleにログインします。</li>
-    <li>[<b>通知</b>]をクリックして、ブロックテーブルを更新します。</li>
-    <li>[プラグインの管理]管理ページで、<b>Google認証</b>プラグインを有効にします。</li>
-    <li>ユーザの認証を選択し、<b>Google認証</b>に移動します。表示されるページに、説明が記載されています。</li>
-    <li>Google Partnerページのドメインを入力します。</li>    
-    <li>証明書をアップロードします (証明書の作成方法の詳細については、<a
-    href="http://code.google.com/apis/apps/articles/sso-keygen.html">キーの生成に関するGoogleのドキュメント</a>を参照してください)。</li>
-    <li>秘密鍵をアップロードします (秘密鍵の作成方法の詳細については、<a
-    href="http://code.google.com/apis/apps/articles/sso-keygen.html">キーの生成に関するGoogleのドキュメント</a>を参照してください)。</li>
-    <li>[保存]をクリックします。</li>
-    <li>説明に従って、適切なURLをGoogleのシングルサインオンページに追加します。</li>
-    <li>Googleサイトのチェックボックスをオンにして、シングルサインオンを有効にします。</li>
-    <li>Googleサイトで、プロビジョニングAPIを必ず有効にしてください。有効にしないと、ユーザが更新されなくなります。</li>
-    <li>Googleサイトで、プロビジョニングAPIが有効になっていることを確認します。</li>
-    <li>Google側でユーザアカウントの追加のリクエストが必要がなることがあります。</li>
-    <li>Moodleのメインページに戻ります。</li>
-    <li>[編集]をクリックします。</li>
-    <li>GAccess、Gmail、GDataの各ブロックをページに追加します。</li>
-    <li><b>Google Apps</b>ブロックの[<b>設定</b>]をクリックします。設定情報を入力します。</li>
-    <li>[ステータス]リンクをクリックして、Google Appsブロックが適切に設定されていることを確認します。</li>
-    <li>[サイト管理] &gt; [セキュリティ] &gt; [サイトポリシー]の順に選択します。</li>
-    <li>[パスワードポリシー]チェックボックスをオンにします。</li>
-    <li>パスワードの長さを6文字以上に設定します (Googleのパスワードポリシーで必須)。</li>
-    <li>GDataブロックで、同期するユーザを追加する必要があります。追加するには、<b>Google Apps
-    ブロック</b>で、[同期するユーザを追加する]リンクをクリックします。GDataブロックのCronを1分に設定すると、結果を容易に確認できます。</li>
-    <li>MoodleユーザをGoogleにアップロードする場合、admin/cron.phpにアクセスして、Cronを手動で実行することもできます。同期の結果が画面に表示されます。
-    <b>このベータでは、MoodleユーザとGoogleとの同期に<em>長い</em>時間がかかることがある点に留意してください。</b></li>
+<li>管理者としてMoodleにログインします。</li>
+<li>[<b>通知</b>]をクリックして、ブロックテーブルを更新します。</li>
+<li>[プラグインの管理]管理ページで、<b>Google認証</b>プラグインを有効にします。</li>
+<li>ユーザの認証を選択し、<b>Google認証</b>に移動します。表示されるページに、説明が記載されています。</li>
+<li>Google Partnerページのドメインを入力します。</li>
+<li>証明書をアップロードします (証明書の作成方法の詳細については、<a
+href="http://code.google.com/apis/apps/articles/sso-keygen.html">キーの生成に関するGoogleのドキュメント</a>を参照してください)。</li>
+<li>秘密鍵をアップロードします (秘密鍵の作成方法の詳細については、<a
+href="http://code.google.com/apis/apps/articles/sso-keygen.html">キーの生成に関するGoogleのドキュメント</a>を参照してください)。</li>
+<li>[保存]をクリックします。</li>
+<li>説明に従って、適切なURLをGoogleのシングルサインオンページに追加します。</li>
+<li>Googleサイトのチェックボックスをオンにして、シングルサインオンを有効にします。</li>
+<li>Googleサイトで、プロビジョニングAPIを必ず有効にしてください。有効にしないと、ユーザが更新されなくなります。</li>
+<li>Googleサイトで、プロビジョニングAPIが有効になっていることを確認します。</li>
+<li>Google側でユーザアカウントの追加のリクエストが必要がなることがあります。</li>
+<li>Moodleのメインページに戻ります。</li>
+<li>[編集]をクリックします。</li>
+<li>GAccess、Gmail、GDataの各ブロックをページに追加します。</li>
+<li><b>Google Apps</b>ブロックの[<b>設定</b>]をクリックします。設定情報を入力します。</li>
+<li>[ステータス]リンクをクリックして、Google Appsブロックが適切に設定されていることを確認します。</li>
+<li>[サイト管理] gt; [セキュリティ] gt; [サイトポリシー]の順に選択します。</li>
+<li>[パスワードポリシー]チェックボックスをオンにします。</li>
+<li>パスワードの長さを6文字以上に設定します (Googleのパスワードポリシーで必須)。</li>
+<li>GDataブロックで、同期するユーザを追加する必要があります。追加するには、<b>Google Apps
+ブロック</b>で、[同期するユーザを追加する]リンクをクリックします。GDataブロックのCronを1分に設定すると、結果を容易に確認できます。</li>
+<li>MoodleユーザをGoogleにアップロードする場合、admin/cron.phpにアクセスして、Cronを手動で実行することもできます。同期の結果が画面に表示されます。
+<b>このベータでは、MoodleユーザとGoogleとの同期に<em>長い</em>時間がかかることがある点に留意してください。</b></li>
 </ol>
 
 <h4><a name="pre" href="#expect">想定される結果</a></h4>
 <ul class="alternate" type="square">
-    <li>任意のGoogleサービスのリンクをクリックするか、Google Partnerページからサービスにアクセスすると、
-    Moodleに対して認証が行われます。</li>
-    <li>ユーザは、MoodleとGoogle Partnerのサービスの両方にログインします。</li>
-    <li>セットアップの詳細については、GSAML設定の<b>診断ページ</b>を参照してください。</li>
+<li>任意のGoogleサービスのリンクをクリックするか、Google Partnerページからサービスにアクセスすると、
+Moodleに対して認証が行われます。</li>
+<li>ユーザは、MoodleとGoogle Partnerのサービスの両方にログインします。</li>
+<li>セットアップの詳細については、GSAML設定の<b>診断ページ</b>を参照してください。</li>
 </ul>
 
 
 <h4><a name="pre" href="#consider">考慮事項 (ベータ版時点)</a></h4>
 <ul class="alternate" type="square">
-    <li>Gmailのフィードが見つからないことがあります。原因としては、ユーザのパスワードがGoogleのユーザパスワードと一致していない可能性が挙げられます。
-    将来、この問題は解消される予定です。現時点では、ユーザとGoogle Appsブロックを必ず同期してください。メールは、ログイン時に
-    更新されます。将来、未読メッセージはリアルタイムで更新されるようになる予定です。</li>
+<li>Gmailのフィードが見つからないことがあります。原因としては、ユーザのパスワードがGoogleのユーザパスワードと一致していない可能性が挙げられます。
+将来、この問題は解消される予定です。現時点では、ユーザとGoogle Appsブロックを必ず同期してください。メールは、ログイン時に
+更新されます。将来、未読メッセージはリアルタイムで更新されるようになる予定です。</li>
 
-    <li>認証順序におけるGoogle認証プラグインのロケーションは重要です。
-    現時点では、Moodleユーザがパスワードを変更した場合、ユーザの認証タイプをオーバーライドする必要があります。
-    この動作は、MNetユーザに影響が生じる可能性があります。この問題の解決策は現在のところ見つかっていません。</li>
+<li>認証順序におけるGoogle認証プラグインのロケーションは重要です。
+現時点では、Moodleユーザがパスワードを変更した場合、ユーザの認証タイプをオーバーライドする必要があります。
+この動作は、MNetユーザに影響が生じる可能性があります。この問題の解決策は現在のところ見つかっていません。</li>
 
 </ul>
 
@@ -198,15 +198,15 @@ $string['diagnostics_help'] = '<h2>Google統合診断</h2>
 
 <h3>目次 :</h3>
 <ul>
-    <li><a href="#setup">設定テーブルの情報</a></li>
-    <li><a href="#gdata">GDataの接続ステータス</a></li>
-    <li><a href="#gmail">Gmailブロックの接続テスト</a></li>
-    <li><a href="#saml">SAMLシングルサインオンのステータステスト</a></li>
+<li><a href="#setup">設定テーブルの情報</a></li>
+<li><a href="#gdata">GDataの接続ステータス</a></li>
+<li><a href="#gmail">Gmailブロックの接続テスト</a></li>
+<li><a href="#saml">SAMLシングルサインオンのステータステスト</a></li>
 </ul>
 
 <h3><a name="setup" href="#setup">設定テーブルの情報</a></h3>
 <div class="indent">
-    一連のテーブルは、MoodleとGoogleの統合に関する現在の設定を表します。値がすべて設定されていることを確認してください。
+一連のテーブルは、MoodleとGoogleの統合に関する現在の設定を表します。値がすべて設定されていることを確認してください。
 </div>
 
 <h3><a name="gdata" href="#gdata">GDataの接続</a></h3>
@@ -240,7 +240,6 @@ SAML Moodleシングルサインオンサービスでは、<b>RSAキー</b>の�
 </span>
 
 <!--
-
 <h4><a name="pem" href="#status">Google Appsのステータス</a></h4>
 <div class="indent">
 
@@ -257,31 +256,31 @@ $string['mgadget_help'] = '<h2>GoogleとMoodleガジェット</h2>
 
 <h3><a name="status" href="#status">Moodleガジェット</a></h3>
 <div class="indent">
-    <em>Moodleガジェット</em>は、Google Partnerのスタートページに埋め込むことができるガジェットです。
+<em>Moodleガジェット</em>は、Google Partnerのスタートページに埋め込むことができるガジェットです。
 
 </div>
 
 
 <p><b>ユーザのスタートページへのインストール手順</b></p>
 <ol>
-    <li>Moodleにログインします。</li>
-    <li><b>Googleサービスへのアクセス</b>ブロックの[<b>Google Partnerページ</b>]をクリックします。</li>
-    <li>[<b>コンテンツの追加</b>]リンクをクリックします。</li>
-    <li>[<b>自分のページに追加</b>]をクリックします。</li>
-    <li>MoodleガジェットのURLを入力します。</li>
-    <li>URLの例を次に示します。<br/><b>http://www.yourmoodedomain.org/auth/gsaml/moodlegadget.php </b>
-    <li>これは、管理ブロックの<b>Google認証</b>の設定で確認できます。</li>
-    <li>URLをURLフィールドにコピーしたら、[<b>追加</b>]をクリックします。</li>
-    <li>[<b>ホームページに戻る</b>]をクリックします。</li>
-    <li>Moodleサイトへのリンクを含むブロックが表示されるようになります。</li>
+<li>Moodleにログインします。</li>
+<li><b>Googleサービスへのアクセス</b>ブロックの[<b>Google Partnerページ</b>]をクリックします。</li>
+<li>[<b>コンテンツの追加</b>]リンクをクリックします。</li>
+<li>[<b>自分のページに追加</b>]をクリックします。</li>
+<li>MoodleガジェットのURLを入力します。</li>
+<li>URLの例を次に示します。<br/><b>http://www.yourmoodedomain.org/auth/gsaml/moodlegadget.php </b>
+<li>これは、管理ブロックの<b>Google認証</b>の設定で確認できます。</li>
+<li>URLをURLフィールドにコピーしたら、[<b>追加</b>]をクリックします。</li>
+<li>[<b>ホームページに戻る</b>]をクリックします。</li>
+<li>Moodleサイトへのリンクを含むブロックが表示されるようになります。</li>
 </ol>
 
 
 
 <h3><a name="status" href="#status">考慮事項 (ベータリリース時点)</a></h3>
 <div class="indent">
-    これは、Google Moodleガジェットのベータプロトタイプです。将来、利便性が大幅に向上するよう開発を継続いたします。
-    現時点では、インストール時にガジェットが即座に更新されないバグが把握されています。
-    この点については、開発者が調査を進めています。
+これは、Google Moodleガジェットのベータプロトタイプです。将来、利便性が大幅に向上するよう開発を継続いたします。
+現時点では、インストール時にガジェットが即座に更新されないバグが把握されています。
+この点については、開発者が調査を進めています。
 </div>';
 $string['event_user_authenticated'] = 'ユーザが認証されました';
