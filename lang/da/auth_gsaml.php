@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2020 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -34,11 +34,11 @@ $string['desckeystr'] = 'Upload RSA-nøglen (pem). Vær opmærksom på, at Moodl
 $string['googauthconfstr'] = 'Google-godkendelseskonfiguration';
 $string['ssl_str'] = 'SSL-signering af certifikat';
 $string['desc_certstr'] = 'Upload X.509-certifikatet. Vær opmærksom på, at dette er den samme fil, som du også skal uploade til Google.';
-$string['setupinstrctstr'] = 'Instruktioner til konfiguration ';
-$string['mgadgetstr'] = 'Moodle Gadget ';
+$string['setupinstrctstr'] = 'Instruktioner til konfiguration';
+$string['mgadgetstr'] = 'Moodle Gadget';
 $string['mgadgethelp'] = 'Moodle Gadget Hjælp';
 $string['googdiag'] = 'Google Integration Diagnostics';
-$string['googdebugopts'] = 'Når du er færdig med at konfigurere, kan du logge på igen og besøge ';
+$string['googdebugopts'] = 'Når du er færdig med at konfigurere, kan du logge på igen og besøge';
 $string['thediagnosticspage'] = 'Siden Diagnosticering';
 $string['notadminnopermin'] = 'Du er ikke administrator. Du har ikke tilladelse til at få vist disse indstillinger.';
 $string['nokeyuploaded'] = 'Der blev ikke uploadet nogen nøgle';
@@ -54,10 +54,10 @@ $string['nodomainyet'] = 'Domæne ikke indstillet endnu';
 $string['gsamlsetuptableinfo'] = '<ol><li>Indstil<b>Domænenavn</b> til din Google-tjenestes domænenavn, og klik derefter på <b>Gem ændringer</b><br/><br/></li>
 <li>Åbn siden med kontrolpanelet for Google Apps i et nyt vindue som administrator (<a href="https://www.google.com/a/{$a->domainname}">{$a->googsettings}</a>)<br/><br/></li>
 <li>Klik på fanen <b>Avancerede værktøjer</b>.<br/><br/></li>
-<li>Klik på linket <b>///Set up single sign-on (SSO)</b> ved siden af Godkendelse.<br/><br/></li>
+<li>Klik på linket <b>///Opsæt enkeltlogon (SSO)</b> ved siden af Godkendelse.<br/><br/></li>
 <li>Markér først feltet <b>///Aktivér enkeltlogon</b>.<br/><br/></li>
-<li>Indsæt nu denne URL i tekstfeltet <b>///Sign-in page URL</b>.<br/><b>{$a->wwwroot}/login/index.php</b><br/><br/></li>
-<li>Indsæt denne URL i tekstfeltet <b>///Sign-out page URL</b>.<br/><b>{$a->wwwroot}/login/logout.php</b><br/><br/></li>
+<li>Indsæt nu denne URL i tekstfeltet <b>///URL til logon-side</b>.<br/><b>{$a->wwwroot}/login/index.php</b><br/><br/></li>
+<li>Indsæt denne URL i tekstfeltet <b>///URL til log ud-side</b>.<br/><b>{$a->wwwroot}/login/logout.php</b><br/><br/></li>
 <li>Indsæt denne URL i tekstfeltet <b>URL til ændring af adgangskode</b>.<br/><b>{$a->wwwroot}/login/change_password.php</b><br/><br/></li>
 <li>Generér og upload et <b>bekræftelsescertifikat til Google (X.509-certifikat med den offentlige nøgle)</b><br/><br/></li>
 <li>Upload også den private nøgle og certifikatet til Moodle, og klik derefter på <b>Gem ændringer</b></b><br/></li></ol>';
@@ -86,7 +86,7 @@ $string['trytoinitgdataconnection'] = 'Prøver at initialisere en forbindelse me
 $string['gsamlsuccess'] = 'Gennemført';
 $string['gmailtestresults'] = 'Resultater af Gmail-test';
 $string['gmailtestwillnotrun'] = 'Gmail-test kan ikke køres, medmindre Moodle er i tilstanden DEBUG_DEVELOPER';
-$string['obtainemailfeed'] = 'Henter e-mailfeed for brugernavn: ';
+$string['obtainemailfeed'] = 'Henter e-mailfeed for brugernavn:';
 $string['currfileupload'] = 'Aktuel fil:';
 $string['nonestr'] = 'Ingen';
 $string['privatekeystr'] = 'Privat nøgle';
@@ -103,13 +103,13 @@ $string['course'] = 'Kursus';
 $string['module'] = 'Modul';
 $string['cmid'] = 'cmid';
 $string['action'] = 'Handling';
-$string['url'] = 'URL-adresse';
+$string['url'] = 'Webadresse';
 $string['info'] = 'Oplysninger';
 $string['config_gsaml'] = 'Konfiguration af Google SAML';
 $string['config_gsaml_help'] = '<h2>Komplet opsætning</h2>
 
 <p>Det kræver en smule konfiguration at opsætte den fulde integration mellem Google og Moodle. Denne hjælpefil bør
-føre dig gennem det meste af processen med at få plugin til Google-godkendelse konfigureret samt få GData-blokken og 
+føre dig gennem det meste af processen med at få plugin til Google-godkendelse konfigureret samt få GData-blokken og
 Gmail-blokken klar.</p>
 
 <h4>Indholdsfortegnelse:</h4>
@@ -120,39 +120,39 @@ Gmail-blokken klar.</p>
 <li><a href="#consider">Overvejelser</a></li>
 </ul>
 
-<h4><a name="status" href="#status">Status for Google Apps</a></h4>
+<h4><a name="status" href="#status">Status for Google-apps</a></h4>
 <div class="indent">
 
 
-<h4><a name="pre" href="#status">Forudsætninger/antagelser</a></h4>
+<h4><a name="pre" href="#status">Forudsætninger/formodninger</a></h4>
 <p>
 <ol>
-<li>GSAML-, GAccess-, Gmail-, GData-kode er blevet installeret</li>
+<li>GSAML, GAccess, Gmail, GData-kode er installeret</li>
 <ul>
-<li>godk/gsaml</li>
-<li>blokke/gmail</li>
-<li>blokke/gdata</li>
-<li>blokke/gaccess</li>
-<li>blokke/mgadget (valgfri fra beta)</li>
+<li>auth/gsaml</li>
+<li>blocks/gmail</li>
+<li>blocks/gdata</li>
+<li>blocks/gaccess</li>
+<li>blocks/mgadget (valgfrit fra og med betaversionen)</li>
 </ul>
 </ol>
 </p>
 
 <h4><a name="pre" href="#steps">Trin</a></h4>
 <ol>
-<li>Log på Moodle som administrator</li>
+<li>Log ind på Moodle som administrator</li>
 <li>Klik på <b>Notifikationer</b> for at opdatere bloktabeller</li>
-<li>Aktivér plugin til <b>Google-godkendelse</b> fra administratorsiden ///Manage Plugins </li>
-<li>Vælg nu brugergodkendelse, gå til <b>Google-godkendelse</b>, der bør være anvisninger på siden, der skal følges.</li>
+<li>Aktivér plugin til <b>Google-godkendelse</b> på administratorsiden Administrer plugins</li>
+<li>Vælg nu brugergodkendelse, gå til <b>Google-godkendelse</b>. Der bør være anvisninger på siden, der skal følges.</li>
 <li>Angiv din Google-partners sidedomæne</li>
-<li>Upload certifikat (for yderligere oplysninger om oprettelse af dette <a
-    href="http://code.google.com/apis/apps/articles/sso-keygen.html">Google-dokumentation angående nøglegenerering</a>)</li>
-<li>Upload privat nøgle (for yderligere oplysninger om at oprette dette besøges <a
-    href="http://code.google.com/apis/apps/articles/sso-keygen.html">Google-dokumentation angående nøglegenerering</a>)</li>
+<li>Upload certifikat (få yderligere oplysninger om oprettelse af dette i <a
+href="http://code.google.com/apis/apps/articles/sso-keygen.html">Google-dokumentation angående nøglegenerering</a>)</li>
+<li>Upload privat nøgle (få yderligere oplysninger om at oprette dette i
+<a      href="http://code.google.com/apis/apps/articles/sso-keygen.html">Google-dokumentation angående nøglegenerering</a>)</li>
 <li>Klik på Gem</li>
-<li>Følg anvisningerne i at føje de korrekte URL\'er til Google SSO-siden</li>
+<li>Følg anvisningerne for at føje de korrekte URL-adresser til Google SSO-siden</li>
 <li>Markér afkrydsningsfeltet på Googles websted for at aktivere SSO</li>
-<li>Sørg for at aktivere klargørings-API\'en på Googles websted, ellers opdateres ingen brugere.</li>
+<li>Sørg for at aktivere klargørings-API\'en på Googles websted. Ellers opdateres ingen brugere.</li>
 <li>Sørg for, at API-klargøring er aktiveret på Googles websted</li>
 <li>Det kan være nødvendigt at anmode om flere brugerkonti på Google-siden</li>
 <li>Vend tilbage til Moodles hovedside</li>
@@ -160,10 +160,10 @@ Gmail-blokken klar.</p>
 <li>Føj GAccess-, Gmail- og GData-blokkene til siden.</li>
 <li>Klik på <b>Indstillinger</b> i blokken <b>Google Apps</b>. Udfyld konfigurationsoplysninger.</li>
 <li>Klik på linket Status for at bekræfte, at Google Apps-blokken er konfigureret korrekt.</li>
-<li>Gå til Webstedsadministration &gt; Sikkerhed &gt; Webstedspolitikker</li>
+<li>Gå til Webstedsadministration gt; Sikkerhed gt; Webstedspolitikker</li>
 <li>Kontrollér adgangskodepolitik</li>
 <li>Indstil adgangskodelængde til 6 eller flere tegn (obligatorisk for Googles adgangskodepolitik)</li>
-<li>I GData-blokken skal du tilføje brugere, der skal synkroniseres. Gør det ved at klikke på linket ///add users to sync i <b>Google Apps
+<li>I GData-blokken skal du tilføje brugere, der skal synkroniseres. Gør det ved at klikke på linket tilføj brugere, der skal synkroniseres, i <b>Google Apps
 -blokken</b>. Det er nemmere at se resultatet, hvis du indstiller          GData-blokkens cron til 1 min.</li>
 <li>For at uploade disse Moodle-brugere til Google kan du køre cron manuelt ved at besøge admin/cron.php. Resultater for synkroniseringen bør blive vist i udlæsningen.
 <b>Vær opmærksom på, at synkronisering af Moodle-brugere med Google fra denne beta kan tage <em>LANG</em> tid.</b></li>
@@ -171,28 +171,28 @@ Gmail-blokken klar.</p>
 
 <h4><a name="pre" href="#expect">Forventede resultater</a></h4>
 <ul class="alternate" type="square">
-<li>Hvis der klikkes på et vilkårligt Google-tjenestelink eller besøges tjenester fra Google-partnerens side,
-godkendes der i forhold til Moodle.</li>
-<li>Brugeren skal være logget på Moodle såvel som Google-partnertjenester</li>
-<li>Se siden <b>Diagnosticering</b> i GSAML-indstillingerne for yderligere oplysninger om opsætningen.</li>
+<li>Hvis der klikkes på et vilkårligt Google-tjenestelink eller besøges tjenester fra Google-partnerens side
+,  godkendes der i forhold til Moodle.
+</li>  <li>Brugeren skal være logget på Moodle såvel som Google-partnertjenester</li>
+<li>Se siden <b>Diagnosticering</b> i GSAML-indstillingerne for at få yderligere oplysninger om opsætningen.</li>
 </ul>
 
 
 <h4><a name="pre" href="#consider">Overvejelser (fra BETA-version)</a></h4>
 <ul class="alternate" type="square">
 <li>Gmail-feed findes muligvis ikke. Det skyldes sandsynligvis, at brugerens adgangskode ikke stemmer overens med Googles brugeradgangskode.
-Fremadrettet vil det ikke være noget problem. Sørg nu for at synkronisere brugere med Google Apps-blokken. E-mail opdateres
-ved logon. Fremadrettet bør ulæste beskeder blive opdateret i realtid.</li>
+Fremover vil det ikke være noget problem. Sørg nu for at synkronisere brugere med Google Apps-blokken. E-mail opdateres
+ved login. Fremover bør ulæste beskeder blive opdateret i realtid.</li>
 
 <li>Placeringen af plugin til Google-godkendelse i godkendelsesrækkefølgen er vigtig.
 Fra dette øjeblik skal den tilsidesætte en brugers godkendelsestype, når en Moodle-bruger ændrer adgangskoder.
-Denne virkemåde kan berøre MNet-brugere. Der er endnu ikke fundet en løsning på dette problem.</li>
+Denne adfærd kan berøre MNet-brugere. Der er endnu ikke fundet en løsning på dette problem.</li>
 
 </ul>
 
 </div>';
 $string['diagnostics'] = 'Diagnosticering';
-$string['diagnostics_help'] = '<h2>Google Integration Diagnostics</h2>
+$string['diagnostics_help'] = '<h2>Diagnosticering af Google-integration</h2>
 <p>Siden Diagnosticering viser oplysninger angående forbindelsesstatus for Gmail, GData og SAML.
 Kun administratorer har tilladelse til at få vist diagnostiske oplysninger.</p>
 
@@ -225,7 +225,7 @@ kunne køre testen, hvis fejlfinding er slået til.  Understøttelse til visning
 <h3><a name="saml" href="#saml">Test af SAML SSO-status</a></h3>
 <div class="indent">
 Testen af SAML-status er en uafhængig kontrol af SSO-godkendelsesprocessen. Den er ikke implementeret endnu.
-<!--But with debugging turned on and set to DEBUG_DEVELOPER error information should be revealed upon login -->
+<!--Med med fejlfinding aktiveret og indstillet til DEBUG_DEVELOPER bør fejloplysninger vises ved logon -->
 </div>';
 $string['keys'] = 'Nøgler';
 $string['keys_help'] = '<span style="font-size: 1.2em">
@@ -264,14 +264,14 @@ $string['mgadget_help'] = '<h2>Google til Moodle Gadget</h2>
 <p><b>Trin til installation på en brugers startside</b></p>
 <ol>
 <li>Log på Moodle</li>
-<li>Klik på <b>///Google Partner Page</b> i blokken <b>///Google Services Access</b> </li>
-<li>Klik på linket <b>///Add Stuff</b></li>
-<li>Klik på <b>///Add my url</b></li>
+<li>Klik på <b>Google-partnerside</b> i blokken <b>Adgang til Google-tjenester</b> </li>
+<li>Klik på linket <b>Tilføj ting</b></li>
+<li>Klik på <b>Tilføj min url</b></li>
 <li>Angiv URL for moodlegadget</li>
 <li>URL er noget i retning af <br/><b>http://www.ditmoodedomæne.org/auth/gsaml/moodlegadget.php </b>
 <li> Den kan findes i indstillingerne for <b>Google-godkendelse</b> i administrationsblokken</li>
 <li>Efter at du har kopieret URL\'en til URL-feltet. Klik på <b>Tilføj</b></li>
-<li>Klik på <b>///Back to homepage</b></li>
+<li>Klik på <b>Tilbage til startside</b></li>
 <li>Du bør nu kunne se en blok med et link til dit Moodle-websted</li>
 </ol>
 

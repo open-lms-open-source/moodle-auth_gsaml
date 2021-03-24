@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2020 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -34,11 +34,11 @@ $string['desckeystr'] = 'RSA anahtarını (pem) yükleyin. Moodle SAML hizmetini
 $string['googauthconfstr'] = 'Google Kimlik Doğrulaması Yapılandırması';
 $string['ssl_str'] = 'SSL İmza Sertifikası';
 $string['desc_certstr'] = 'X.509 Sertifikasını Karşıya Yükleyin. Bunun Google\'a da yükleyeceğiniz dosya ile aynı dosya olduğunu unutmayın.';
-$string['setupinstrctstr'] = 'Kurulum Talimatları ';
-$string['mgadgetstr'] = 'Moodle Aracı ';
+$string['setupinstrctstr'] = 'Kurulum Talimatları';
+$string['mgadgetstr'] = 'Moodle Aracı';
 $string['mgadgethelp'] = 'Moodle Aracı Yardımı';
 $string['googdiag'] = 'Google Entegrasyonu Tanılamaları';
-$string['googdebugopts'] = 'Yapılandırmayı tamamladıktan sonra yeniden giriş yapabilir ve ziyaret edebilirsiniz ';
+$string['googdebugopts'] = 'Yapılandırmayı tamamladıktan sonra yeniden giriş yapabilir ve ziyaret edebilirsiniz';
 $string['thediagnosticspage'] = 'Tanılama Sayfası';
 $string['notadminnopermin'] = 'Yönetici değilsiniz. Bu ayarları görme izniniz yok.';
 $string['nokeyuploaded'] = 'Yüklenmiş bir anahtar yok';
@@ -86,9 +86,9 @@ $string['trytoinitgdataconnection'] = 'Bir GData-Google bağlantısı kurulmaya 
 $string['gsamlsuccess'] = 'Başarılı';
 $string['gmailtestresults'] = 'Gmail Test Sonuçları';
 $string['gmailtestwillnotrun'] = 'Gmail Testi, Moodle DEBUG_DEVELOPER Modu\'nda olmadığı sürece çalışmaz';
-$string['obtainemailfeed'] = 'E-posta akışının alındığı kullanıcı adı: ';
+$string['obtainemailfeed'] = 'E-posta akışının alındığı kullanıcı adı:';
 $string['currfileupload'] = 'Geçerli Dosya:';
-$string['nonestr'] = 'Hiçbiri';
+$string['nonestr'] = 'Yok';
 $string['privatekeystr'] = 'Özel Anahtar';
 $string['certificatestr'] = 'Sertifika';
 $string['statustab'] = 'Durum';
@@ -109,15 +109,15 @@ $string['config_gsaml'] = 'Google SAML Yapılandırılıyor';
 $string['config_gsaml_help'] = '<h2>Kurulumu Tamamla</h2>
 
 <p>Google-Moodle entegrasyonunun tam olarak kurulması için biraz yapılandırma gerekir. Bu yardım dosyası
-Google Kimlik Doğrulama Eklentisinin yapılandırması ve GData bloku ile Gmail blokunun hazır hale getirilmesi sürecinin
+Google Kimlik Doğrulama Eklentisinin yapılandırması ve GData bloku ile Gmail blokunun hazır hâle getirilmesi sürecinin
 büyük bölümünde size yol gösterecektir.</p>
 
 <h4>İçindekiler:</h4>
 <ul>
-    <li><a href="#pre">Ön Koşullar</a></li>
-    <li><a href="#status">Adımlar</a></li>
-    <li><a href="#expect">Beklenen Sonuçlar</a></li>
-    <li><a href="#consider">Değerlendirilmesi Gereken Hususlar</a></li>
+<li><a href="#pre">Ön Koşullar</a></li>
+<li><a href="#status">Adımlar</a></li>
+<li><a href="#expect">Beklenen Sonuçlar</a></li>
+<li><a href="#consider">Değerlendirilmesi Gereken Hususlar</a></li>
 </ul>
 
 <h4><a name="status" href="#status">Google Apps Durumu</a></h4>
@@ -127,66 +127,66 @@ büyük bölümünde size yol gösterecektir.</p>
 <h4><a name="pre" href="#status">Ön koşullar/varsayımlar</a></h4>
 <p>
 <ol>
-    <li>GSAML, GAccess, Gmail, GData kodu yüklendi</li>
-    <ul>
-    <li>auth/gsaml</li>
-    <li>blocks/gmail</li>
-    <li>blocks/gdata</li>
-    <li>blocks/gaccess</li>
-    <li>blocks/mgadget (beta sürümünden itibaren isteğe bağlı)</li>
-    </ul>
+<li>GSAML, GAccess, Gmail, GData kodu yüklendi</li>
+<ul>
+<li>auth/gsaml</li>
+<li>blocks/gmail</li>
+<li>blocks/gdata</li>
+<li>blocks/gaccess</li>
+<li>blocks/mgadget (beta sürümünden itibaren isteğe bağlı)</li>
+</ul>
 </ol>
 </p>
 
 <h4><a name="pre" href="#steps">Adımlar</a></h4>
 <ol>
-    <li>Moodle\'da Yönetici Olarak Oturum Açın</li>
-    <li>Blok tablolarını güncelleştirmek için <b>Bildirimler</b>\'i tıklatın</li>
-    <li>Eklentileri Yönet yönetici sayfasından <b>Google Kimlik Doğrulama</b> eklentisini etkinleştirin</li>
-    <li>Şimdi Kullanıcı Kimlik Doğrulama\'yı Seçin ve <b>Google Kimlik Doğrulama</b>\'ya gidin sayfada izlenecek yönergeler bulunmaktadır.</li>
-    <li>Google iş ortağı sayfanızın etki alanını girin</li>
-    <li>Sertifikayı Yükleyin (bunu oluşturmayla ilgili daha fazla bilgi almak için <a
-    href="http://code.google.com/apis/apps/articles/sso-keygen.html">Anahtar Oluşturmayla İlgili Google Belgeleri</a>\'ne bakın)</li>
-    <li>Özel Anahtarı Yükleyin (bunu oluşturmayla ilgili daha fazla bilgi almak için <a
-    href="http://code.google.com/apis/apps/articles/sso-keygen.html">Anahtar Oluşturmayla İlgili Google Belgeleri</a>\'ni ziyaret edin)</li>
-    <li>Kaydet\'i tıklatın</li>
-    <li>Google SSO sayfasına uygun URL\'leri eklemeyle ilgili talimatları izleyin</li>
-    <li>SSO\'yu etkinleştirmek için Google sitesindeki onay kutusunu tıklatın</li>
-    <li>Google Site üzerinde yetkilendirme API\'sinin etkinleştirildiğine emin olun, aksi takdirde hiçbir kullanıcı güncelleştirilmez.</li>
-    <li>Google Site üzerinde Yetkilendirme API\'sinin Etkin olduğuna emin olun</li>
-    <li>Google Site üzerinde daha çok Kullanıcı hesabı istemeniz gerekebilir</li>
-    <li>Moodle\'ın ana sayfasına dönün</li>
-    <li>Düzenle\'yi tıklatın</li>
-    <li>Sayfaya GAccess, Gmail ve GData bloklarını ekleyin.</li>
-    <li><b>Google Apps</b> blokunda <b>Ayarlar</b>\'ı tıklatın. Yapılandırma bilgilerini girin.</li>
-    <li>Google Apps blokunuzun uygun şekilde ayarlandığını doğrulamak için Durum bağlantısını tıklatın.</li>
-    <li>Site Yönetimi &gt; Güvenlik &gt; Site politikaları</li>
-    <li>Parola Politikasını Okuyun</li>
-    <li>Parola Uzunluğunu en az 6 karakter olacak şekilde ayarlayın (Google\'ın parola politikası için gereklidir)</li>
-    <li>GData blokunda senkronize edilecek kullanıcıları eklemeniz gerekir. Bunu <b>Google Apps
-    blokundaki</b> senkronize edilecek kullanıcıları ekleme bağlantısını tıklatarak yapın. GData bloku cron değerini 1 dakikaya ayarlarsanız sonucu görmenize yardımcı olur.</li>
-    <li>Bu Moodle Kullanıcılarını Google\'a Yüklemek için admin/cron.php dosyasına giderek cron\'u manuel olarak çalıştırabilirsiniz. Senkronizasyon sonuçları okunan değerlerde görünür.
-    <b>Bu beta sürümünden itibaren Moodle Kullanıcılarını Google ile senkronize etmenin <em>uzun</em> sürebileceğini lütfen göz önünde bulundurun.</b></li>
+<li>Moodle\'da Yönetici Olarak Oturum Açın</li>
+<li>Blok tablolarını güncelleştirmek için <b>Bildirimler</b>\'i tıklatın</li>
+<li>Eklentileri Yönet yönetici sayfasından <b>Google Kimlik Doğrulama</b> eklentisini etkinleştirin</li>
+<li>Şimdi Kullanıcı Kimlik Doğrulama\'yı Seçin ve <b>Google Kimlik Doğrulama</b>\'ya gidin sayfada izlenecek yönergeler bulunmaktadır.</li>
+<li>Google iş ortağı sayfanızın etki alanını girin</li>
+<li>Sertifikayı Yükleyin (bunu oluşturmayla ilgili daha fazla bilgi almak için <a
+href="http://code.google.com/apis/apps/articles/sso-keygen.html">Anahtar Oluşturmayla İlgili Google Belgeleri</a>\'ne bakın)</li>
+<li>Özel Anahtarı Yükleyin (bunu oluşturmayla ilgili daha fazla bilgi almak için <a
+href="http://code.google.com/apis/apps/articles/sso-keygen.html">Anahtar Oluşturmayla İlgili Google Belgeleri</a>\'ni ziyaret edin)</li>
+<li>Kaydet\'i tıklatın</li>
+<li>Google SSO sayfasına uygun URL\'leri eklemeyle ilgili talimatları izleyin</li>
+<li>SSO\'yu etkinleştirmek için Google sitesindeki onay kutusunu tıklatın</li>
+<li>Google Site üzerinde yetkilendirme API\'sinin etkinleştirildiğine emin olun, aksi takdirde hiçbir kullanıcı güncelleştirilmez.</li>
+<li>Google Site üzerinde Yetkilendirme API\'sinin Etkin olduğuna emin olun</li>
+<li>Google Site üzerinde daha çok Kullanıcı hesabı istemeniz gerekebilir</li>
+<li>Moodle\'ın ana sayfasına dönün</li>
+<li>Düzenle\'yi tıklatın</li>
+<li>Sayfaya GAccess, Gmail ve GData bloklarını ekleyin.</li>
+<li><b>Google Apps</b> blokunda <b>Ayarlar</b>\'ı tıklatın. Yapılandırma bilgilerini girin.</li>
+<li>Google Apps blokunuzun uygun şekilde ayarlandığını doğrulamak için Durum bağlantısını tıklatın.</li>
+<li>Site Yönetimi &gt; Güvenlik &gt; Site politikaları</li>
+<li>Parola Politikasını Okuyun</li>
+<li>Parola Uzunluğunu en az 6 karakter olacak şekilde ayarlayın (Google\'ın parola politikası için gereklidir)</li>
+<li>GData blokunda senkronize edilecek kullanıcıları eklemeniz gerekir. Bunu <b>Google Apps
+blokundaki</b> senkronize edilecek kullanıcıları ekleme bağlantısını tıklatarak yapın. GData bloku cron değerini 1 dakikaya ayarlarsanız sonucu görmenize yardımcı olur.</li>
+<li>Bu Moodle Kullanıcılarını Google\'a Yüklemek için admin/cron.php dosyasına giderek cron\'u manuel olarak çalıştırabilirsiniz. Senkronizasyon sonuçları okunan değerlerde görünür.
+<b>Bu beta sürümünden itibaren Moodle Kullanıcılarını Google ile senkronize etmenin <em>uzun</em> sürebileceğini lütfen göz önünde bulundurun.</b></li>
 </ol>
 
 <h4><a name="pre" href="#expect">Beklenen Sonuçlar</a></h4>
 <ul class="alternate" type="square">
-    <li>Herhangi bir Google Hizmeti bağlantısının tıklatılması veya Google İş Ortağı sayfasından hizmetlere gidilmesi
-    Moodle\'da Kimlik Doğrulaması yapar.</li>
-    <li>Kullanıcının Google İş Ortağı Hizmetleri\'nin yanı sıra Moodle\'da da oturum açması gerekir.</li>
-    <li>Daha fazla bilgi edinmek için kurulumunuzun GSAML ayarlarında yer alan <b>Tanılamalar Sayfası</b>\'na bakın.</li>
+<li>Herhangi bir Google Hizmeti bağlantısının tıklatılması veya Google İş Ortağı sayfasından hizmetlere gidilmesi
+Moodle\'da Kimlik Doğrulaması yapar.</li>
+<li>Kullanıcının Google İş Ortağı Hizmetleri\'nin yanı sıra Moodle\'da da oturum açması gerekir.</li>
+<li>Daha fazla bilgi edinmek için kurulumunuzun GSAML ayarlarında yer alan <b>Tanılamalar Sayfası</b>\'na bakın.</li>
 </ul>
 
 
 <h4><a name="pre" href="#consider">Değerlendirilmesi Gereken Hususlar (BETA sürümünden itibaren)</a></h4>
 <ul class="alternate" type="square">
-    <li>Gmail akışı bulunmayabilir. Bu, büyük olasılıkla kullanıcının parolasının Google kullanıcı parolası ile eşleşmemesinden kaynaklanabilir.
-    İleride bu sorun olmayacaktır. Şimdilik kullanıcıları Google Apps blokuyla senkronize ettiğinize emin olun. E-posta, oturum açma işleminin
-    ardından güncelleştirilir. İleride, okunmayan iletiler gerçek zamanlı olarak güncelleştirilecektir.</li>
+<li>Gmail akışı bulunmayabilir. Bu, büyük olasılıkla kullanıcının parolasının Google kullanıcı parolası ile eşleşmemesinden kaynaklanabilir.
+İleride bu sorun olmayacaktır. Şimdilik kullanıcıları Google Apps blokuyla senkronize ettiğinize emin olun. E-posta, oturum açma işleminin
+ardından güncelleştirilir. İleride, okunmayan iletiler gerçek zamanlı olarak güncelleştirilecektir.</li>
 
-    <li>Google Kimlik Doğrulama Eklentisi\'nin Kimlik Doğrulama sırasındaki konumu önemlidir.
-    Şu anda bir Moodle kullanıcısı parola değiştirdiğinde kullanıcının kimlik doğrulama türünün değiştirilmesi gerekir.
-    Bu da MNet kullanıcılarını etkileyebilir. Soruna henüz bir çözüm bulunamamıştır.</li>
+<li>Google Kimlik Doğrulama Eklentisi\'nin Kimlik Doğrulama sırasındaki konumu önemlidir.
+Şu anda bir Moodle kullanıcısı parola değiştirdiğinde kullanıcının kimlik doğrulama türünün değiştirilmesi gerekir.
+Bu da MNet kullanıcılarını etkileyebilir. Soruna henüz bir çözüm bulunamamıştır.</li>
 
 </ul>
 
@@ -198,15 +198,15 @@ Tanılama bilgilerini görmeye sadece yöneticilerin izni vardır.</p>
 
 <h3>İçindekiler:</h3>
 <ul>
-    <li><a href="#setup">Kurulum Tablosu Bilgileri</a></li>
-    <li><a href="#gdata">GData Bağlantı Durumu</a></li>
-    <li><a href="#gmail">Gmail Blok Bağlantı Testi</a></li>
-    <li><a href="#saml">SAML SSO Durumu Testi</a></li>
+<li><a href="#setup">Kurulum Tablosu Bilgileri</a></li>
+<li><a href="#gdata">GData Bağlantı Durumu</a></li>
+<li><a href="#gmail">Gmail Blok Bağlantı Testi</a></li>
+<li><a href="#saml">SAML SSO Durumu Testi</a></li>
 </ul>
 
 <h3><a name="setup" href="#setup">Yapılandırma Tablosu Bilgileri</a></h3>
 <div class="indent">
-    Bu tablolar Moodle-Google Entegrasyonunun geçerli yapılandırmasını belirtir. Değerlerin tümünün ayarlandığına emin olun.
+Bu tablolar Moodle-Google Entegrasyonunun geçerli yapılandırmasını belirtir. Değerlerin tümünün ayarlandığına emin olun.
 </div>
 
 <h3><a name="gdata" href="#gdata">GData Bağlantısı </a></h3>
@@ -268,8 +268,8 @@ $string['mgadget_help'] = '<h2>Google-Moodle Aracı</h2>
 <li> <b>Öğe Ekle</b> bağlantısını tıklatın</li>
 <li> <b>Url\'mi ekle</b> öğesini tıklatın</li>
 <li>Moodlegadget URL\'sini girin</li>
-<li>URL, <br/><b>http://www.yourmoodedomain.org/auth/gsaml/moodlegadget.php </b>
-benzeri bir adrestir.<li> Yönetici blokunda <b>Google Kimlik Doğrulama</b> Ayarları</li>\'nda bulunabilir
+<li>URL, şuna benzemektedir: <br/><b>http://www.yourmoodedomain.org/auth/gsaml/moodlegadget.php </b>
+<li> Yönetici blokunda <b>Google Kimlik Doğrulama</b> Ayarları</li>\'nda bulunabilir
 <li>Sonra URL\'yi URL alanına kopyalayın. <b>Ekle</b>\'yi tıklatın</li>
 <li><b>Ana sayfaya geri dön</b> öğesini tıklatın</li>
 <li>Burada Moodle sitenizin bağlantısını içeren bir blok görürsünüz.</li>

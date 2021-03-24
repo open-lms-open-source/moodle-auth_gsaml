@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2020 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2021 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -34,11 +34,11 @@ $string['desckeystr'] = 'Carregueu la clau RSA (pem) Tingueu en compte que el se
 $string['googauthconfstr'] = 'Configuració de l’autenticació de Google';
 $string['ssl_str'] = 'Certificat de signatura SSL';
 $string['desc_certstr'] = 'Carrega el certificat X.509. Aquest és el mateix fitxer que carregareu a Google.';
-$string['setupinstrctstr'] = 'Instruccions de configuració ';
-$string['mgadgetstr'] = 'Giny de Moodle ';
+$string['setupinstrctstr'] = 'Instruccions de configuració';
+$string['mgadgetstr'] = 'Giny de Moodle';
 $string['mgadgethelp'] = 'Ajuda del giny de Moodle';
 $string['googdiag'] = 'Diagnòstic de la integració amb Google';
-$string['googdebugopts'] = 'Un cop acabada la configuració, podeu tornar a iniciar la sessió i consultar ';
+$string['googdebugopts'] = 'Un cop acabada la configuració, podeu tornar a iniciar la sessió i consultar';
 $string['thediagnosticspage'] = 'La pàgina de diagnòstic';
 $string['notadminnopermin'] = 'No sou administrador. No teniu permisos per visualitzar aquests paràmetres.';
 $string['nokeyuploaded'] = 'No s\'ha carregar cap clau.';
@@ -46,7 +46,7 @@ $string['filesnotsaved'] = 'No s’han desat els fitxers.';
 $string['keypathnotsaved'] = 'No s’ha desat el camí de la clau.';
 $string['uploadkeystr'] = 'Carrega la clau';
 $string['uploadkey'] = 'UploadKey';
-$string['uploadstr'] = 'Penja';
+$string['uploadstr'] = 'Càrrega';
 $string['uploadthekey'] = 'Carrega una clau';
 $string['gadgetinfostr'] = 'Utilitzeu l\'URL següent per afegir el giny de Moodle a la pàgina d\'inici de Google<br/><b>{$a->wwwroot}/auth/gsaml/moodlegadget.php</b>';
 $string['lnktogoogsettings'] = 'Enllaç als paràmetres de Google';
@@ -83,20 +83,20 @@ $string['gmailblocknotinstalled'] = 'El bloc Gmail no està instal·lat';
 $string['gmailblockinstalled'] = 'El bloc Gmail està instal·lat\\n';
 $string['gdataapitestresults'] = 'Resultats de la prova d\'API de GData';
 $string['trytoinitgdataconnection'] = 'S’està intentant iniciar una connexió de GData a Google<br/>';
-$string['gsamlsuccess'] = 'Èxit';
+$string['gsamlsuccess'] = 'S\'han fet correctament les assignacions';
 $string['gmailtestresults'] = 'Resultats de la prova de Google';
 $string['gmailtestwillnotrun'] = 'La prova de Gmail no s’executarà si no és que Moodle es troba en mode DEBUG_DEVELOPER';
-$string['obtainemailfeed'] = 'Obtenció de canal de continguts de correu electrònic per al nom d\'usuari: ';
+$string['obtainemailfeed'] = 'Obtenció de canal de continguts de correu electrònic per al nom d\'usuari:';
 $string['currfileupload'] = 'Fitxer actual:';
-$string['nonestr'] = 'Cap';
+$string['nonestr'] = 'Ningun';
 $string['privatekeystr'] = 'Clau privada';
 $string['certificatestr'] = 'Certificat';
 $string['statustab'] = 'Estat';
 $string['logstab'] = 'Registres SAML';
 $string['ssoteststab'] = 'Proves SSO';
 $string['docstab'] = 'Documentació';
-$string['id'] = 'ID';
-$string['time'] = 'Temps';
+$string['id'] = 'Identificador';
+$string['time'] = 'Hora';
 $string['userid'] = 'ID d’usuari';
 $string['ip'] = 'Adreça IP';
 $string['course'] = 'Curs';
@@ -112,7 +112,7 @@ $string['config_gsaml_help'] = '<h2>Configuració completa</h2>
 us guiarà en el procés de configurar el connector d’autenticació de Google, el bloc de GData i
 el bloc de Gmail.</p>
 
-<h4>Taula de continguts:</h4>
+<h4>Índex:</h4>
 <ul>
 <li><a href="#pre">Condicions prèvies</a></li>
 <li><a href="#status">Passos</a></li>
@@ -127,7 +127,7 @@ el bloc de Gmail.</p>
 <h4><a name="pre" href="#status">Condicions prèvies / assumpcions</a></h4>
 <p>
 <ol>
-<li>S’ha instal·lat el codi de GSAML, GAccess, Gmail, GData</li>
+<li>S’ha instal·lat el codi de GSAML, GAccess, Gmail, Gdata</li>
 <ul>
 <li>auth/gsaml</li>
 <li>blocks/gmail</li>
@@ -146,9 +146,9 @@ el bloc de Gmail.</p>
 <li>Per seleccionar l’autenticació d’usuaris, aneu a la pàgina <b>Autenticació de Google</b>, on hi trobareu indicacions.</li>
 <li>Introduïu el domini de la pagina de partner de Google</li>
 <li>Carregueu el certificat (per obtenir més informació sobre com crear-lo <a
-    href="http://code.google.com/apis/apps/articles/sso-keygen.html">Documentació de Google sobre la generació de claus</a>)</li>
+href="http://code.google.com/apis/apps/articles/sso-keygen.html">Documentació de Google sobre la generació de claus</a>)</li>
 <li>Carregueu la clau privada (per obtenir més informació sobre com crear-la <a
-    href="http://code.google.com/apis/apps/articles/sso-keygen.html">Documentació de Google sobre la generació de claus</a>)</li>
+href="http://code.google.com/apis/apps/articles/sso-keygen.html">Documentació de Google sobre la generació de claus</a>)</li>
 <li>Feu clic a Desa</li>
 <li>Seguiu les instruccions per afegir URL a la pàgina SSO de Google</li>
 <li>Feu clic a la casella de verificació del lloc de Google per habilitar SSO</li>
@@ -162,7 +162,7 @@ el bloc de Gmail.</p>
 <li>Feu clic a l\'enllaç d’estat per confirmar que el bloc de Google Apps estigui correctament configurat.</li>
 <li>Aneu a Administració del lloc &gt; Seguretat &gt; Polítiques del lloc</li>
 <li>Política de comprovació de contrasenyes</li>
-<li>Estableix la longitud de la contrasenya en 6 caràcters o més (obligatori segons la política de contrasenyes de Google)</li>
+<li>Establiu la longitud de la contrasenya en 6 caràcters o més (obligatori segons la política de contrasenyes de Google)</li>
 <li>Haureu d’afegir usuaris al bloc GData per a realitzar la sincronització. Feu-ho fent clic a l’enllaç per afegir usuaris per sincronitzar al bloc de <b>Google Apps
 </b>. És útil veure el resultat si establiu el cron del bloc GData en 1 min.</li>
 <li>Per carregar aquests usuaris de Moodle a Google pot ser útil executar el cron manualment anant a admin/cron.php Els resultats de la sincronització han d\'aparèixer als registres.
@@ -196,7 +196,7 @@ $string['diagnostics_help'] = '<h2>Diagnòstic de la integració amb Google</h2>
 <p>La pàgina de diagnòstic proporciona informació sobre l’estat de connexió de Gmail, GData i SAML.
 Només els administradors poden consultar aquesta informació de diagnòstic.</p>
 
-<h3>Taula de continguts:</h3>
+<h3>Índex:</h3>
 <ul>
 <li><a href="#setup">Informació de la taula de configuració</a></li>
 <li><a href="#gdata">Estat de la connexió de GData</a></li>
@@ -225,7 +225,7 @@ executar la prova aquí si la funció de depuració està habilitada. Aviat es p
 <h3><a name="saml" href="#saml">Prova de l’estat d\'SSO de SAML</a></h3>
 <div class="indent">
 La prova de l’estat de SAML és una comprovació independent del procés d\'autorització SSO. Encara no ha estat implementada.
-<!--But with debugging turned on and set to DEBUG_DEVELOPER error information should be revealed upon login -->
+<!--Però amb la depuració habilitada i establerta a DEBUG_DEVELOPER, la informació de l\'error s\'hauria de veure en iniciar sessió -->
 </div>';
 $string['keys'] = 'Claus';
 $string['keys_help'] = '<span style="font-size: 1.2em">
