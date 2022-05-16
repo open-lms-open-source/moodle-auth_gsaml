@@ -14,12 +14,12 @@
 *
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see http://opensource.org/licenses/gpl-3.0.html.
-* 
+*
 * @copyright  Copyright (c) 2009 Open LMS (https://www.openlms.net)
 * @license    http://opensource.org/licenses/gpl-3.0.html     GNU Public License
 * @author Chris Stones
 */
- 
+
 if (!defined('MOODLE_INTERNAL')) {
     die('Direct access to this script is forbidden.');    ///  It must be included from a Moodle page
 }
@@ -34,13 +34,13 @@ require_once($CFG->dirroot.'/auth/gsaml/samllib.php');
 /**
  * SAML Authentication Plugin
  *
- * 
+ *
  * NOTE MOODLE must enforce Google's minium 6 char passwords!
  * http://www.google.com/support/a/bin/answer.py?answer=33386
  */
 class auth_plugin_gsaml extends auth_plugin_base {
-    
-     
+
+
     /**
      * Constructor.
      */
@@ -77,7 +77,14 @@ class auth_plugin_gsaml extends auth_plugin_base {
         if (!empty($SESSION->samlrequestdata) and !empty($SESSION->samlrequest) and $SESSION->samlrequest === true) {
             $SESSION->samlrequest = false;
 
-            add_to_log(SITEID, 'auth_gsaml', 'process samlrequest','','User has accessed gservice first', 0,0);
+            if (empty($CFG->logstore_usestandardlog)) {
+                add_to_log(SITEID, 'auth_gsaml', 'process samlrequest', '', 'User has accessed gservice first', 0, 0);
+            } else {
+                $event = \auth_gsaml\event\samlrequest::create([
+                    'info' => 'useraccesedgservice'
+                ]);
+                $event->trigger();
+            }
 
             if (!$user = $DB->get_record('user', array('username'=> $username, 'mnethostid'=> $CFG->mnet_localhost_id))) {
                // User could not be logged in
@@ -88,7 +95,7 @@ class auth_plugin_gsaml extends auth_plugin_base {
                 // Password not valid
                 print_error('pwdnotvalid', 'auth_gsaml');
             }
-		        
+
             // Since we don't have another auth plugin hook to redirect a gsaml request in the case
             // that the user as tried to access Ex. Gmail before logging in to moodle we must complete
             // the users login procedures and then redirect them out. So we pull in the code from
@@ -99,7 +106,7 @@ class auth_plugin_gsaml extends auth_plugin_base {
             // the only time we have to process this code is in the case the user accessed the google service
             // before being logged in.
             global $frm;
-		        
+
             if ($user) {
 
                 // language setup
@@ -128,8 +135,15 @@ class auth_plugin_gsaml extends auth_plugin_base {
                 }
 
             /// Let's get them all set up.
-                add_to_log(SITEID, 'user', 'login', "view.php?id=$user->id&course=".SITEID,
-                           $user->id, 0, $user->id);
+                if (empty($CFG->logstore_usestandardlog)) {
+                    add_to_log(SITEID, 'user', 'login', "view.php?id=$user->id&course=" . SITEID,
+                        $user->id, 0, $user->id);
+                } else {
+                    $event = \auth_gsaml\event\user_login::create([
+                        'userid' => $user->id
+                    ]);
+                    $event->trigger();
+                }
                 $USER = complete_user_login($user);
 
             /// Prepare redirection
@@ -191,8 +205,8 @@ class auth_plugin_gsaml extends auth_plugin_base {
                     // SAML code failed turn debugging on
                     print_error('samlcodefailed','auth_gsaml');
                }
-	
-		        
+
+
             } else {
                 if (empty($errormsg)) {
                     $errormsg = get_string("invalidlogin");
@@ -203,7 +217,7 @@ class auth_plugin_gsaml extends auth_plugin_base {
         } // else if NO SAML request is made we don't do anything but log in normally
     }
 
-    
+
     /**
      * Perform a Google SAML Logout by visiting a page on logout
      */
@@ -216,14 +230,14 @@ class auth_plugin_gsaml extends auth_plugin_base {
         // So we visit this and it logs us out of all of the google's services
         redirect('https://mail.google.com/a/'.$this->config->domainname.'/?logout');
     }
-    
-    
+
+
     /**
      * Check for a SAML Request if you find one and you are logged in
      * send a SAML Reply. Else continue with the login
      */
     function loginpage_hook() {
-        global $frm,$user,$SESSION,$CFG;  
+        global $frm,$user,$SESSION,$CFG;
 
         // Do we have a SAMLRequest that needs processing?
         // Must common case is that user has already logged into Moodle
@@ -238,14 +252,28 @@ class auth_plugin_gsaml extends auth_plugin_base {
                 $SESSION->samlrequestdata = $_REQUEST['SAMLRequest'];
                 $SESSION->samlrelaystate  = $_REQUEST['RelayState'];
                 $SESSION->samlrequest     = true;
-                add_to_log(SITEID, 'auth_gsaml', 'process samlrequest','','User has saml request but needs login/redirect', 0,0);
+                if (empty($CFG->logstore_usestandardlog)) {
+                    add_to_log(SITEID, 'auth_gsaml', 'process samlrequest', '', 'User has saml request but needs login/redirect', 0, 0);
+                } else {
+                    $event = \auth_gsaml\event\samlrequest::create([
+                        'info' => 'userneedsredirect'
+                    ]);
+                    $event->trigger();
+                }
             }
 
             // Case 1: if your logged in already and the SAML request just needs to
             // be processed go ahead and redirect with authentication.
             if ( isloggedin() and !empty($_REQUEST['SAMLRequest']) ) {
 
-                add_to_log(SITEID, 'auth_gsaml', 'process samlrequest','','User islogged in and samlrequest', 0,0);
+                if (empty($CFG->logstore_usestandardlog)) {
+                    add_to_log(SITEID, 'auth_gsaml', 'process samlrequest', '', 'User islogged in and samlrequest', 0, 0);
+                } else {
+                    $event = \auth_gsaml\event\samlrequest::create([
+                        'info' => 'userislogged'
+                    ]);
+                    $event->trigger();
+                }
 
                 $SESSION->samlrequestdata = $_REQUEST['SAMLRequest'];
                 $SESSION->samlrelaystate  = $_REQUEST['RelayState'];
@@ -267,7 +295,7 @@ class auth_plugin_gsaml extends auth_plugin_base {
      *
      * @return bool Authentication success or failure.
      */
-    function user_login($username, $password) { 
+    function user_login($username, $password) {
         global $CFG,$DB;
         if ($user = $DB->get_record('user', array('username' => $username, 'mnethostid' => $CFG->mnet_localhost_id))) {
             return validate_internal_user_password($user, $password);
@@ -287,16 +315,16 @@ class auth_plugin_gsaml extends auth_plugin_base {
      */
     function user_update_password($user, $newpassword) {
         global $CFG,$FULLME;
-        
+
     	// Enforce 6 char min google password rules.
         // error where page jumps to some random other page
-        // Site Administration > Security > Site policies 
+        // Site Administration > Security > Site policies
         if( strlen($newpassword) < 6 ) {
             $sixchar_msg = get_string('sixcharmsg','auth_gsaml');
             $link = $FULLME;
             notice($sixchar_msg,$link);
         }
-        
+
     	// Check and update on the moodle side
         // If the user is in gsync then when the cron runs
         // their password should be synced up
@@ -328,17 +356,17 @@ class auth_plugin_gsaml extends auth_plugin_base {
 
    /**
      * Confirm the new user as registered. This should normally not be used,
-     * but it may be necessary if the user auth_method is changed to manual 
+     * but it may be necessary if the user auth_method is changed to manual
      * before the user is confirmed.
      */
-    function user_confirm($username, $confirmsecret = null) { 
-    	   
+    function user_confirm($username, $confirmsecret = null) {
+
         $user = get_complete_user_data('username', $username);
 
         if (!empty($user)) {
             if ($user->confirmed) {
                 return AUTH_CONFIRM_ALREADY;
-            } else { 
+            } else {
                 if (!set_field("user", "confirmed", 1, "id", $user->id)) {
                     return AUTH_CONFIRM_FAIL;
                 }

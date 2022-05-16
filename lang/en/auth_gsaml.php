@@ -14,7 +14,7 @@
 *
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see http://opensource.org/licenses/gpl-3.0.html.
-* 
+*
 * @copyright  Copyright (c) 2009 Open LMS (https://www.openlms.net)
 * @license    http://opensource.org/licenses/gpl-3.0.html     GNU Public License
 * @author Chris Stones
@@ -29,7 +29,7 @@ $string['auth_gsamltitle']       = 'Google Authentication'; // needs a change of
 $string['cert']                   = 'Certificate';
 $string['key']                    = 'RSA Key';
 
-// for auth/gsaml/settings.php 
+// for auth/gsaml/settings.php
 $string['domainnamestr'] = 'Domain Name';
 $string['rsakeystr'] = 'RSA Key File';
 $string['desckeystr'] = 'Upload the RSA key (pem) Note that the Moodle SAML service supports RSA signed keys only.';
@@ -55,7 +55,7 @@ $string['uploadthekey'] = 'Upload Key';
 
 $string['gadgetinfostr'] = 'Use the following URL to add the Moodle Gadget to your Google Start Page<br/><b>{$a->wwwroot}/auth/gsaml/moodlegadget.php</b>';
 $string['lnktogoogsettings'] = 'Link to Google Settings';
-$string['nodomainyet'] = 'No Domain Set Yet'; 
+$string['nodomainyet'] = 'No Domain Set Yet';
 $string['gsamlsetuptableinfo'] = '<ol><li>Set the <b>Domain Name</b> to your Google service domain name then click <b>Save Changes</b><br/><br/></li>
 <li>In a new window open Google Apps Control Panel page as admin (<a href="https://www.google.com/a/{$a->domainname}">{$a->googsettings}</a>)<br/><br/></li>
 <li>Click the <b>Advanced tools</b> tab.<br/><br/></li>
@@ -78,7 +78,7 @@ $string['samlcodefailed'] = 'SAML Code Failed turn debugging on to find out why'
 $string['samlauthcodefailed'] = 'SAML Auth Code Failed turn debugging on for more information';
 $string['sixcharmsg'] = 'User Password Must be longer than 6 characters for Google Integration. Tell your Admin to adjust the site policy settings';
 $string['errordecodingsamlrequest'] = 'Problem decoding SAML Request or gzinflating (May be a HTTPS settings error check your Google SSO configuration): {$a}';
- 
+
 // diagnostics
 $string['googsamldiag'] = 'Google SAML Diagnostics';
 $string['notadminnoperm'] = 'You are not a Site Admin. You do not have permission to view this information';
@@ -112,17 +112,24 @@ $string['docstab'] = 'Documentation';
 $string['auth_gsaml_report_gsamllogs'] = '';
 
 // auth/gsaml logs_action strings
-$string['id']   = 'ID';
-$string['time']   = 'Time';
+$string['id'] = 'ID';
+$string['time'] = 'Time';
 $string['userid'] = 'UserID';
-$string['ip']     = 'IP Address';
+$string['ip'] = 'IP Address';
 $string['course'] = 'Course';
 $string['module'] = 'Module';
-$string['cmid']   = 'cmid';
+$string['cmid'] = 'cmid';
 $string['action'] = 'Action';
-$string['url']    = 'URL';
-$string['info']   = 'Information';
-
+$string['url'] = 'URL';
+$string['info'] = 'Information';
+$string['contextinstanceid'] = 'Instance ID';
+$string['courseid'] = 'Course ID';
+$string['eventname'] = 'Event Name';
+$string['otherlog'] = 'Other';
+$string['useraccesedgservice'] = 'User has accessed gservice first';
+$string['userneedsredirect'] = 'User has saml request but needs login/redirect';
+$string['userislogged'] = 'User islogged in and samlrequest';
+$string['login'] = 'Login';
 
 // help files
 $string['config_gsaml'] = 'Configuring Google SAML';

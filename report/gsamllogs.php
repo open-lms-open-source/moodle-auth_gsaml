@@ -18,7 +18,7 @@
  * @copyright  Copyright (c) 2009 Open LMS (https://www.openlms.net)
  * @license    http://opensource.org/licenses/gpl-3.0.html     GNU Public License
  */
- 
+
 /**
  * A report for viewing the auth/gsaml actions for debugging and testing purposes
  *
@@ -26,7 +26,7 @@
  * add_to_log(SITEID, 'auth_gsaml', 'process samlrequest','','255 chars of info here', 0,0);
  *
  * @package auth_gsaml
- * @author Chris Stones
+ * @author  Chris Stones
  */
 class auth_gsaml_report_gsamllogs extends mr_report_abstract {
 
@@ -36,11 +36,11 @@ class auth_gsaml_report_gsamllogs extends mr_report_abstract {
      * @return void
      */
     public function init() {
-        $this->config->set(array(
+        $this->config->set([
             'export' => '**',
             'perpage' => true,
-            'perpageopts' => array('all', 1, 5, 10, 50,100),
-        ));
+            'perpageopts' => ['all', 1, 5, 10, 50,100]
+        ]);
     }
 
     /**
@@ -58,19 +58,31 @@ class auth_gsaml_report_gsamllogs extends mr_report_abstract {
      * @return void
      */
     public function table_init() {
-        $this->url->params(array('controller' => 'default', 'action' => 'logs'));
+        $this->url->params(['controller' => 'default', 'action' => 'logs']);
         $this->table = new mr_html_table($this->preferences, $this->url, 'time');
-        $this->table->add_column('id',     get_string('id',    'auth_gsaml'))
-                    ->add_column('time',   get_string('time',  'auth_gsaml'))
-                    ->add_column('userid', get_string('userid','auth_gsaml'))
-                    ->add_column('ip',     get_string('ip',    'auth_gsaml'))
-                    ->add_column('course', get_string('course','auth_gsaml'))
-                    ->add_column('cmid',   get_string('cmid',  'auth_gsaml'))
-                    ->add_column('action', get_string('action','auth_gsaml'))
-                    ->add_column('info',   get_string('info',  'auth_gsaml'));
+        if (empty($CFG->logstore_usestandardlog)) {
+            // Legacy log usage.
+            $this->table->add_column('id', get_string('id', 'auth_gsaml'))
+                ->add_column('time', get_string('time', 'auth_gsaml'))
+                ->add_column('userid', get_string('userid', 'auth_gsaml'))
+                ->add_column('ip', get_string('ip', 'auth_gsaml'))
+                ->add_column('course', get_string('course', 'auth_gsaml'))
+                ->add_column('cmid', get_string('cmid', 'auth_gsaml'))
+                ->add_column('action', get_string('action', 'auth_gsaml'))
+                ->add_column('info', get_string('info', 'auth_gsaml'));
+        } else {
+            // Standard log usage.
+            $this->table->add_column('id', get_string('id', 'auth_gsaml'))
+                ->add_column('timecreated', get_string('time', 'auth_gsaml'))
+                ->add_column('userid', get_string('userid', 'auth_gsaml'))
+                ->add_column('ip', get_string('ip', 'auth_gsaml'))
+                ->add_column('courseid', get_string('courseid', 'auth_gsaml'))
+                ->add_column('contextinstanceid', get_string('contextinstanceid', 'auth_gsaml'))
+                ->add_column('action', get_string('action', 'auth_gsaml'))
+                ->add_column('eventname', get_string('eventname', 'auth_gsaml'))
+                ->add_column('other', get_string('otherlog', 'auth_gsaml'));
+        }
     }
-
-
 
     /**
      * A hook into the rendering of the table.
@@ -84,10 +96,9 @@ class auth_gsaml_report_gsamllogs extends mr_report_abstract {
     public function output_wrapper($tablehtml) {
         $head = '<span class="widereportbox">';
         $tail = '</span>';
-        return $head.$tablehtml.$tail;
+        return $head . $tablehtml . $tail;
     }
 
-    
     /**
      * Add a row to the table
      *
@@ -99,7 +110,6 @@ class auth_gsaml_report_gsamllogs extends mr_report_abstract {
         $this->table->add_row($row);
     }
 
-
     /**
      * Filter setup
      *
@@ -107,32 +117,47 @@ class auth_gsaml_report_gsamllogs extends mr_report_abstract {
      */
     public function filter_init() {
         $this->filter = new mr_html_filter($this->preferences, $this->url);
-        $this->filter->new_text('info', 'Info');
-        $this->filter->new_text('userid','userid');
-        $this->filter->new_text('course', 'course');
+        if (empty($CFG->logstore_usestandardlog)) {
+            // Legacy log usage.
+            $this->filter->new_text('info', 'Info');
+            $this->filter->new_text('userid', 'userid');
+            $this->filter->new_text('course', 'course');
+        } else {
+            // Standard log usage.
+            $this->filter->new_text('eventname', 'Info');
+            $this->filter->new_text('userid', 'userid');
+            $this->filter->new_text('courseid', 'courseid');
+        }
         $this->filter->new_daterange('time', 'Times');
     }
-
 
     /**
      * Pull logs only from auth/gsaml actions
      */
     public function get_sql($fields, $filtersql, $filterparams) {
-        global $CFG,$SESSION;
+        global $CFG;
 
         $sql = '';
+        $component = $this->get_component();
 
-        $select = "SELECT ".$fields;
-        $from   = "FROM {log}";
-        $where  = "WHERE module='auth_gsaml' ";
+        $select = 'SELECT ' . $fields;
+        if (empty($CFG->logstore_usestandardlog)) {
+            // Legacy log usage.
+            $from = "FROM {log}";
+            $where = "WHERE module='$component' ";
+        } else {
+            // Standard log usage.
+            $from = "FROM {logstore_standard_log}";
+            $where = "WHERE component='$component' ";
+        }
 
-        // if filter sql exists..
+        // if filter sql exists.
         if (!empty($filtersql)) {
             $where .= " AND $filtersql";
         }
 
-        $sql = $select.' '.$from.' '.$where;
-        return array($sql,$filterparams);
+        $sql .= $select . ' '. $from . ' ' . $where;
+        return [$sql, $filterparams];
     }
 
      /**
@@ -143,4 +168,3 @@ class auth_gsaml_report_gsamllogs extends mr_report_abstract {
         return $this->fsql;
      }
 }
-
