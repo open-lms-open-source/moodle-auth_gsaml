@@ -25,7 +25,7 @@ namespace auth_gsaml\event;
 
 defined('MOODLE_INTERNAL') || die();
 
-class samlrequest extends \core\event\base {
+class samlrequest_processed extends \core\event\base {
     protected function init() {
         $this->data['crud'] = 'r'; // c(reate), r(ead), u(pdate), d(elete)
         $this->data['edulevel'] = self::LEVEL_PARTICIPATING;

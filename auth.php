@@ -80,7 +80,7 @@ class auth_plugin_gsaml extends auth_plugin_base {
             if (empty($CFG->logstore_usestandardlog)) {
                 add_to_log(SITEID, 'auth_gsaml', 'process samlrequest', '', 'User has accessed gservice first', 0, 0);
             } else {
-                $event = \auth_gsaml\event\samlrequest::create([
+                $event = \auth_gsaml\event\samlrequest_processed::create([
                     'info' => 'useraccesedgservice'
                 ]);
                 $event->trigger();
@@ -139,7 +139,7 @@ class auth_plugin_gsaml extends auth_plugin_base {
                     add_to_log(SITEID, 'user', 'login', "view.php?id=$user->id&course=" . SITEID,
                         $user->id, 0, $user->id);
                 } else {
-                    $event = \auth_gsaml\event\user_login::create([
+                    $event = \auth_gsaml\event\user_loggedin::create([
                         'userid' => $user->id
                     ]);
                     $event->trigger();
@@ -255,7 +255,7 @@ class auth_plugin_gsaml extends auth_plugin_base {
                 if (empty($CFG->logstore_usestandardlog)) {
                     add_to_log(SITEID, 'auth_gsaml', 'process samlrequest', '', 'User has saml request but needs login/redirect', 0, 0);
                 } else {
-                    $event = \auth_gsaml\event\samlrequest::create([
+                    $event = \auth_gsaml\event\samlrequest_processed::create([
                         'info' => 'userneedsredirect'
                     ]);
                     $event->trigger();
@@ -269,7 +269,7 @@ class auth_plugin_gsaml extends auth_plugin_base {
                 if (empty($CFG->logstore_usestandardlog)) {
                     add_to_log(SITEID, 'auth_gsaml', 'process samlrequest', '', 'User islogged in and samlrequest', 0, 0);
                 } else {
-                    $event = \auth_gsaml\event\samlrequest::create([
+                    $event = \auth_gsaml\event\samlrequest_processed::create([
                         'info' => 'userislogged'
                     ]);
                     $event->trigger();
