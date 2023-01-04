@@ -56,6 +56,10 @@ $string['uploadthekey'] = 'Upload Key';
 $string['gadgetinfostr'] = 'Use the following URL to add the Moodle Gadget to your Google Start Page<br/><b>{$a->wwwroot}/auth/gsaml/moodlegadget.php</b>';
 $string['lnktogoogsettings'] = 'Link to Google Settings';
 $string['nodomainyet'] = 'No Domain Set Yet';
+
+// Provider string
+$string['privacy:no_data_reason'] = 'The auth_gsaml plugin does not store any personal data.';
+
 $string['gsamlsetuptableinfo'] = '<ol><li>Set the <b>Domain Name</b> to your Google service domain name then click <b>Save Changes</b><br/><br/></li>
 <li>In a new window open Google Apps Control Panel page as admin (<a href="https://www.google.com/a/{$a->domainname}">{$a->googsettings}</a>)<br/><br/></li>
 <li>Click the <b>Advanced tools</b> tab.<br/><br/></li>
@@ -69,7 +73,6 @@ $string['gsamlsetuptableinfo'] = '<ol><li>Set the <b>Domain Name</b> to your Goo
 
 // Moodle Gadget
 $string['tomoodle'] = 'To Moodle';
-
 
 // errors
 $string['errusernotloggedin'] = 'User could not be logged in';
