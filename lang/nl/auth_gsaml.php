@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2022 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2023 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -51,14 +51,14 @@ $string['uploadthekey'] = 'Upload sleutel';
 $string['gadgetinfostr'] = 'Gebruik de volgende URL om de Moodle-gadget toe te voegen aan de startpagina van Google<br/><b>{$a->wwwroot}/auth/gsaml/moodlegadget.php</b>';
 $string['lnktogoogsettings'] = 'Koppeling naar Google-instellingen';
 $string['nodomainyet'] = 'Nog geen domein ingesteld';
-$string['gsamlsetuptableinfo'] = '<ol><li>Stel de <b>domeinnaam</b> in op de naam van je Google-servicedomein en klik op <b>Wijzigingen opslaan</b><br/><br/></li>
-<li>Open de pagina Configuratiescherm Google-apps als beheerder in een nieuw venster (<a href="https://www.google.com/a/{$a->domainname}">{$a->googsettings}</a>)<br/><br/></li>
+$string['gsamlsetuptableinfo'] = '<ol><li>Stel de <b>Domeinnaam</b> in op de naam van je Google-servicedomein en klik op <b>Wijzigingen opslaan</b><br/><br/></li>
+<li>Open de pagina Configuratiescherm Google Apps als beheerder in een nieuw venster (<a href="https://www.google.com/a/{$a->domainname}">{$a->googsettings}</a>)<br/><br/></li>
 <li>Klik op het tabblad <b>Geavanceerde tools</b>.<br/><br/></li>
-<li>Klik op de koppeling <b>Eenmalige aanmelding (SSO) inschakelen</b> naast Verificatie.<br/><br/></li>
-<li>Schakel eerst het selectievakje <b>Eenmalige aanmelding inschakelen</b> in.<br/><br/></li>
-<li>Voer deze URL nu in het tekstveld <b>URL aanmeldingspagina</b> in.<br/><b>{$a->wwwroot}/login/index.php</b><br/><br/></li>
+<li>Klik op de koppeling <b>Stel eenmalige aanmelding (SSO) in</b> naast Verificatie.<br/><br/></li>
+<li>Selecteer eerst het vakje voor <b>Schakel eenmalige aanmelding in</b>.<br/><br/></li>
+<li>Voer nu deze URL in het tekstveld <b>URL aanmeldingspagina</b> in.<br/><b>{$a->wwwroot}/login/index.php</b><br/><br/></li>
 <li>Voer deze URL in het tekstveld <b>URL afmeldingspagina</b> in.<br/><b>{$a->wwwroot}/login/logout.php</b><br/><br/></li>
-<li>Voer deze URL in het tekstveld <b>URL-wachtwoord wijzigen</b> in.<br/><b>{$a->wwwroot}/login/change_password.php</b><br/><br/></li>
+<li>Voer deze URL in het tekstveld <b>Wijzig URL wachtwoord</b> in.<br/><b>{$a->wwwroot}/login/change_password.php</b><br/><br/></li>
 <li>Genereer en upload een <b>Verificatiecertificaat naar Google (X.509-certificaat met de openbare sleutel)</b><br/><br/></li>
 <li>Upload de persoonlijke sleutel en het certificaat ook naar Moodle en klik vervolgens op <b>Wijzigingen opslaan</b></b><br/></li></ol>';
 $string['tomoodle'] = 'Naar Moodle';
@@ -88,7 +88,7 @@ $string['gmailtestresults'] = 'Gmail-testresultaten';
 $string['gmailtestwillnotrun'] = 'Gmail-test wordt niet uitgevoerd tenzij Moodle zich in de DEBUG_DEVELOPER-modus bevindt';
 $string['obtainemailfeed'] = 'E-mailfeed verkrijgen voor gebruikersnaam:';
 $string['currfileupload'] = 'Huidig bestand:';
-$string['nonestr'] = 'Niets';
+$string['nonestr'] = 'Geen';
 $string['privatekeystr'] = 'Persoonlijke sleutel';
 $string['certificatestr'] = 'Certificaat';
 $string['statustab'] = 'Status';
@@ -103,12 +103,22 @@ $string['course'] = 'Cursus';
 $string['module'] = 'Module';
 $string['cmid'] = 'cmid';
 $string['action'] = 'Actie';
-$string['url'] = 'Url';
+$string['url'] = 'URL';
 $string['info'] = 'Informatie';
+$string['contextinstanceid'] = 'Exemplaar-ID';
+$string['courseid'] = 'Cursus-ID';
+$string['eventname'] = 'Naam gebeurtenis';
+$string['otherlog'] = 'Anders';
+$string['useraccesedgservice'] = 'Gebruiker heeft eerst gservice geopend';
+$string['userneedsredirect'] = 'Gebruiker heeft saml-aanvraag, maar heeft aanmelding/omleiding nodig';
+$string['userislogged'] = 'Gebruiker is aangemeld en samlrequest';
+$string['login'] = 'Login';
 $string['config_gsaml'] = 'Google SAML configureren';
 $string['config_gsaml_help'] = '<h2>Volledige installatie</h2>
 
-<p>Het instellen van de volledige integratie van Google naar Moodle vereist wat configuratiewerk. Dit Help-bestand begeleidt je door het grootste deel van het proces om de Google-plug-in voor verificatie te configureren en ervoor te zorgen dat het GData-blok en Gmail-blok gereed zijn.</p>
+<p>Voor het instellen van de volledige integratie van Google naar Moodle is een configuratie nodig. Dit Help-bestand
+begeleidt je door het grootste deel van het proces om de Google-plugin voor verificatie te configureren en ervoor te zorgen dat het GData-blok en
+Gmail-blok gereed zijn.</p>
 
 <h4>Inhoudsopgave:</h4>
 <ul>
@@ -122,10 +132,10 @@ $string['config_gsaml_help'] = '<h2>Volledige installatie</h2>
 <div class="indent">
 
 
-<h4><a name="pre" href="#status">Voorwaarden/overwegingen</a></h4>
+<h4><a name="pre" href="#status">Voorwaarden/aannames</a></h4>
 <p>
 <ol>
-<li>Code voor GSAMS, GAccess, Gmail, GData is geïnstalleerd</li>
+<li>Code voor GSAML, GAccess, Gmail, GData-code is geïnstalleerd</li>
 <ul>
 <li>auth/gsaml</li>
 <li>blocks/gmail</li>
@@ -138,20 +148,20 @@ $string['config_gsaml_help'] = '<h2>Volledige installatie</h2>
 
 <h4><a name="pre" href="#steps">Stappen</a></h4>
 <ol>
-<li>Log je in bij Moodle als een beheerder</li>
+<li>Meld je aan bij Moodle als een beheerder</li>
 <li>Klik op <b>Meldingen</b> om tabellen voor blokken bij te werken</li>
-<li>Schakel de <b>Google-verificatie</b>plug-in in vanaf de beheerpagina Plug-ins beheren</li>
-<li>Selecteer Gebruikersverificatie en ga naar <b>Google-verificatie</b> voor aanwijzingen op de pagina die moeten worden opgevolgd.</li>
-<li>Voer het domein van je Google-partnerpagina in</li>
+<li>Schakel de <b>Google-verificatie</b>-plugin in vanaf de beheerpagina Beheer plugins</li>
+<li>Selecteer nu Gebruikersverificatie en ga naar <b>Google-verificatie</b>, er staan aanwijzingen op de pagina die je moet volgen.</li>
+<li>Voer het domein van je Google Partnerpagina in</li>
 <li>Upload het certificaat (voor meer informatie over het maken van een certificaat ga je naar <a
 href="http://code.google.com/apis/apps/articles/sso-keygen.html">Google-documentatie met betrekking tot het genereren van sleutels</a> )</li>
 <li>Upload de persoonlijke sleutel (voor meer informatie over het maken van een persoonlijke sleutel ga je naar <a
 href="http://code.google.com/apis/apps/articles/sso-keygen.html">Google-documentatie met betrekking tot het genereren van sleutels</a>)</li>
 <li>Klik op Opslaan</li>
-<li>Volg de aanwijzingen voor het toevoegen van de juiste URL\'s aan de Google SSO-pagina</li>
-<li>Schakel het selectievakje op de Google-site in om SSO in te schakelen</li>
+<li>Volg de aanwijzingen voor het toevoegen van de juiste URL&apos;s aan de Google SSO-pagina</li>
+<li>Selecteer het vakje op de Google-site om SSO in te schakelen</li>
 <li>Zorg er op de Google-site voor dat je de Provisioning API hebt ingeschakeld, want anders worden er geen gebruikers bijgewerkt.</li>
-<li>Zorg er op de Google-site voor dat API Provisioning is ingeschakeld</li>
+<li>Controleer op de Google-site of Provisioning API is ingeschakeld</li>
 <li>Op de Google-site moet je mogelijk meer gebruikersaccounts aanvragen</li>
 <li>Ga terug naar de hoofdpagina van Moodle</li>
 <li>Klik op Bewerken</li>
@@ -160,26 +170,29 @@ href="http://code.google.com/apis/apps/articles/sso-keygen.html">Google-document
 <li>Klik op de statuskoppeling om te controleren of het Google Apps-blok goed is ingesteld.</li>
 <li>Ga naar Sitebeheer &gt; Beveiliging &gt; Sitebeleid</li>
 <li>Schakel wachtwoordbeleid in</li>
-<li>Stel de lengte van het wachtwoord in op 6 of meer tekens (vereist volgens het wachtwoordbeleid van Google)</li>
-<li>In het GData-blok moet je gebruikers toevoegen voor de sync. Doe dit door op de koppeling Gebruikers toevoegen voor sync te klikken in het <b>Google Apps-blok</b>. Het resultaat is beter zichtbaar als je de cron van het GData-blok instelt op 1 min.</li>
+<li>Stel de lengte van het wachtwoord in op 6 of meer (vereist volgens het wachtwoordbeleid van Google)</li>
+<li>In het GData-blok moet je gebruikers toevoegen voor de sync. Doe dit door op de desbetreffende koppeling te klikken in het <b>Google Apps-
+blok</b>. Het resultaat is beter zichtbaar als je de cron van het GData-blok instelt op 1 min.</li>
 <li>Als je die Moodle-gebruikers in Google wilt uploaden, kun je de cron handmatig uitvoeren door naar admin/cron.php te gaan. De resultaten voor de sync zouden nu in de beeldschermtekst moeten worden weergegeven.
-<b>Houd er rekening mee dat het synchroniseren van Moodle-gebruikers met Google vanaf deze bètaversie <em>LANG</em> kan duren.</b></li>
+<b>Houd er rekening mee dat het synchroniseren van Moodle-gebruikers met Google vanaf deze bèta-versie <em>LANG</em> kan duren.</b></li>
 </ol>
 
 <h4><a name="pre" href="#expect">Verwachte resultaten</a></h4>
 <ul class="alternate" type="square">
-<li>Door op een koppeling van Google Service te klikken of services te bezoeken vanaf de Google Partner-pagina, vindt verificatie tegen Moodle plaats.</li>
+<li>Door op een koppeling van Google Service te klikken of services te bezoeken vanaf de Google Partner-pagina,
+vindt verificatie tegen Moodle plaats.</li>
 <li>De gebruiker moet zowel bij Moodle als bij Google Partner Services zijn aangemeld</li>
 <li>Zie de <b>diagnostische pagina</b> in de GSAML-instellingen voor meer informatie over je installatie.</li>
 </ul>
 
 
-<h4><a name="pre" href="#consider">Overwegingen (vanaf bètaversie)</a></h4>
+<h4><a name="pre" href="#consider">Overwegingen (vanaf BÈTA-versie)</a></h4>
 <ul class="alternate" type="square">
 <li>De GMail-feed wordt mogelijk niet gevonden. Dit kan worden veroorzaakt doordat het wachtwoord van de gebruiker niet overeenkomt met het wachtwoord van de Google-gebruiker.
-In de toekomst zal dit geen probleem zijn. Zorg er nu voor dat gebruikers worden gesynchroniseerd met het Google Apps-blok. De e-mail zal bij aanmelding worden bijgewerkt. In de toekomst worden ongelezen berichten in realtime bijgewerkt.</li>
+In de toekomst zal dit geen probleem zijn. Zorg er nu voor dat gebruikers worden gesynchroniseerd met het Google Apps-blok. De e-mail zal worden bijgewerkt
+bij aanmelding. In de toekomst worden ongelezen berichten in realtime bijgewerkt.</li>
 
-<li>De locatie van de Google-plug-in voor verificatie in de verificatievolgorde is belangrijk.
+<li>De locatie van de Google-plugin voor verificatie in de verificatievolgorde is belangrijk.
 Vanaf dit moment moet dit het verificatietype van een gebruiker overschrijven wanneer een Moodle-gebruiker het wachtwoord verandert.
 Dit gedrag kan van invloed zijn op MNet-gebruikers. Er is nog geen oplossing voor dit probleem gevonden.</li>
 
@@ -187,9 +200,9 @@ Dit gedrag kan van invloed zijn op MNet-gebruikers. Er is nog geen oplossing voo
 
 </div>';
 $string['diagnostics'] = 'Diagnostische gegevens';
-$string['diagnostics_help'] = '<h2>Diagnostische pagina Google-integratie</h2>
-<p>De diagnostische pagina geeft informatie met betrekking tot de Gmail-, GData- en SAMLS-verbindingsstatus.
-Alleen beheerders hebben toestemming om diagnostische gegevens te bekijken.</p>
+$string['diagnostics_help'] = '<h2>Diagnostische gegevens Google-integratie</h2>
+<p>De diagnostische pagina geeft informatie met betrekking tot de Gmail-, GData- en SAML-verbindingsstatus.
+Alleen beheerders hebben toestemming om diagnosegegevens te bekijken.</p>
 
 <h3>Inhoudsopgave:</h3>
 <ul>
@@ -201,18 +214,19 @@ Alleen beheerders hebben toestemming om diagnostische gegevens te bekijken.</p>
 
 <h3><a name="setup" href="#setup">Informatie configuratietabel</a></h3>
 <div class="indent">
-Deze tabellen geven de huidige configuratie weer van de Moodle naar Google integratie. Zorg ervoor dat de waarden allemaal zijn ingesteld.
+Deze tabellen geven de huidige configuratie weer van de integratie van Moodle en Google. Zorg ervoor dat de waarden allemaal zijn ingesteld.
 </div>
 
-<h3><a name="gdata" href="#gdata">GData-verbinding </a></h3>
+<h3><a name="gdata" href="#gdata">GData-verbinding</a></h3>
 <div class="indent">
-Het GData-blok in de map met blokken bevat de bibliotheken voor allerlei Google Services. Je moet bevestigen dat deze in staat is verbinding te maken met de Google Services. De waarden op de pagina met GData-blokinstellingen moeten mogelijk worden aangepast.
+Het GData-blok in de map met blokken bevat de bibliotheken voor allerlei Google Services. Je moet bevestigen
+dat deze in staat is verbinding te maken met de Google Services. Het kan zijn dat je de waarden op de pagina met GData-blokinstellingen moet aanpassen.
 </div>
 
 <h3><a name="gmail" href="#gmail">Test Gmail-blokverbinding</a></h3>
 <div class="indent">
-Momenteel zal het Gmail-blok alleen de ongelezen berichten van een gebruiker vernieuwen bij aanmelding. Je kunt de test hier alleen uitvoeren als Fouten opsporen is ingeschakeld. Ondersteuning voor het weergeven van ongelezen berichten in realtime komt eraan.
-
+Momenteel zal het Gmail-blok alleen de ongelezen berichten van een gebruiker vernieuwen bij aanmelding. Je kunt
+de test hier alleen uitvoeren als Fouten opsporen is ingeschakeld. Ondersteuning voor het weergeven van ongelezen berichten in realtime komt eraan.
 </div>
 
 <h3><a name="saml" href="#saml">Test SAML SSO-status</a></h3>
@@ -223,21 +237,21 @@ De SAML-statustest is een onafhankelijke controle van het SSO-autorisatieproces.
 $string['keys'] = 'Sleutels';
 $string['keys_help'] = '<span style="font-size: 1.2em">
 <h3>Google SSO-sleutels</h3>
-<p>Zowel Moodle als Google moet in staat zijn om op een veilige manier toegang te verlenen tot belangrijke bronnen.
-De beheerder moet een <b>verificatiecertificaat</b> genereren en een geformatteerd X.509-certificaat met een ingesloten openbare sleutel voor Google uploaden.
+<p>Zowel Moodle als Google moeten in staat zijn om op een veilige manier toegang te verlenen tot belangrijke bronnen.
+De beheerder moet een <b>verificatiecertificaat</b> genereren en een geformatteerd X.509-certificaat met een ingesloten
+openbare sleutel voor Google uploaden.
 <a href="http://code.google.com/apis/apps/articles/sso-keygen.html">Google-documentatie met betrekking tot het genereren van sleutels</a>
 Houd er rekening mee dat de SAML Moodle SSO-service alleen <b>RSA-sleutels</b> gebruikt.
-
 </p>
 </span>
 
 <!--
-<h4><a name="pem" href="#status">Status Google Apps</a></h4>
+<h4><a name="pem" href="#status">Google Apps Status</a></h4>
 <div class="indent">
 
 </div>
 
-<h4><a name="crt" href="#status">Certificaat</a></h4>
+<h4><a name="crt" href="#status">Certificate</a></h4>
 <div class="indent">
 -->
 </div>';
@@ -248,31 +262,30 @@ $string['mgadget_help'] = '<h2>Google naar Moodle-gadget</h2>
 
 <h3><a name="status" href="#status">De Moodle-gadget</a></h3>
 <div class="indent">
-De <em>Moodle-gadget</em> is een gadget die je op je Google Partner-startpagina kunt invoegen.
-
+De <em>Moodle-gadget</em> is een gadget die je op je Google Partner-startpagina kunt insluiten.
 </div>
 
 
 <p><b>Stappen voor installatie op een startpagina voor gebruikers</b></p>
 <ol>
 <li>Meld je aan bij Moodle</li>
-<li>Klik op de <b>Google Partner-pagina</b> in het blok <b>Toegang Google Services</b>.</li>
-<li>Klik op de koppeling <b>Items toevoegen</b></li>
+<li>Klik op de <b>Google Partner-pagina</b> in het blok <b>Toegang Google Services</b> </li>
+<li>Klik op koppeling <b>Items toevoegen</b></li>
 <li>Klik op <b>Mijn URL toevoegen</b></li>
-<li>Voeg de URL van de moodlegadget toe</li>
-<li>De URL is iets als <br/><b>http://www.uwmoodledomein.org/auth/gsaml/moodlegadget.php </b>
-<li>Deze kan worden gevonden in de instellingen voor <b>Google-verificatie</b> in het beheerblok</li>
+<li>Voer de URL van de Moodle-gadget in</li>
+<li>De URL is iets als<br/><b>http://www.yourmoodledomain.org/auth/gsaml/moodlegadget.php</b>
+<li>Je vindt deze in de instellingen voor <b>Google-verificatie</b> in het beheerblok</li>
 <li>Nadat je de URL in het veld URL hebt gekopieerd, klik je op <b>Toevoegen</b></li>
 <li>Klik op <b>Terug naar startpagina</b></li>
-<li>Er moet nu een blok worden weergegeven met een koppeling naar je Moodle-site.</li>
+<li>Er moet nu een blok worden weergegeven met een koppeling naar je Moodle-site</li>
 </ol>
 
 
 
-<h3><a name="status" href="#status">Overwegingen (vanaf BÈTAversie)</a></h3>
+<h3><a name="status" href="#status">Overwegingen (vanaf BÈTA-versie)</a></h3>
 <div class="indent">
-Dit is het bètaprototype voor deze Google Moodle-gadget. In de toekomst heb je hier mogelijk veel meer aan.
+Dit is het bèta-prototype voor deze Google Moodle-gadget. In de toekomst heb je hier mogelijk veel meer aan.
 Momenteel is er een bekende fout waarbij de gadget niet direct wordt bijgewerkt na installatie.
-Ontwikkelaars zijn hier mee bezig.
+Ontwikkelaars zijn hiermee bezig.
 </div>';
 $string['event_user_authenticated'] = 'Met gebruikersverificatie';
