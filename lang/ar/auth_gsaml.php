@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2022 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2023 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -48,19 +48,19 @@ $string['uploadkeystr'] = 'رفع المفتاح';
 $string['uploadkey'] = 'رفع المفتاح';
 $string['uploadstr'] = 'رفع';
 $string['uploadthekey'] = 'رفع المفتاح';
-$string['gadgetinfostr'] = 'استخدم عنوان URL التالي لإضافة أدوات Moodle الذكية إلى صفحة البدء في Google‏<br/><b>{$a->wwwroot}/auth/gsaml/moodlegadget.php</b>';
+$string['gadgetinfostr'] = 'استخدم عنوان URL الآتي لإضافة أدوات Moodle الذكية إلى صفحة البدء في Google<br/><b dir="rtl">{$a->wwwroot}/auth/gsaml/moodlegadget.php</b>';
 $string['lnktogoogsettings'] = 'ربط بإعدادات Google';
 $string['nodomainyet'] = 'لم يتم تعيين مجال بعد';
-$string['gsamlsetuptableinfo'] = '<ol><li>قم بتعيين <b>اسم المجال</b> إلى اسم مجال خدمة Google ثم انقر فوق <b>حفظ التغييرات</b><br/><br/></li>
-<li>في نافذة جديدة، افتح صفحة لوحة التحكم في Google Apps كمسؤول (<a href="https://www.google.com/a/{$a->domainname}">{$a->googsettings}</a>)<br/><br/></li>
+$string['gsamlsetuptableinfo'] = '<ol dir="rtl"><li>قم بتعيين <b>اسم المجال</b> على اسم مجال خدمة Google الخاص بك، ثم انقر فوق <b>حفظ التغييرات</b><br/><br/></li>
+<li>في نافذة جديدة، افتح صفحة لوحة تحكم Google Apps كمسؤول (<a href="https://www.google.com/a/{$a->domainname}">{$a->googsettings}</a>)<br/><br/></li>
 <li>انقر فوق علامة التبويب <b>أدوات متقدمة</b>.<br/><br/></li>
-<li>انقر فوق الرابط <b>إعداد تسجيل الدخول الأحادي (SSO)</b> بجوار المصادقة.<br/><br/></li>
-<li>حدد المربع <b>تمكين تسجيل الدخول الأحادي</b> أولاً.<br/><br/></li>
-<li>والآن قم بإدراج عنوان URL هذا إلى حقل النص <b>عنوان URL لصفحة تسجيل الدخول</b>.<br/><b>{$a->wwwroot}/login/index.php</b><br/><br/></li>
-<li>قم بإدراج عنوان URL هذا في حقل النص<b>عنوان URL لصفحة تسجيل الخروج</b>.<br/><b>{$a->wwwroot}/login/logout.php</b><br/><br/></li>
-<li>قم بإدراج عنوان URL هذا في حقل النص <b>عنوان URL الخاص بتغيير كلمة المرور</b>.<br/><b>{$a->wwwroot}/login/change_password.php</b><br/><br/></li>
-<li>قم بإنشاء ورفع <b>شهادة التحقق من الصحة إلى Google (شهادة X.509 تحتوي على مفتاح عام)</b><br/><br/></li>
-<li>ارفع المفتاح الخاص والشهادة إلى Moodle أيضًا ثم انقر فوق <b>حفظ التغييرات</b></b><br/></li></ol>';
+<li>انقر فوق رابط <b>إعداد تسجيل الدخول الأحادي (SSO)</b> بجانب المصادقة.<br/><br/></li>
+<li>حدد أولاً مربع <b>تمكين تسجيل الدخول الأحادي</b>.<br/><br/></li>
+<li>أدخِل الآن عنوان URL هذا في الحقل النصي <b>عنوان URL لصفحة تسجيل الدخول</b>.<br/><b>{$a->wwwroot}/login/index.php</b><br/><br/></li>
+<li>أدخِل عنوان URL هذا في الحقل النصي <b>عنوان URL لصفحة تسجيل الخروج</b>.<br/><b>{$a->wwwroot}/login/logout.php</b><br/><br/></li>
+<li>أدخِل عنوان URL هذا في الحقل النصي <b>عنوان URL الخاص بتغيير كلمة المرور</b>.<br/><b>{$a->wwwroot}/login/change_password.php</b><br/><br/></li>
+<li>قم بإنشاء <b>شهادة تحقق على Google (شهادة X.509 تحتوي على المفتاح العام)</b> ورفعها<br/><br/></li>
+<li>قم برفع المفتاح الخاص والشهادة على Moodle كذلك، ثم انقر فوق <b>حفظ التغييرات</b></b><br/></li></ol>';
 $string['tomoodle'] = 'إلى Moodle';
 $string['errusernotloggedin'] = 'تعذر تسجيل دخول المستخدم';
 $string['pwdnotvalid'] = 'كلمة المرور غير صالحة';
@@ -105,35 +105,43 @@ $string['cmid'] = 'cmid';
 $string['action'] = 'الإجراء';
 $string['url'] = 'عنوان URL';
 $string['info'] = 'معلومات';
+$string['contextinstanceid'] = 'معرف المثيل';
+$string['courseid'] = 'معرف المقرر الدراسي';
+$string['eventname'] = 'اسم الحدث';
+$string['otherlog'] = 'أخرى';
+$string['useraccesedgservice'] = 'قام المستخدم بالوصول إلى gservice أولاً';
+$string['userneedsredirect'] = 'لدى المستخدم طلب saml لكنه يحتاج إلى تسجيل الدخول/إعادة التوجيه';
+$string['userislogged'] = 'قام المستخدم بتسجيل الدخول ولديه طلب saml';
+$string['login'] = 'تسجيل الدخول';
 $string['config_gsaml'] = 'تكوين Google SAML';
-$string['config_gsaml_help'] = '<h2>إكمال الإعداد</h2>
+$string['config_gsaml_help'] = '<h2 dir="rtl">إكمال الإعداد</h2>
 
-<p>إعداد تكامل Google بالكامل مع Moodle يتطلب قليلاً من التكوين. ينبغي أن يرشدك ملف المساعدة هذا
-خلال معظم خطوات العملية لتكوين المكون الإضافي لمصادقة Google وكذلك تجهيز
-كتلة GData وكتلة Gmail.</p>
+<p dir="rtl">يتطلب إعداد التكامل الكامل من Google إلى Moodle القليل من التكوين. من شأن ملف التعليمات هذا أن يرشدك
+خلال معظم العملية في تكوين المكون الإضافي مصادقة Google فضلاً عن تجهيز كتلة GData
+وكتلة Gmail.</p>
 
-<h4>جدول المحتويات:</h4>
-<ul>
-<li><a href="#pre">الشروط المسبقة</a></li>
+<h4 dir="rtl">جدول المحتويات:</h4>
+<ul dir="rtl">
+<li><a href="#pre" dir="rtl">الشروط السابقة</a></li>
 <li><a href="#status">الخطوات</a></li>
 <li><a href="#expect">النتائج المتوقعة</a></li>
 <li><a href="#consider">الاعتبارات</a></li>
 </ul>
 
-<h4><a name="status" href="#status">حالة Google Apps</a></h4>
-<div class="indent">
+<h4 dir="rtl"><a name="status" href="#status" dir="rtl">حالة Google Apps</a></h4>
+<div class="indent" dir="rtl">
 
 
-<h4><a name="pre" href="#status">الشروط المسبقة/الافتراضات</a></h4>
+<h4><a name="pre" href="#status" dir="rtl">الشروط السابقة/الافتراضات</a></h4>
 <p>
 <ol>
-<li>تثبيت رمز GSAML وGAccessوGmail وGData</li>
+<li>تم تثبيت رمز GSAML وGAccess وGmail وGData</li>
 <ul>
-<li>auth/gsaml</li>
-<li>blocks/gmail</li>
-<li>blocks/gdata</li>
-<li>blocks/gaccess</li>
-<li>blocks/mgadget (اختياري بدءًا من إصدار بيتا)</li>
+<li>المصادقة/gsaml</li>
+<li>الكتل/gmail</li>
+<li>الكتل/gdata</li>
+<li>الكتل/gaccess</li>
+<li>الكتل/mgadget (اختياري بدءًا من الإصدار التجريبي)</li>
 </ul>
 </ol>
 </p>
@@ -141,148 +149,143 @@ $string['config_gsaml_help'] = '<h2>إكمال الإعداد</h2>
 <h4><a name="pre" href="#steps">الخطوات</a></h4>
 <ol>
 <li>قم بتسجيل الدخول إلى Moodle كمسؤول</li>
-<li>انقر فوق <b>الإعلانات</b> لتحديث جداول الكتل</li>
-<li>قم بتمكين المكون الإضافي <b>لمصادقة Google</b> من صفحة المسؤول "إدارة المكونات الإضافية"</li>
-<li>الآن حدد مصادقة المستخدمين للانتقال إلى <b>مصادقة Google</b> حيث توجد توجيهات بالصفحة جديرة بالاتباع.</li>
-<li>ادخل إلى مجال صفحة شريك Google لديك</li>
-<li>ارفع الشهادة (لمزيد من المعلومات حول إنشاء ذلك <a
-
-href="http://code.google.com/apis/apps/articles/sso-keygen.html">وثائق Google بخصوص إنشاء المفاتيح</a> )</li>
-<li>ارفع المفتاح الخاص (لمزيد من المعلومات حول إنشاء ذلك، يرجى زيارة <a
-
-href="http://code.google.com/apis/apps/articles/sso-keygen.html">وثائق Google بخصوص إنشاء المفاتيح</a>)</li>
+<li>انقر فوق <b>الإعلامات</b> لتحديث جداول الكتل</li>
+<li>قم بتمكين المكون الإضافي <b>مصادقة Google</b> من صفحة المسؤول إدارة المكونات الإضافية</li>
+<li>والآن حدد مصادقة المستخدمين، وانتقل إلى <b>مصادقة Google</b>، من المفترض أن تكون ثمة توجيهات في الصفحة لاتباعها.</li>
+<li>أدخِل مجال صفحة شريك Google</li>
+<li>قم برفع الشهادة (لمزيد من المعلومات عن إنشاء ذلك، تفضل بزيارة <a
+href="http://code.google.com/apis/apps/articles/sso-keygen.html"‎&gt; وثائق Google في ما يتعلق بإنشاء المفاتيح</a>)</li>
+<li>قم برفع المفتاح الخاص (لمزيد من المعلومات عن إنشاء ذلك، تفضل بزيارة <a
+href="http://code.google.com/apis/apps/articles/sso-keygen.html"‎&gt; وثائق Google في ما يتعلق بإنشاء المفاتيح</a>)</li>
 <li>انقر فوق حفظ</li>
-<li>اتبع التوجيهات لإضافة عناوين URL المناسبة إلى صفحة تسجيل الدخول الأحادي إلى Google</li>
+<li>اتبع توجيهات إضافة عناوين URL المناسبة إلى صفحة تسجيل الدخول الأحادي في Google</li>
 <li>انقر فوق خانة الاختيار في موقع Google لتمكين تسجيل الدخول الأحادي</li>
-<li>في موقع Google، تأكد من تمكين واجهة برمجة التطبيقات لإدارة الحسابات وإلا لن يتم تحديث أي مستخدمين.</li>
-<li>تأكد من تمكين API Provisioning في موقع Google</li>
-<li>ربما تحتاج إلى طلب مزيد من حسابات المستخدمين في موقع Google</li>
+<li>في موقع Google، تأكد من تمكين واجهة برمجة تطبيقات التوفير وإلا فلن يتم تحديث أي مستخدم.</li>
+<li>في موقع Google، تأكد من تمكين توفير واجهة برمجة التطبيقات</li>
+<li>في موقع Google، قد يلزم طلب مزيد من حسابات المستخدمين</li>
 <li>ارجع إلى صفحة Moodle الرئيسية</li>
 <li>انقر فوق تحرير</li>
-<li>قم بإضافة كتل GAccess وGmail وGData إلى الصفحة.</li>
-<li>انقر فوق <b>الإعدادات</b> في كتلة <b>Google Apps</b>. املأ معلومات التكوين.</li>
-<li>انقر فوق رابط الحالة للتأكيد على أن كتلة Google Apps لديك معدّة بشكل صحيح.</li>
-<li>انتقل إلى إدارة الموقع gt; الأمان gt; سياسات الموقع</li>
+<li>أضِف كتل GAccess وGmail وGData إلى الصفحة.</li>
+<li>انقر فوق <b>الإعدادات</b> في كتلة <b>Google Apps</b>. واملأ معلومات التكوين.</li>
+<li>انقر فوق رابط الحالة لتأكيد أنه تم إعداد كتلة Google Apps بشكل سليم.</li>
+<li>انتقل إلى إدارة الموقع &gt; الأمان &gt; سياسات الموقع</li>
 <li>تحقق من سياسة كلمة المرور</li>
-<li>قم بتعيين طول كلمة المرور إلى 6 أحرف أو أكثر (مطلوب لسياسة كلمة مرور Google)</li>
-<li>في كتلة GData، عليك إضافة مستخدمين للمزامنة. يمكنك القيام بذلك من خلال النقر فوق الرابط "إضافة مستخدمين للمزامنة" في كتلة <b>Google Apps
-</b>. قد يكون مفيدًا أن تري النتيجة إن قمت بتعيين           cron لكتلة GData إلى 1 دقيقة.</li>
-<li>لرفع مستخدمي Moodle هؤلاء إلى Google، يمكنك تشغيل cron يدويًا من خلال زيارة admin/cron.php. ينبغي أن تظهر نتائج المزامنة في القراءة.
-<b>انتبه إلى أن تلك المزامنة التجريبية لمستخدمي Moodle مع Google قد تستغرق وقتًا <em>طويلاً</em>.</b></li>
+<li>قم بتعيين طول كلمة المرور على 6 أو أكبر (مطلوب لسياسة كلمة مرور Google)</li>
+<li>في كتلة GData، تلزم إضافة مستخدمين لمزامنتهم. قم بذلك من خلال النقر فوق رابط إضافة مستخدمين لمزامنتهم في <b>كتلة
+Google Apps</b>. من المفيد رؤية النتيجة إذا قمت بتعيين cron الخاص بكتلة GData على دقيقة واحدة.</li>
+<li>لرفع مستخدمي Moodle هؤلاء على Google، يمكنك تشغيل cron يدويًا من خلال زيارة admin/cron.php، ومن المفترض أن تظهر نتائج المزامنة في نافذة القراءة.
+<b>انتبه إلى أنه بدءًا من هذا الإصدار التجريبي، قد تستغرق مزامنة مستخدمي Moodle مع Google وقتًا <em>طويلاً</em>.</b></li>
 </ol>
 
 <h4><a name="pre" href="#expect">النتائج المتوقعة</a></h4>
 <ul class="alternate" type="square">
-<li>النقر فوق أي من ارتباطات خدمة Google أو زيارة الخدمات المقدمة في صفحة شريك Google سوف
-يؤدي إلى المصادقة مقابل Moodle.</li>
-<li>يجب تسجيل دخول المستخدم إلى Moodle وكذلك خدمات شريك Google</li>
-<li>راجع <b>صفحة التشخيصات</b> في إعدادات GSAML لمزيد من المعلومات حول الإعداد الخاص بك.</li>
+<li>سيؤدي النقر فوق أي من روابط خدمة Google أو زيارة الخدمات من صفحة شريك Google إلى
+المصادقة مقابل Moodle.</li>
+<li>ينبغي تسجيل دخول المستخدم إلى Moodle بالإضافة إلى خدمات شريك Google</li>
+<li>راجع <b>صفحة التشخيصات</b> في إعدادات GSAML لمزيد من المعلومات عن الإعداد الخاص بك.</li>
 </ul>
 
 
-<h4><a name="pre" href="#consider">الاعتبارات (بدءًا من إصدار بيتا)</a></h4>
+<h4><a name="pre" href="#consider">الاعتبارات (بدءًا من الإصدار التجريبي)</a></h4>
 <ul class="alternate" type="square">
-<li>ربما لا يتم العثور على موجز Gmail. قد يرجع السبب في ذلك إلى أن كلمة مرور المستخدم لا تطابق كلمة مرور مستخدم Google.
-لكن ذلك لن يشكل مشكلة في المستقبل. فلتتأكد حاليًا من مزامنة المستخدمين مع كتلة Google Apps. سيتم تحديث البريد الإلكتروني
-عقب تسجيل الدخول. في المستقبل سيتم تحديث الرسائل غير المقروءة في الوقت الفعلي.</li>
+<li>قد لا يتم العثور على موجز Gmail. ربما يرجع ذلك إلى أن كلمة مرور المستخدم لا تطابق كلمة مرور مستخدم Google.
+لن تكون هذه مشكلة في المستقبل. في الوقت الحالي، تأكد من مزامنة المستخدمين مع كتلة Google Apps. سيتم تحديث البريد الإلكتروني
+عند تسجيل الدخول. من المفترض في المستقبل أن يتم تحديث الرسائل غير المقروءة في الوقت الفعلي.</li>
 
-<li>موقع المكون الإضافي لمصادقة Google في أمر المصادقة مهم.
-بدءًا من تلك اللحظة، يجب تجاوز نوع مصادقة المستخدم عندما يقوم مستخدم Moodle بتغيير كلمات المرور.
-قد يؤثر هذا السلوك على مستخدمي MNet. لم يتم العثور على حل لتلك المشكلة إلى اللحظة.</li>
+<li>يُعَد موقع المكون الإضافي مصادقة Google في ترتيب المصادقة مهمًا.
+بدءًا من هذه اللحظة، يلزم تجاوز نوع مصادقة المستخدم عندما يغير مستخدم Moodle كلمات المرور.
+قد يؤثر هذا السلوك في مستخدمي MNet. لم يتم العثور على حل لهذه المشكلة حتى الآن.</li>
 
 </ul>
 
 </div>';
 $string['diagnostics'] = 'التشخيصات';
-$string['diagnostics_help'] = '<h2>تشخيصات تكامل Google</h2>
-<p>سوف تحتوي صفحة التشخيصات على معلومات حول حالة اتصال Gmail وGData وSAML
-فقط المسؤولون هم من لديهم إذن عرض المعلومات التشخيصية.</p>
+$string['diagnostics_help'] = '<h2 dir="rtl">تشخيصات تكامل Google</h2>
+<p dir="rtl">ستكشف صفحة التشخيصات عن معلومات متعلقة بحالة اتصال Gmail وGData وSAML.
+يمتلك المسؤولون فقط صلاحية لعرض معلومات التشخيص.</p>
 
-<h3>جدول المحتويات:</h3>
-<ul>
-<li><a href="#setup">إعداد معلومات الجدول</a></li>
+<h3 dir="rtl">جدول المحتويات:</h3>
+<ul dir="rtl">
+<li><a href="#setup" dir="rtl">معلومات جدول الإعداد</a></li>
 <li><a href="#gdata">حالة اتصال GData</a></li>
 <li><a href="#gmail">اختبار اتصال كتلة Gmail</a></li>
-<li><a href="#saml">اختبار حالة SAML SSO</a></li>
+<li><a href="#saml">اختبار حالة تسجيل الدخول الأحادي لـ SAML</a></li>
 </ul>
 
-<h3><a name="setup" href="#setup">معلومات جدول التكوين</a></h3>
-<div class="indent">
-هذه الجداول تمثل التكوين الحالي الذي يخص Moodle إلى تكامل Google. تأكد من تعيين كل القيم.
+<h3 dir="rtl"><a name="setup" href="#setup" dir="rtl">معلومات جدول التكوين</a></h3>
+<div class="indent" dir="rtl">
+تمثل هذه الجداول التكوين الحالي للتكامل من Moodle إلى Google. تأكد من تعيين جميع القيم.
 </div>
 
-<h3><a name="gdata" href="#gdata">اتصال GData </a></h3>
-<div class="indent">
-تحتوي كتلة GData الموجودة في مجلد الكتل على مكتبات لمجموعة متنوعة من خدمات Google. عليك التأكد
-من أن بإمكانها الاتصال بخدمات Google. ربما تضطر إلى تعديل القيم في صفحة إعدادات كتلة GData.
+<h3 dir="rtl"><a name="gdata" href="#gdata" dir="rtl">اتصال GData</a></h3>
+<div class="indent" dir="rtl">
+تحتوي كتلة GData الموجودة في مجلد الكتل على مكتبات لمجموعة متنوعة من خدمات Google. يجب عليك تأكيد
+قدرتها على الاتصال بخدمات Google. قد يلزم ضبط القيم في صفحة إعدادات كتلة GData.
 </div>
 
-<h3><a name="gmail" href="#gmail">اختبار اتصال كتلة Gmail</a></h3>
-<div class="indent">
-في اللحظة الحالية، لن تقوم كتلة Gmail بتحديث رسائل المستخدم غير المقروءة إلا عقب تسجيل الدخول. لن يكون بإمكانك تشغيل
-الاختبار هنا إلا إذا كان تصحيح الأخطاء قيد التشغيل.  سيتوفر قريبًا دعم عرض الرسائل غير المقروءة في الوقت الفعلي.
-
+<h3 dir="rtl"><a name="gmail" href="#gmail" dir="rtl">اختبار اتصال كتلة Gmail</a></h3>
+<div class="indent" dir="rtl">
+في الوقت الراهن، ستقوم كتلة Gmail بتحديث رسائل المستخدمين غير المقروءة فقط عند تسجيل الدخول. لن
+تتمكن من تشغيل الاختبار هنا إلا إذا تم تشغيل تصحيح الأخطاء. سيتوفر دعم عرض الرسائل غير المقروءة في الوقت الفعلي قريبًا.
 </div>
 
-<h3><a name="saml" href="#saml">اختبار حالة SAML SSO</a></h3>
-<div class="indent">
-اختبار حالة SAML عبارة عن فحص مستقل لعملية تفويض تسجيل الدخول الأحادي. لم يتم تطبيقه بعد.
+<h3 dir="rtl"><a name="saml" href="#saml" dir="rtl">اختبار حالة تسجيل الدخول الأحادي لـ SAML</a></h3>
+<div class="indent" dir="rtl">
+اختبار حالة SAML هو فحص مستقل لعملية تخويل تسجيل الدخول الأحادي. ولم يتم تنفيذه بعد.
 <!--But with debugging turned on and set to DEBUG_DEVELOPER error information should be revealed upon login -->
 </div>';
 $string['keys'] = 'المفاتيح';
-$string['keys_help'] = '<span style="font-size: 1.2em">
-<h3>مفاتيح تسجيل الدخول الأحادي إلى Google</h3>
-<p>يجب أن يكون بإمكان كل من Moodle وGoogle منح تفويضات الوصول إلى الموارد المهمة بأمان.
-ويجب على المسؤول إنشاء <b>شهادة تحقق من الصحة</b> ورفع شهادة بتنسيق X.509 إلى Google مع مفتاح
-عام مضمّن.
-<a href="http://code.google.com/apis/apps/articles/sso-keygen.html">وثائق Google بخصوص إنشاء المفاتيح</a>
-لاحظ أن خدمة SAML Moodle SSO لا تستخدم إلا <b>مفاتيح RSA.</b>
-
+$string['keys_help'] = '<span style="font-size: 1.2em" dir="rtl">
+<h3>مفاتيح تسجيل الدخول الأحادي في Google</h3>
+<p>يجب أن يتمكن كل من Moodle وGoogle من تخويل الوصول إلى الموارد المهمة بشكل آمن.
+يجب على المسؤول إنشاء <b>شهادة تحقق</b> ورفع شهادة بتنسيق X.509 على Google مع مفتاح
+عام مضمن.
+<a href="http://code.google.com/apis/apps/articles/sso-keygen.html">وثائق Google في ما يتعلق بإنشاء المفاتيح</a>
+لاحظ أن خدمة تسجيل الدخول الأحادي لـ SAML Moodle تستخدم <b>مفاتيح RSA</b> فقط.
 </p>
 </span>
 
 <!--
-<h4><a name="pem" href="#status">حالة Google Apps</a></h4>
+<h4><a name="pem" href="#status">Google Apps Status</a></h4>
 <div class="indent">
 
 </div>
 
-<h4><a name="crt" href="#status">الشهادة</a></h4>
+<h4><a name="crt" href="#status">Certificate</a></h4>
 <div class="indent">
 -->
 </div>';
 $string['mgadget'] = 'أدوات Moodle الذكية';
-$string['mgadget_help'] = '<h2>Google إلى أداة Moodle الذكية</h2>
+$string['mgadget_help'] = '<h2 dir="rtl">Google إلى أدوات Moodle الذكية</h2>
 
-<p>يوفر ملف المساعدة هذا نظرة عامة مقتضبة على أداة Google الذكية لموقع Moodle الخاص بك</p>
+<p dir="rtl">يوفر ملف التعليمات هذا نظرة عامة مختصرة على أدوات Google الذكية لموقع Moodle</p>
 
-<h3><a name="status" href="#status">أداة Moodle الذكية</a></h3>
-<div class="indent">
-إن <em>أداة Moodle الذكية</em> عبارة عن أداة ذكية يمكنك تضمينها في صفحة البداية لشريك Google
-
+<h3 dir="rtl"><a name="status" href="#status" dir="rtl">أدوات Moodle الذكية</a></h3>
+<div class="indent" dir="rtl">
+<em>أدوات Moodle الذكية</em> هي أدوات ذكية يمكنك تضمينها في صفحة بدء شريك Google.
 </div>
 
 
-<p><b>خطوات التثبيت في صفحة بداية للمستخدمين</b></p>
-<ol>
+<p dir="rtl"><b dir="rtl">خطوات التثبيت في صفحة بدء المستخدمين</b></p>
+<ol dir="rtl">
 <li>قم بتسجيل الدخول إلى Moodle</li>
-<li>انقر فوق <b>صفحة شريك Google</b> في كتلة <b> الوصول إلى خدمات Google</b>.</li>
-<li>انقر فوق الرابط <b>إضافة عنصر</b> </li>
-<li>انقر فوق<b>إضافة عنوان URL الخاص بي</b></li>
-<li>أدخل عنوان URL الخاص بـ moodlegadget</li>
-<li>يبدو عنوان URL مثل <br/><b>http://www.yourmoodedomain.org/auth/gsaml/moodlegadget.php </b>
-<li> ويمكن العثور عليه في إعدادات <b>مصادقة Google</b> من كتلة المسؤول</li>
-<li>بعد أن تنسخ عنوان URL إلى حقل عنوان URL. انقر فوق <b>إضافة</b></li>
-<li>انقر فوق <b>رجوع إلى الصفحة الرئيسية</b></li>
-<li>ينبغي أن ترى الآن كتلة تحتوي على رابط إلى موقع Moodle</li>
+<li>انقر فوق <b>صفحة شريك Google</b> في كتلة <b>الوصول إلى خدمات Google</b></li>
+<li>انقر فوق رابط <b>إضافة محتويات</b></li>
+<li>انقر فوق <b>إضافة عنوان url الخاص بي</b></li>
+<li>أدخِل عنوان URL لأدوات moodle الذكية</li>
+<li>عنوان URL هو شيء يشبه<br/><b>http://www.yourmoodedomain.org/auth/gsaml/moodlegadget.php</b>
+<li>يمكن العثور عليه في إعدادات <b>مصادقة Google</b> من كتلة المسؤول</li>
+<li>بعد نسخ عنوان url إلى حقل عنوان url، انقر فوق <b>إضافة</b></li>
+<li>انقر فوق <b>العودة إلى الصفحة الرئيسية</b></li>
+<li>من المفترض أن ترى الآن كتلة تحتوي على رابط إلى موقع Moodle الخاص بك</li>
 </ol>
 
 
 
-<h3><a name="status" href="#status">الاعتبارات (بدءًا من إصدار بيتا)</a></h3>
-<div class="indent">
-هذا هو النموذج الأولى التجريبي من أداة Google Moodle الذكية تلك. وقد تكون في المستقبل أكثر وأعم نفعًا.
-يوجد حاليًا خطأ معروف بالأداة الذكية حيث لا يتم تحديثها مباشرة عقب التثبيت.
-لكن المطورون يعملون بجد على إيجاد حل له.
+<h3 dir="rtl"><a name="status" href="#status" dir="rtl">الاعتبارات (بدءًا من الإصدار التجريبي)</a></h3>
+<div class="indent" dir="rtl">
+هذا هو النموذج الأولي التجريبي لأدوات Google Moodle الذكية. قد يكون مفيدًا أكثر بكثير في المستقبل.
+ثمة حاليًا خطأ معروف في ما يتعلق بعدم تحديث الأدوات الذكية فور التثبيت.
+ويبحث المطورون في ذلك الأمر.
 </div>';
 $string['event_user_authenticated'] = 'تمت مصادقة المستخدم';
