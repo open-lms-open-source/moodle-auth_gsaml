@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @copyright  Copyright (c) 2022 Open LMS (https://www.openlms.net)
+ * @copyright  Copyright (c) 2023 Open LMS (https://www.openlms.net)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -51,16 +51,16 @@ $string['uploadthekey'] = '上傳金鑰';
 $string['gadgetinfostr'] = '使用下列 URL，以便將 Moodle Gadget 加入您的 Google 起始頁面<br/><b>{$a->wwwroot}/auth/gsaml/moodlegadget.php</b>';
 $string['lnktogoogsettings'] = 'Google 連結設定';
 $string['nodomainyet'] = '尚未設定任何網域';
-$string['gsamlsetuptableinfo'] = '<ol><li>將「<b>網域名稱</b>」設為您的 Google 服務網域名稱，然後按一下「<b>儲存變更</b>」<br/><br/></li>
-<li>在新視窗中以管理員身分開啟 Google Apps 控制面板頁面 (<a href="https://www.google.com/a/{$a->domainname}">{$a->googsettings}</a>)<br/><br/></li>
-<li>按一下「<b>進階工具</b>」頁籤。<br/><br/></li>
-<li>按一下「驗證」旁的「<b>設定單一登入 (SSO)</b>」連結。<br/><br/></li>
-<li>首先檢查「<b>啟用單一登入</b>」方塊。<br/><br/></li>
-<li>現在將此 URL 插入「<b>登入頁面 URL</b>」文字欄位。<br/><b>{$a->wwwroot}/login/index.php</b><br/><br/></li>
-<li>將此 URL 插入「<b>登出頁面 URL</b>」文字欄位。<br/><b>{$a->wwwroot}/login/logout.php</b><br/><br/></li>
-<li>將此 URL 插入「<b>變更密碼 URL</b>」文字欄位。<br/><b>{$a->wwwroot}/login/change_password.php</b><br/><br/></li>
-<li>產生並上傳<b>驗證憑證至 Google (包含公開金鑰的 X.509 憑證)</b><br/><br/></li>
-<li>亦將私密金鑰和憑證上傳至 Moodle，然後按一下「<b>儲存變更</b>」</b><br/></li></ol>';
+$string['gsamlsetuptableinfo'] = '<ol><li>將<b>網域名稱</b>設定為您的 Google 服務網域名稱，然後按一下<b>儲存變更</b><br/><br/></li>
+<li>以管理員身分在新視窗中開啟 Google Apps 控制面板頁面 (<a href="https://www.google.com/a/{$a->domainname}">{$a->googsettings}</a>)<br/><br/></li>
+<li>按一下<b>進階工具</b>分頁。<br/><br/></li>
+<li>按一下「驗證」旁的<b>設定單一登入 (SSO)</b> 連結。<br/><br/></li>
+<li>首先勾選<b>啟用單一登入</b>方塊。<br/><br/></li>
+<li>現在將此 URL 插入<b>登入頁面 URL</b> 文字欄位。<br/><b>{$a->wwwroot}/login/index.php</b><br/><br/></li>
+<li>將此 URL 插入<b>登出頁面 URL</b> 文字欄位。<br/><b>{$a->wwwroot}/login/logout.php</b><br/><br/></li>
+<li>將此 URL 插入<b>變更密碼 URL</b> 文字欄位。<br/><b>{$a->wwwroot}/login/change_password.php</b><br/><br/></li>
+<li>產生並上傳<b>驗證憑證到 Google (含有公開金鑰的 X.509 憑證)</b><br/><br/></li>
+<li>也將私密金鑰和憑證上傳到 Moodle，然後按一下<b>儲存變更</b></b><br/></li></ol>';
 $string['tomoodle'] = '至 Moodle';
 $string['errusernotloggedin'] = '無法登入使用者';
 $string['pwdnotvalid'] = '密碼無效';
@@ -105,170 +105,187 @@ $string['cmid'] = 'cmid';
 $string['action'] = '動作';
 $string['url'] = 'URL';
 $string['info'] = '資訊';
+$string['contextinstanceid'] = '例項編號';
+$string['courseid'] = '課程編號';
+$string['eventname'] = '事件名稱';
+$string['otherlog'] = '其他';
+$string['useraccesedgservice'] = '使用者已先存取 GService';
+$string['userneedsredirect'] = '使用者有 SAML 請求，但需要登入/重新導向';
+$string['userislogged'] = '使用者已登入，並提出 SAML 請求';
+$string['login'] = '登入';
 $string['config_gsaml'] = '正在配置 Google SAML';
 $string['config_gsaml_help'] = '<h2>完成設定</h2>
 
-<p>將 Google 完整設定至 Moodle 整合需要進行一些配置。此說明檔應能帶您進行大部分的流程，助您配置 Google 驗證外掛程式，並將 GData 區塊和 Gmail 區塊備妥。</p>
+<p>設定完整的 Google 至 Moodle 整合需要一些配置程序。此說明檔案應可
+引導您通過配置 Google 驗證外掛程式，以及使 GData 區塊和
+Gmail 區塊就緒的大部分程序。</p>
 
 <h4>目錄：</h4>
 <ul>
-<li><a href="#pre">前置條件</a></li>
-<li><a href="#status">執行步驟</a></li>
+<li><a href="#pre">先決條件</a></li>
+<li><a href="#status">步驟</a></li>
 <li><a href="#expect">預期結果</a></li>
-<li><a href="#consider">考量情況</a></li>
+<li><a href="#consider">考量</a></li>
 </ul>
 
 <h4><a name="status" href="#status">Google Apps 狀態</a></h4>
 <div class="indent">
 
 
-<h4><a name="pre" href="#status">前置條件/假設</a></h4>
+<h4><a name="pre" href="#status">先決條件/假設</a></h4>
 <p>
 <ol>
-<li>GSAML、GAccess、Gmail、GData 程式碼已經安裝</li>
+<li>GSAML、GAccess、Gmail、GData 代碼已安裝</li>
 <ul>
 <li>auth/gsaml</li>
 <li>blocks/gmail</li>
-<li>blocks/gdataa</li>
+<li>blocks/gdata</li>
 <li>blocks/gaccess</li>
-<li>blocks/mgadget (Beta 版後為可選)</li>
+<li>blocks/mgadget (Beta 版為選擇性)</li>
 </ul>
 </ol>
 </p>
 
-<h4><a name="pre" href="#steps">執行步驟</a></h4>
+<h4><a name="pre" href="#steps">步驟</a></h4>
 <ol>
 <li>以管理員身分登入 Moodle</li>
-<li>按一下「<b>通知</b>」以更新區塊表格</li>
-<li>在「管理外掛程式」管理員頁面中，啟用「<b>Google 驗證</b>」外掛程式</li>
-<li>現在選取「使用者驗證」並前往「<b>Google 驗證</b>」，頁面上應會有指示供您遵循。</li>
+<li>按一下<b>通知</b>以更新區塊表格</li>
+<li>從「管理外掛程式」管理員頁面啟用 <b>Google 驗證</b>外掛程式</li>
+<li>現在選取使用者驗證，前往 <b>Google 驗證</b>，頁面上應有可遵循的指示。</li>
 <li>輸入您的 Google 合作夥伴頁面網域</li>
-<li>上傳憑證 (如需建立資訊，請參閱「<a
-href="http://code.google.com/apis/apps/articles/sso-keygen.html">Google 金鑰產生說明文件</a> 」)</li>
-<li>上傳私密金鑰 (如需建立資訊，請參閱「<a
-href="http://code.google.com/apis/apps/articles/sso-keygen.html">Google 金鑰產生說明文件</a>」)</li>
+<li>上傳憑證 (如需如何產生的詳細資訊 <a
+href="http://code.google.com/apis/apps/articles/sso-keygen.html"&gt;關於金鑰產生的 Google 說明文件</a>)</li>
+<li>上傳私密金鑰 (如需如何產生的詳細資訊，請造訪 <a
+href="http://code.google.com/apis/apps/articles/sso-keygen.html"&gt;關於金鑰產生的 Google 說明文件</a>)</li>
 <li>按一下「儲存」</li>
-<li>遵循指示將適當的 URL 加入 GoogleSSO 頁面</li>
-<li>按一下 Google 網站上的核取方塊來啟用 SSO</li>
-<li>在 Google 網站上，務必啟用佈建 API，否則將不會更新任何使用者。</li>
-<li>在 Google 網站上，確認「佈建 API」已啟用</li>
-<li>在 Google 網站上，您可能會需要請求更多使用者帳戶</li>
+<li>遵循新增適當 URL 至 Google SSO 頁面的指示</li>
+<li>按一下 Google 網站上的核取方塊啟用 SSO</li>
+<li>在 Google 網站上請務必啟用佈建 API，否則任何使用者都將不會更新。</li>
+<li>在 Google 網站上確認 API 佈建已啟用</li>
+<li>您可能需要在 Google 端請求更多使用者帳戶</li>
 <li>返回 Moodle 主頁面</li>
 <li>按一下「編輯」</li>
-<li>將 GAccess、Gmail 和 GData 區塊新增至頁面。</li>
-<li>按一下「<b>Google Apps</b>」區塊中的「<b>設定</b>」，填寫設定資訊。</li>
-<li>按一下「狀態」連結，確認您的 GoogleApps 區塊已正確設定。</li>
-<li>前往「網站管理」gt;「安全性」gt;「網站原則」</li>
-<li>檢查「密碼原則」</li>
-<li>將「密碼長度」設為 6 以上 (Google 密碼原則要求)</li>
-<li>在 GData 區塊中，您需要將使用者新增至同步，做法為：按一下 <b>Google Apps</b> 區塊中的新增使用者至同步連結。若您將 Gdata 區塊 cron 設為 1 分鐘，在查看結果時會有幫助。</li>
-<li>將這些 Moodle 使用者上傳至 Google時，您可以造訪 admin/cron.PHP 來手動執行 cron。同步結果應會出現在讀出裝置中。
-<b>請注意：自此 Beta 版後，與 Google 同步 Moodle 使用者可能會花<em>很久</em>的時間。</b></li>
+<li>新增 GAccess、Gmail 和 GData 區塊至頁面。</li>
+<li>按一下 <b>Google Apps</b> 區塊中的<b>設定</b>。填妥配置資訊。</li>
+<li>按一下「狀態」連結，確認您的 Google Apps 區塊已正確設定。</li>
+<li>前往網站管理 &gt; 安全性 &gt; 網站原則</li>
+<li>檢查密碼原則</li>
+<li>設定密碼長度為 6 或更長 (Google 的密碼原則規定)</li>
+<li>在 GData 區塊中，您需要新增要同步的使用者。可透過按一下 <b>Google Apps
+區塊</b>中的「新增要同步的使用者」連結完成。如果您設定 GData 區塊 cron 為 1 分鐘，這可協助查看結果。</li>
+<li>若要上傳 Moodle 使用者至 Google，您可透過造訪 admin/cron.php 手動執行 cron，同步結果應會顯示於輸出內容中。
+<b>請注意，此 Beta 版 Moodle 使用者與 Google 同步可能耗費很<em>長</em>時間。</b></li>
 </ol>
 
 <h4><a name="pre" href="#expect">預期結果</a></h4>
 <ul class="alternate" type="square">
-<li>當您按一下任何 Google 服務連結，或從 Google 合作夥伴頁面造訪服務時，會針對 Moodle 驗證。</li>
-<li>系統應將使用者登入至 Moodle 和 Google 合作夥伴服務</li>
-<li>設定時如需更多資訊，請查看 GSAML 設定中的「<b>診斷頁面</b>」。</li>
+<li>按一下任何 Google 服務連結，或從 Google 合作夥伴頁面造訪服務將
+驗證 Moodle。</li>
+<li>使用者應登入 Moodle，也需登入 Google 合作夥伴服務</li>
+<li>請參閱 GSAML 設定中的<b>診斷頁面</b>瞭解更多有關設定的資訊。</li>
 </ul>
 
 
-<h4><a name="pre" href="#consider">考量情況 (自 BETA 版起)</a></h4>
+<h4><a name="pre" href="#consider">考量 (BETA 版時)</a></h4>
 <ul class="alternate" type="square">
-<li>可能找不到 Gmail 摘要。這可能是因為使用者的密碼與 Google 使用者密碼不符。
-此問題在之後就會解決，現在則請您務必將使用者與 Google Apps 區塊同步。電子郵件會在登入時更新。未讀訊息在未來應會即時更新。</li>
+<li>可能找不到 Gmail 摘要。這可能是因為使用者的密碼與 Google 使用者密碼不相符。
+在未來這將不成問題。目前請務必與 Google Apps 區塊同步使用者。電子郵件將於
+登入時更新。在未來，未讀訊息應會即時更新。</li>
 
-<li>「Google 驗證外掛程式」在驗證次序中的位置相當重要。
-Moodle 使用者在變更密碼時，現階段需要取代使用者的驗證類型。
-此行為可能會影響 MNet 使用者，目前尚未找到此問題的解決方案。</li>
+<li>Google 驗證外掛程式在驗證順序中的位置很重要。
+在目前，當 Moodle 使用者變更密碼時，需要取代使用者的驗證類型。
+此行為可能會影響 MNet 使用者。此問題尚未找出解決方案。</li>
 
 </ul>
 
 </div>';
 $string['diagnostics'] = '診斷';
 $string['diagnostics_help'] = '<h2>Google 整合診斷</h2>
-<p>診斷頁面會告知有關 Gmail、Gdata 和 SAML 連接狀態的資訊。只有管理員有權檢視診斷資訊。</p>
+<p>診斷頁面會顯示關於 Gmail、GData 和 SAML 連線狀態的資訊。
+只有管理員有檢視診斷資訊的權限。</p>
 
 <h3>目錄：</h3>
 <ul>
 <li><a href="#setup">設定表格資訊</a></li>
-<li><a href="#gdata">GData 連接狀態</a></li>
-<li><a href="#gmail">Gmail 區塊連接測試</a></li>
+<li><a href="#gdata">GData 連線狀態</a></li>
+<li><a href="#gmail">Gmail 區塊連線測試</a></li>
 <li><a href="#saml">SAML SSO 狀態測試</a></li>
 </ul>
 
 <h3><a name="setup" href="#setup">配置表格資訊</a></h3>
 <div class="indent">
-這些表格說明 Moodle 至 Google 整合的目前設定。請確認所有數值都已設定。</div>
-
-<h3><a name="gdata" href="#gdata">GData 連接 </a></h3>
-<div class="indent">位於區塊資料夾中的 GData 區塊包含多種 Google 服務的程式庫，您必須確認可以連線至 Google 服務。您可能需要調整「GData 區塊設定」頁面上的值。
+這些表格代表 Moodle 至 Google 整合的目前配置。請確認所有值均已設定。
 </div>
 
-<h3><a name="gmail" href="#gmail">Gmail 區塊連接測試</a></h3>
-<div class="indent">Gmail 區塊現階段只會在登入時重新整理使用者未讀的訊息。測試只能在開啟除錯後執行。即時檢視未讀訊息的支援即將推出。
+<h3><a name="gdata" href="#gdata">GData 連線</a></h3>
+<div class="indent">
+位於區塊資料夾中的 GData 區塊包含多種 Google 服務的程式庫。您必須確認
+其可連線到 Google 服務。您可能需要調整 GData 區塊設定頁面上的值。
+</div>
 
+<h3><a name="gmail" href="#gmail">Gmail 區塊連線測試</a></h3>
+<div class="indent">
+目前 Gmail 區塊僅會在登入時重新整理使用者的未讀訊息。如果開啟除錯
+您將僅能在此執行測試。即時檢視未讀訊息的支援即將推出。
 </div>
 
 <h3><a name="saml" href="#saml">SAML SSO 狀態測試</a></h3>
 <div class="indent">
-SAML狀態測試為 SSO 授權流程的獨立檢查，至今尚未實施。
+SAML 狀態測試是 SSO 授權程序的一項獨立檢查。此功能尚未實施。
 <!--But with debugging turned on and set to DEBUG_DEVELOPER error information should be revealed upon login -->
 </div>';
 $string['keys'] = '金鑰';
 $string['keys_help'] = '<span style="font-size: 1.2em">
 <h3>Google SSO 金鑰</h3>
-<p>Moodle 和 Google 都必須能夠安全地授予重要資源的存取權。
-管理員必須產生「<b>驗證憑證</b>」，並將以 X.509 格式化且嵌入公開金鑰的憑證上傳至 Google。
-<a href="http://code.google.com/apis/apps/articles/sso-keygen.html">Google 金鑰產生說明文件</a>
-請注意：SAML Moodle SSO 服務只能使用 <b>RSA 金鑰。</b>
-
+<p>Moodle 和 Google 都必須能夠安全地授權重要資源的存取。
+管理員必須產生<b>驗證憑證</b>，並上傳含有內嵌
+公開金鑰的 X.509 格式憑證到 Google。
+<a href="http://code.google.com/apis/apps/articles/sso-keygen.html">關於金鑰產生的 Google 說明文件</a>
+請注意，SAML Moodle SSO 服務僅使用 <b>RSA 金鑰。</b>
 </p>
 </span>
 
 <!--
-<h4><a name="pem" href="#status">Google Apps 狀態</a></h4>
+<h4><a name="pem" href="#status">Google Apps Status</a></h4>
 <div class="indent">
 
 </div>
 
-<h4><a name="crt" href="#status">憑證</a></h4>
+<h4><a name="crt" href="#status">Certificate</a></h4>
 <div class="indent">
 -->
 </div>';
 $string['mgadget'] = 'Moodle Gadget';
 $string['mgadget_help'] = '<h2>Google 至 Moodle Gadget</h2>
 
-<p>此說明檔簡述供 Moodle 網站使用的 Google 小工具</p>
+<p>此說明檔案提供可用於 Moodle 網站的 Google 小工具概覽</p>
 
 <h3><a name="status" href="#status">Moodle Gadget</a></h3>
 <div class="indent">
-The <em>Moodle Gadget</em>是一種可讓您嵌入 Google 合作夥伴起始頁面的小工具。
-
+<em>Moodle Gadget</em> 是可以嵌入 Google 合作夥伴起始頁面的小工具。
 </div>
 
 
-<p><b>安裝至使用者起始頁面的步驟</b></p>
+<p><b>安裝到使用者起始頁面的步驟</b></p>
 <ol>
 <li>登入 Moodle</li>
-<li>按一下「<b>Google服務存取</b>」區塊中的「<b>Google合作夥伴頁面</b>」</li>
-<li>按一下「<b>新增項目</b>」連結</li>
-<li>按一下「<b>新增我的URL</b>」</li>
-<li>輸入 Moodle gadget URL</li>
-<li>URL的樣子如<br/><b>http://www.yourmoodedomain.org/auth/gsaml/moodlegadget.php </b>
-<li> 這可在「管理員」區塊中的「<b>Google 驗證</b>」設定中找到</li>
-<li>在將 URL 複製到 URL 欄位後，按一下「<b>新增</b>」</li>
-<li>按一下「<b>回到首頁</b>」</li>
-<li>您現在應會看到包含 Moodle 網站連結的區塊</li>
+<li>按一下 <b>Google 服務存取</b>區塊中的 <b>Google 合作夥伴頁面</b></li>
+<li>按一下<b>新增項目</b>連結</li>
+<li>按一下<b>新增我的 url</b></li>
+<li>輸入 Moodle Gadget URL</li>
+<li>URL 看起來會像<br/><b>http://www.yourmoodedomain.org/auth/gsaml/moodlegadget.php</b>
+<li>這可從管理員區塊的 <b>Google 驗證</b>設定中找到</li>
+<li>將 url 複製到 url 欄位後，按一下<b>新增</b></li>
+<li>按一下<b>回到首頁</b></li>
+<li>您現在應可看到包含通往您 Moodle 網站連結的區塊</li>
 </ol>
 
 
 
-<h3><a name="status" href="#status">考量情況 (自 BETA 版起)</a></h3>
+<h3><a name="status" href="#status">考量 (BETA 版時)</a></h3>
 <div class="indent">
-這是該 Google Moodle Gadget 的Beta 版原型，未來會變得更加好用。
-目前已知有 Gadget 在安裝時不會立即更新的錯誤。
-開發人員已對此展開調查。
+這是 Google Moodle Gadget 的 Beta 版原型。未來可能會變得更加有用。
+目前 Gadget 有安裝後不會立即更新的已知錯誤。
+開發人員正在調查中。
 </div>';
 $string['event_user_authenticated'] = '使用者已驗證';
