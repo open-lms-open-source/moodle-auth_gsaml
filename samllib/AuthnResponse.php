@@ -721,7 +721,7 @@ class gSimpleSAML_XML_SAML20_AuthnResponse extends gSimpleSAML_XML_AuthnResponse
 	 *  @return String containing the encoded saml:attribute value for this
 	 *  attribute.
 	 */
-	private static function enc_attribute($name, $values, $base64 = false, $attributeNameFormat = '') {
+	private static function enc_attribute($name, $values, $base64, $attributeNameFormat) {
 		assert(is_array($values));
 
 		// Default: urn:oasis:names:tc:SAML:2.0:attrname-format:basic
