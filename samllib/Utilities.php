@@ -543,12 +543,12 @@ class gSimpleSAML_Utilities {
 	 * @return      The transposed array.
 	 */
 	public static function transposeArray($in) {
-		assert('is_array($in)');
+		assert(true == is_array($in));
 
 		$ret = array();
 
 		foreach($in as $k1 => $a2) {
-			assert('is_array($a2)');
+			assert(true == is_array($a2));
 
 			foreach($a2 as $k2 => $v) {
 				if(!array_key_exists($k2, $ret)) {
@@ -581,10 +581,10 @@ class gSimpleSAML_Utilities {
 	 * @return TRUE if both namespace and localname matches, FALSE otherwise.
 	 */
 	public static function isDOMElementOfType($element, $name, $nsURI) {
-		assert('$element instanceof DOMElement');
-		assert('is_string($name)');
-		assert('is_string($nsURI)');
-		assert('strlen($nsURI) > 0');
+		assert(true == $element instanceof DOMElement);
+		assert(true == is_string($name));
+		assert(true == is_string($nsURI));
+		assert(strlen($nsURI) > 0);
 
 		/* Check if the namespace is a shortcut, and expand it if it is. */
 		if($nsURI[0] == '@') {
@@ -635,7 +635,7 @@ class gSimpleSAML_Utilities {
 	 *         returned if no elements match.
 	 */
 	public static function getDOMChildren($element, $localName, $namespaceURI) {
-		assert('$element instanceof DOMElement');
+		assert(true == $element instanceof DOMElement);
 
 		$ret = array();
 
@@ -664,7 +664,7 @@ class gSimpleSAML_Utilities {
 	 * @return The text content of the element.
 	 */
 	public static function getDOMText($element) {
-		assert('$element instanceof DOMElement');
+		assert(true == $element instanceof DOMElement);
 
 		$txt = '';
 
@@ -762,8 +762,8 @@ class gSimpleSAML_Utilities {
 	 *         returned if validation passes.
 	 */
 	public static function validateXML($message, $schema) {
-		assert('is_string($message)');
-		assert('is_string($schema)');
+		assert(true == is_string($message));
+		assert(true == is_string($schema));
 
 		$xmlErrorState = libxml_use_internal_errors(TRUE);
 		libxml_clear_errors();
@@ -805,7 +805,7 @@ class gSimpleSAML_Utilities {
 	 * @param $type     The type of document - can be either 'saml20', 'saml11' or 'saml-meta'.
 	 */
 	public static function validateXMLDocument($message, $type) {
-		assert('is_string($message)');
+		assert(true == is_string($message));
 		assert($type === 'saml11' || $type === 'saml20' || $type === 'saml-meta');
 
 		/* A SAML message should not contain a doctype-declaration. */
@@ -926,7 +926,7 @@ class gSimpleSAML_Utilities {
 	 */
 	public static function generateRandomBytes($length) {
 		static $fp = NULL;
-		assert('is_int($length)');
+		assert(true == is_int($length));
 
 		if($fp === NULL) {
 			$fp = @fopen('/dev/urandom', 'rb');

@@ -33,14 +33,14 @@ class gSimpleSAML_XML_Validator {
 	 *                      NULL (the default), then we will use whatever is the default ID.
 	 */
 	public function __construct($xmlNode, $idAttribute = NULL, $publickey = FALSE) {
-		assert('$xmlNode instanceof DOMNode');
+		assert(true == $xmlNode instanceof DOMNode);
 
 		/* Create an XML security object. */
 		$objXMLSecDSig = new XMLSecurityDSig();
 
 		/* Add the id attribute if the user passed in an id attribute. */
 		if($idAttribute !== NULL) {
-			assert('is_string($idAttribute)');
+			assert(true == is_string($idAttribute));
 			$objXMLSecDSig->idKeys[] = $idAttribute;
 		}
 
@@ -94,7 +94,7 @@ class gSimpleSAML_XML_Validator {
 	 * @param $fingerprint  The fingerprint which should match.
 	 */
 	public function validateFingerprint($fingerprint) {
-		assert('is_string($fingerprint)');
+		assert(true == is_string($fingerprint));
 
 		if($this->x509Fingerprint === NULL) {
 			throw new Exception('Key used to sign the message was not an X509 certificate.');
@@ -120,7 +120,7 @@ class gSimpleSAML_XML_Validator {
 	 * @return TRUE if this node (or a parent node) was signed. FALSE if not.
 	 */
 	public function isNodeValidated($node) {
-		assert('$node instanceof DOMNode');
+		assert(true == $node instanceof DOMNode);
 
 		while($node !== NULL) {
 			if(in_array($node, $this->validNodes)) {

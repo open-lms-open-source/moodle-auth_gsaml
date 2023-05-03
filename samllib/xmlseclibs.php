@@ -314,7 +314,7 @@ class XMLSecurityKey {
      *  NULL is returned if the argument isn't an X509 certificate.
      */
     private static function calculateX509Fingerprint($x509cert) {
-        assert('is_string($x509cert)');
+        assert(true == is_string($x509cert));
 
         $lines = explode("\n", $x509cert);
 

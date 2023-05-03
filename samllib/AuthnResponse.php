@@ -88,16 +88,16 @@ class gSimpleSAML_XML_SAML20_AuthnResponse extends gSimpleSAML_XML_AuthnResponse
 	 * @return Whatever DOMXPath::query returns.
 	 */
 	private function doXPathQuery($query, $node = NULL) {
-		assert('is_string($query)');
+		assert(true == is_string($query));
 
 		$dom = $this->getDOM();
-		assert('$dom instanceof DOMDocument');
+		assert(true == $dom instanceof DOMDocument);
 
 		if($node === NULL) {
 			$node = $dom->documentElement;
 		}
 
-		assert('$node instanceof DOMNode');
+		assert(true == $node instanceof DOMNode);
 
 		$xPath = new DOMXpath($dom);
 		$xPath->registerNamespace("saml", self::SAML2_ASSERT_NS);
@@ -116,8 +116,8 @@ class gSimpleSAML_XML_SAML20_AuthnResponse extends gSimpleSAML_XML_AuthnResponse
 	 */
 	private function isValidationRelaxed($id) {
 
-		assert('is_string($id)');
-		assert('$this->issuer != NULL');
+		assert(true == is_string($id));
+		assert($this->issuer != NULL);
 
 		/* Get the metadata of the issuer. */
 		$md = $this->metadata->getMetaData($this->issuer, 'saml20-idp-remote');
@@ -539,7 +539,7 @@ class gSimpleSAML_XML_SAML20_AuthnResponse extends gSimpleSAML_XML_AuthnResponse
 			return NULL;
 		}
 
-		assert('$dom instanceof DOMDocument');
+		assert(true == $dom instanceof DOMDocument);
 
 		$xPath = new DOMXpath($dom);
 		$xPath->registerNamespace('samlp', self::SAML2_PROTOCOL_NS);
@@ -721,7 +721,7 @@ class gSimpleSAML_XML_SAML20_AuthnResponse extends gSimpleSAML_XML_AuthnResponse
 	 *  @return String containing the encoded saml:attribute value for this
 	 *  attribute.
 	 */
-	private static function enc_attribute($name, $values, $base64 = false, $attributeNameFormat) {
+	private static function enc_attribute($name, $values, $base64 = false, $attributeNameFormat = '') {
 		assert(is_array($values));
 
 		// Default: urn:oasis:names:tc:SAML:2.0:attrname-format:basic
