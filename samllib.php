@@ -107,7 +107,7 @@ function gsaml_send_auth_response($samldata) {
         }
     } catch (Exception $e) {
         $a = $e->getMessage();
-        print_error('errordecodingsamlrequest','auth_gsaml','', $a);
+        throw new \moodle_exception('errordecodingsamlrequest','auth_gsaml','', $a);
     }
 
     gSimpleSAML_Utilities::validateXMLDocument($samlRequestXML, 'saml20');
