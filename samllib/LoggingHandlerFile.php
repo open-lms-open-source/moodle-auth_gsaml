@@ -8,7 +8,7 @@ if (!defined('MOODLE_INTERNAL')) {
  * A class for logging
  *
  * @author Lasse Birnbaum Jensen, SDU.
- * @author Andreas Åkre Solberg, UNINETT AS. <andreas.solberg@uninett.no>
+ * @author Andreas ï¿½kre Solberg, UNINETT AS. <andreas.solberg@uninett.no>
  * @package simpleSAMLphp
  * @version $ID$
  */
@@ -37,7 +37,7 @@ class gSimpleSAML_Logger_LoggingHandlerFile implements gSimpleSAML_Logger_Loggin
 
     function log_internal($level,$string) {
         if ($this->logFile != null) {
-            $line = sprintf("%s %s %d %s\n",strftime("%b %d %H:%M:%S"),$this->processname,$level,$string);
+            $line = sprintf("%s %s %d %s\n",\core_date::strftime("%b %d %H:%M:%S"),$this->processname,$level,$string);
             file_put_contents($this->logFile,$line,FILE_APPEND);
         }
     }
