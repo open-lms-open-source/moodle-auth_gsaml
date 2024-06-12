@@ -77,14 +77,10 @@ class auth_plugin_gsaml extends auth_plugin_base {
         if (!empty($SESSION->samlrequestdata) and !empty($SESSION->samlrequest) and $SESSION->samlrequest === true) {
             $SESSION->samlrequest = false;
 
-            if (empty($CFG->logstore_usestandardlog)) {
-                add_to_log(SITEID, 'auth_gsaml', 'process samlrequest', '', 'User has accessed gservice first', 0, 0);
-            } else {
-                $event = \auth_gsaml\event\samlrequest_processed::create([
-                    'info' => 'useraccesedgservice'
-                ]);
-                $event->trigger();
-            }
+            $event = \auth_gsaml\event\samlrequest_processed::create([
+                'info' => 'useraccesedgservice'
+            ]);
+            $event->trigger();
 
             if (!$user = $DB->get_record('user', array('username'=> $username, 'mnethostid'=> $CFG->mnet_localhost_id))) {
                // User could not be logged in
@@ -135,15 +131,10 @@ class auth_plugin_gsaml extends auth_plugin_base {
                 }
 
             /// Let's get them all set up.
-                if (empty($CFG->logstore_usestandardlog)) {
-                    add_to_log(SITEID, 'user', 'login', "view.php?id=$user->id&course=" . SITEID,
-                        $user->id, 0, $user->id);
-                } else {
-                    $event = \auth_gsaml\event\user_loggedin::create([
-                        'userid' => $user->id
-                    ]);
-                    $event->trigger();
-                }
+                $event = \auth_gsaml\event\user_loggedin::create([
+                    'userid' => $user->id
+                ]);
+                $event->trigger();
                 $USER = complete_user_login($user);
 
             /// Prepare redirection
@@ -252,28 +243,19 @@ class auth_plugin_gsaml extends auth_plugin_base {
                 $SESSION->samlrequestdata = $_REQUEST['SAMLRequest'];
                 $SESSION->samlrelaystate  = $_REQUEST['RelayState'];
                 $SESSION->samlrequest     = true;
-                if (empty($CFG->logstore_usestandardlog)) {
-                    add_to_log(SITEID, 'auth_gsaml', 'process samlrequest', '', 'User has saml request but needs login/redirect', 0, 0);
-                } else {
-                    $event = \auth_gsaml\event\samlrequest_processed::create([
-                        'info' => 'userneedsredirect'
-                    ]);
-                    $event->trigger();
-                }
+                $event = \auth_gsaml\event\samlrequest_processed::create([
+                    'info' => 'userneedsredirect'
+                ]);
+                $event->trigger();
             }
 
             // Case 1: if your logged in already and the SAML request just needs to
             // be processed go ahead and redirect with authentication.
             if ( isloggedin() and !empty($_REQUEST['SAMLRequest']) ) {
-
-                if (empty($CFG->logstore_usestandardlog)) {
-                    add_to_log(SITEID, 'auth_gsaml', 'process samlrequest', '', 'User islogged in and samlrequest', 0, 0);
-                } else {
-                    $event = \auth_gsaml\event\samlrequest_processed::create([
-                        'info' => 'userislogged'
-                    ]);
-                    $event->trigger();
-                }
+                $event = \auth_gsaml\event\samlrequest_processed::create([
+                    'info' => 'userislogged'
+                ]);
+                $event->trigger();
 
                 $SESSION->samlrequestdata = $_REQUEST['SAMLRequest'];
                 $SESSION->samlrelaystate  = $_REQUEST['RelayState'];

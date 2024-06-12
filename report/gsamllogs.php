@@ -60,28 +60,16 @@ class auth_gsaml_report_gsamllogs extends mr_report_abstract {
     public function table_init() {
         $this->url->params(['controller' => 'default', 'action' => 'logs']);
         $this->table = new mr_html_table($this->preferences, $this->url, 'time');
-        if (empty($CFG->logstore_usestandardlog)) {
-            // Legacy log usage.
-            $this->table->add_column('id', get_string('id', 'auth_gsaml'))
-                ->add_column('time', get_string('time', 'auth_gsaml'))
-                ->add_column('userid', get_string('userid', 'auth_gsaml'))
-                ->add_column('ip', get_string('ip', 'auth_gsaml'))
-                ->add_column('course', get_string('course', 'auth_gsaml'))
-                ->add_column('cmid', get_string('cmid', 'auth_gsaml'))
-                ->add_column('action', get_string('action', 'auth_gsaml'))
-                ->add_column('info', get_string('info', 'auth_gsaml'));
-        } else {
-            // Standard log usage.
-            $this->table->add_column('id', get_string('id', 'auth_gsaml'))
-                ->add_column('timecreated', get_string('time', 'auth_gsaml'))
-                ->add_column('userid', get_string('userid', 'auth_gsaml'))
-                ->add_column('ip', get_string('ip', 'auth_gsaml'))
-                ->add_column('courseid', get_string('courseid', 'auth_gsaml'))
-                ->add_column('contextinstanceid', get_string('contextinstanceid', 'auth_gsaml'))
-                ->add_column('action', get_string('action', 'auth_gsaml'))
-                ->add_column('eventname', get_string('eventname', 'auth_gsaml'))
-                ->add_column('other', get_string('otherlog', 'auth_gsaml'));
-        }
+        // Standard log usage.
+        $this->table->add_column('id', get_string('id', 'auth_gsaml'))
+            ->add_column('timecreated', get_string('time', 'auth_gsaml'))
+            ->add_column('userid', get_string('userid', 'auth_gsaml'))
+            ->add_column('ip', get_string('ip', 'auth_gsaml'))
+            ->add_column('courseid', get_string('courseid', 'auth_gsaml'))
+            ->add_column('contextinstanceid', get_string('contextinstanceid', 'auth_gsaml'))
+            ->add_column('action', get_string('action', 'auth_gsaml'))
+            ->add_column('eventname', get_string('eventname', 'auth_gsaml'))
+            ->add_column('other', get_string('otherlog', 'auth_gsaml'));
     }
 
     /**
@@ -117,17 +105,10 @@ class auth_gsaml_report_gsamllogs extends mr_report_abstract {
      */
     public function filter_init() {
         $this->filter = new mr_html_filter($this->preferences, $this->url);
-        if (empty($CFG->logstore_usestandardlog)) {
-            // Legacy log usage.
-            $this->filter->new_text('info', 'Info');
-            $this->filter->new_text('userid', 'userid');
-            $this->filter->new_text('course', 'course');
-        } else {
-            // Standard log usage.
-            $this->filter->new_text('eventname', 'Info');
-            $this->filter->new_text('userid', 'userid');
-            $this->filter->new_text('courseid', 'courseid');
-        }
+        // Standard log usage.
+        $this->filter->new_text('eventname', 'Info');
+        $this->filter->new_text('userid', 'userid');
+        $this->filter->new_text('courseid', 'courseid');
         $this->filter->new_daterange('time', 'Times');
     }
 
@@ -141,15 +122,9 @@ class auth_gsaml_report_gsamllogs extends mr_report_abstract {
         $component = $this->get_component();
 
         $select = 'SELECT ' . $fields;
-        if (empty($CFG->logstore_usestandardlog)) {
-            // Legacy log usage.
-            $from = "FROM {log}";
-            $where = "WHERE module='$component' ";
-        } else {
-            // Standard log usage.
-            $from = "FROM {logstore_standard_log}";
-            $where = "WHERE component='$component' ";
-        }
+        // Standard log usage.
+        $from = "FROM {logstore_standard_log}";
+        $where = "WHERE component='$component' ";
 
         // if filter sql exists.
         if (!empty($filtersql)) {
