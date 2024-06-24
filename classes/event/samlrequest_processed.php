@@ -46,18 +46,4 @@ class samlrequest_processed extends \core\event\base {
     public function get_url() {
         return '';
     }
-
-    public function get_legacy_logdata() {
-        // Override when migrating an add_to_log() call.
-        $legacydata = [
-            SITEID,
-            'auth_gsaml',
-            self::get_name(),
-            $this->get_url(),
-            $this->get_description(),
-            0,
-            0
-        ];
-        return $legacydata;
-    }
 }
